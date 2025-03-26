@@ -1,0 +1,123 @@
+.homestaff-container {
+    display: flex;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+    background: #f8f8f8;
+}
+
+/* Sidebar */
+.homestaff-sidebar {
+    width: 250px;
+    background: #d9d9d9;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.homestaff-sidebar button, .homestaff-sidebar a {
+    background: #ffffff;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+    display: block;
+    border-radius: 5px;
+}
+
+/* Header */
+.homestaff-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: #ffffff;
+    border-bottom: 2px solid #ddd;
+}
+
+.homestaff-header-left .homestaff-logo {
+    height: 40px;
+}
+
+.homestaff-header-right {
+    display: flex;
+    gap: 10px;
+}
+
+.homestaff-header-right .homestaff-action-btn {
+    background: none;
+    color: #1d1818;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Profile Dropdown */
+.homestaff-profile-dropdown {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* Upload Section */
+.homestaff-upload-section {
+    padding: 20px;
+    background: #ffffff;
+    margin: 20px;
+    border-radius: 5px;
+}
+
+.homestaff-chat-box-section {
+    width: 300px;
+    background: #e0e0e0;
+    padding: 15px;
+}
+
+.homestaff-chat-box ul {
+    list-style: none;
+}
+
+.homestaff-chat-box .homestaff-chat-bubble {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+}
+
+.homestaff-message-time {
+    font-size: 16px;
+    color: gray;
+}
+/* Đảm bảo các nút nằm ngang và có khoảng cách hợp lý */
+.homestaff-upload-section {
+    display: flex;
+    flex-direction: column; /* Giữ input trên và nút dưới */
+    align-items: center; /* Căn giữa các phần tử */
+    gap: 15px; /* Tạo khoảng cách giữa input và hàng nút */
+}
+
+.homestaff-upload-buttons {
+    display: flex;
+    justify-content: center; /* Căn giữa các nút */
+    gap: 20px; /* Khoảng cách giữa các nút */
+}
+
+.homestaff-upload-buttons button {
+    padding: 10px 20px;
+    font-size: 14px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    min-width: 100px; /* Giữ kích thước nút đồng đều */
+}

@@ -1,0 +1,116 @@
+/* Reset chung */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Arial', sans-serif;
+    background: #ecf0f1;
+    display: flex;
+    overflow: hidden; /* Ngăn kéo dài trang */
+}
+
+/* Bố cục tổng thể */
+.admin-dashboard {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 320px;
+    background: #2c3e50;
+    color: white;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 94vh;
+    justify-content: space-between; /* Đảm bảo nút Đăng Xuất không bị che */
+}
+
+/* Logo eTutoring */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+/* Menu trong sidebar */
+.menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Đảm bảo menu co giãn tốt */
+    justify-content: center; /* Cân giữa menu */
+}
+
+/* Mục trong sidebar */
+.menu a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    color: white;
+    text-decoration: none;
+    padding: 14px;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.menu a:hover {
+    background: #34495e;
+    transform: translateX(6px);
+}
+
+/* Nút đăng xuất */
+.logout-btn {
+    width: 100%;
+    padding: 14px;
+    margin-top: 20px; /* Khoảng cách để không bị che */
+    border: none;
+    background: #e74c3c;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Nội dung chính */
+.main-content {
+    flex: 1;
+    padding: 50px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
+/* Tiêu đề chính */
+.main-content h1 {
+    font-size: 32px;
+    color: #2c3e50;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Hiệu ứng khi hover trên sidebar */
+.menu a.active {
+    background: #1abc9c;
+}

@@ -1,0 +1,139 @@
+/* Reset chung */
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #e3eaf5, #d1d9e6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Bố cục chung của trang */
+.create-account-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    max-width: 1000px;
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Container của form đăng ký */
+.create-account-container {
+    width: 100%;
+    text-align: left;
+}
+
+/* Tiêu đề */
+h2 {
+    font-size: 24px;
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Căn chỉnh Label & Input trên cùng một hàng */
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: row;  /* Changed to row so that they appear on the same line */
+    align-items: center;  /* Vertically align the label and select */
+    margin-bottom: 20px;
+}
+
+/* Nhãn (Giới tính, Vai trò) */
+label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-right: 15px;  /* Added margin to space out the label from the select */
+    width: 120px;  /* Ensure label width is consistent */
+}
+
+/* Input Fields */
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border 0.3s;
+    margin-bottom: 15px;
+}
+
+/* Ensure select dropdown and input fields expand correctly */
+select {
+    flex-grow: 1;  /* Allow select field to take up the remaining space */
+}
+
+input:focus, select:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* Nút Đăng ký */
+button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Liên kết Forgot Password (nếu có) */
+.forgot-password {
+    display: block;
+    margin: 10px 0;
+    font-size: 12px;
+    color: #007BFF;
+    text-decoration: none;
+    text-align: center;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Nút tạo tài khoản mới */
+.create-account {
+    background-color: #28a745;
+    margin-top: 5px;
+}
+
+.create-account:hover {
+    background-color: #218838;
+}
+
+/* Đoạn text tạo tài khoản */
+.create-account-text {
+    font-size: 14px;
+    margin-top: 15px;
+    text-align: center;
+    color: #555;
+}

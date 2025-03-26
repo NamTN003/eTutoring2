@@ -1,0 +1,51 @@
+/* Container cho thông tin tài khoản */
+.information-container {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+.information-container h2 {
+    font-size: 24px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Mỗi phần thông tin người dùng */
+.information-container p {
+    font-size: 16px;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+/* Các nhãn mạnh mẽ để phân biệt thông tin */
+.information-container strong {
+    color: #007BFF;
+    font-weight: bold;
+}
+
+/* Trường hợp thông tin chưa được cập nhật */
+.information-container p span {
+    color: #888;
+    font-style: italic;
+}
+
+/* Loader text */
+.information-container p {
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+}
+
+/* Style khi chưa có dữ liệu */
+.information-container p {
+    font-size: 16px;
+    color: #333;
+}
