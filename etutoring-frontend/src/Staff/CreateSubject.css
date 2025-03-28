@@ -1,0 +1,71 @@
+.subject-container {
+    max-width: 600px;
+    margin: 100px auto;
+    padding: 32px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.subject-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 24px;
+    text-align: center;
+    color: #333;
+}
+
+.subject-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* ✅ Đưa label và input/textarea nằm ngang hàng */
+.subject-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* ✅ Cố định độ rộng label để canh hàng đẹp */
+.subject-group label {
+    font-weight: 600;
+    color: #555;
+    min-width: 130px;
+}
+
+/* ✅ Input và textarea mở rộng phần còn lại */
+.subject-group input,
+.subject-group textarea {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+/* ✅ Hiệu ứng focus */
+.subject-group input:focus,
+.subject-group textarea:focus {
+    border-color: #4a90e2;
+}
+
+.subject-submit {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.subject-submit:hover {
+    background-color: #357ab8;
+}

@@ -1,112 +1,82 @@
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import Logout from '../Utils/Logout';
-import "./Homestaff.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBell, faComment, faTableColumns, faUser, faCalendar, faUpload, faImages, faFaceSmileBeam, faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+    FiCalendar, FiClock, FiFileText, FiKey, FiBell, FiGrid, FiLogOut
+} from 'react-icons/fi';
+import { AiOutlineUpload, AiOutlineHeart } from 'react-icons/ai';
+import { BsPersonCircle } from 'react-icons/bs';
+import './Homestaff.css';
 
 const Homestaff = () => {
     const handleLogout = Logout();
-    const [showProfileOptions, setShowProfileOptions] = useState(false);
+    const location = useLocation();
+
+    // Kiểm tra nếu đang ở đúng "/homestaff"
+    const isMainDashboard = location.pathname === '/homestaff';
 
     return (
         <div className="homestaff-container">
             {/* Sidebar */}
-            <div className="homestaff-sidebar">
-                <button><b><FontAwesomeIcon icon={faUser} /> Staff</b></button>
-                <Link to="/student-management">Student Management</Link>
-                <Link to="/rollcall">trạng thái điểm danh</Link>
-                <Link to="/meeting">Management Meeting</Link>
-                <Link to="/createmeeting">Create Meeting</Link>
-                <Link to="/requestupgrade">Request Authorization</Link>
-                <Link to="/createsubject">Create Môn</Link>
-                <button onClick={handleLogout}><b>Đăng Xuất</b></button>
-            </div>
+            <aside className="sidebar">
+                <div className="sidebar-header">
+                    <BsPersonCircle size={32} className="icon staff-icon" />
+                    <span className="staff-text">Staff</span>
+                </div>
+                <nav className="nav-links">
+                    <Link to="rollcall" className="nav-item"><FiClock className="icon" /> Trạng thái điểm danh</Link>
+                    <Link to="meeting" className="nav-item"><FiCalendar className="icon" /> Management Meeting</Link>
+                    <Link to="createmeeting" className="nav-item"><FiFileText className="icon" /> Create Meeting</Link>
+                    <Link to="createsubject" className="nav-item"><FiFileText className="icon" /> Create subject</Link>
+                    <Link to="requestupgrade" className="nav-item"><FiKey className="icon" /> Request Authorization</Link>
+                </nav>
+                <button onClick={handleLogout} className="logout-btn">
+                    <FiLogOut className="icon" /> Đăng Xuất
+                </button>
+            </aside>
 
-            {/* Main Content */}
-            <div className="homestaff-main-content">
-                {/* Header */}
-                <div className="homestaff-header">
-                    <div className="homestaff-header-left">
-                        <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/12/Icon-Truong-Dai-hoc-Greenwich-Viet-Nam.png" alt="Logo" className="homestaff-logo" />
+            {/* Main Content Area */}
+            <main className="main-content">
+                <header className="header">
+                    <h2>Ứng dụng eTutoring - Staff</h2>
+                    <div className="header-icons">
+                        <Link to="/bell" className="action-btn profile-btn"><FiBell className="icon" /></Link>
+                        <Link to="/ring" className="action-btn profile-btn"><FiGrid className="icon" /></Link>
+                        <Link to="imformation" className="action-btn profile-btn"><BsPersonCircle className="icon" /></Link>
                     </div>
-                    <div className="homestaff-header-right">
-                        <button className="homestaff-action-btn"><FontAwesomeIcon icon={faBell} /></button>
-                        <button className="homestaff-action-btn"><FontAwesomeIcon icon={faComment} /></button>
-                        <button className="homestaff-action-btn"><FontAwesomeIcon icon={faTableColumns} /></button>
-                        <button className="homestaff-action-btn" onClick={() => setShowProfileOptions(!showProfileOptions)}>
-                            <FontAwesomeIcon icon={faUser} />
-                        </button>
-                        <button className="homestaff-action-btn"><FontAwesomeIcon icon={faCalendar} /></button>
+                </header>
 
-                        {/* Profile Dropdown */}
-                        {showProfileOptions && (
-                            <div className="homestaff-profile-dropdown">
-                                <Link to="/profile">Xem thông tin</Link>
-                                <button onClick={handleLogout}>Đăng Xuất</button>
+                {/* Luôn render Outlet */}
+                <div className="homestaff-content-area">
+                    {isMainDashboard ? (
+                        <section className="status-section">
+                            <div className="status-box">
+                                <input type="text" placeholder="Hôm nay bạn thế nào?" className="status-input" />
+                                <div className="upload-options">
+                                    <button className="upload-btn"><AiOutlineUpload className="icon" /> Tải File</button>
+                                    <button className="upload-btn"><AiOutlineUpload className="icon" /> Hình Ảnh</button>
+                                </div>
                             </div>
-                        )}
-                    </div>
+                            {[1, 2].map((_, index) => (
+                                <div key={index} className="status-post">
+                                    <BsPersonCircle className="icon profile-icon" />
+                                    <div className="post-content">
+                                        <span>{index === 0
+                                            ? "Các cuộc họp định kỳ diễn ra vào tuần thứ 3."
+                                            : "Hôm nay là cuộc họp cuối cùng trước kỳ nghỉ."}</span>
+                                        <div className="comment-section">
+                                            <input type="text" placeholder="Thêm bình luận..." className="comment-input" />
+                                            <AiOutlineHeart className="icon heart-icon" />
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </section>
+                    ) : (
+                        <Outlet />
+                    )}
                 </div>
-
-                {/* Upload Section */}
-                <div className="homestaff-upload-section">
-                    <h3>User, how are you today?</h3>
-                    <input type="text" placeholder="Type here..." />
-                    <div className="homestaff-media-options">
-                        <button>Upload File <FontAwesomeIcon icon={faUpload} /></button>
-                        <button>Pic/Vid <FontAwesomeIcon icon={faImages} /></button>
-                        <button>Emotion <FontAwesomeIcon icon={faFaceSmileBeam} /></button>
-                    </div>
-                </div>
-
-                {/* New Information Section */}
-                <div className="homestaff-new-information">
-                    <div className="homestaff-message">
-                        <span>Regular meetings are held every 3rd week and will be held online or offline depending on the situation.</span>
-                        <button className="homestaff-like-btn"><FontAwesomeIcon icon={faHeart} /> Like</button>
-                        <input type="text" placeholder="Your thoughts, please add comment..." />
-                    </div>
-                    <div className="homestaff-message">
-                        <span>Today is the last meeting and we will have a holiday break.</span>
-                        <button className="homestaff-like-btn"><FontAwesomeIcon icon={faHeart} /> Like</button>
-                        <input type="text" placeholder="Your thoughts, please add comment..." />
-                    </div>
-                </div>
-            </div>
-
-            {/* Right Sidebar (Chat Box) */}
-            <div className="homestaff-chat-box-section">
-                <div className="homestaff-search-bar">
-                    <input type="text" placeholder="Search for messages on the web..." />
-                </div>
-                <div className="homestaff-chat-box">
-                    <h2>Chat section</h2>
-                    <ul>
-                        <li>
-                            <span className="homestaff-username">User 1</span>
-                            <div className="homestaff-chat-bubble homestaff-user-1">
-                                <p>This is a message from User 1.</p>
-                            </div>
-                            <span className="homestaff-message-time">10:15 AM</span>
-                        </li>
-                        <li>
-                            <span className="homestaff-username">User 2</span>
-                            <div className="homestaff-chat-bubble homestaff-user-2">
-                                <p>This is a message from User 2.</p>
-                            </div>
-                            <span className="homestaff-message-time">10:20 AM</span>
-                        </li>
-                        <li>
-                            <span className="homestaff-username">User 3</span>
-                            <div className="homestaff-chat-bubble homestaff-user-3">
-                                <p>This is a message from User 3.</p>
-                            </div>
-                            <span className="homestaff-message-time">10:25 AM</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            </main>
         </div>
     );
 };

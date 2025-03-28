@@ -1,0 +1,79 @@
+/* RequestUpgrade.css */
+
+.upgrade-container {
+    max-width: 600px;
+    margin: 60px auto;
+    padding: 32px;
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .upgrade-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 28px;
+    color: #222;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+  }
+  
+  .upgrade-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .upgrade-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .upgrade-label {
+    width: 80px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 8px;
+    flex-shrink: 0;
+  }
+  
+  .upgrade-textarea {
+    flex-grow: 1;
+    min-height: 120px;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.25s ease;
+    font-family: inherit;
+  }
+  
+  .upgrade-textarea:focus {
+    border-color: #4a90e2;
+    box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+  }
+  
+  .upgrade-submit {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.25s ease;
+    width: 200px;
+    align-self: center;
+  }
+  
+  .upgrade-submit:hover {
+    background-color: #357ab8;
+  }
+  

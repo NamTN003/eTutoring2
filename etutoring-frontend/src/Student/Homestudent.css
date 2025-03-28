@@ -1,5 +1,5 @@
-
-.homestaff-container {
+/* ========== Homestudent Layout ========== */
+.homestudent-container {
     display: flex;
     height: 100vh;
     width: 100vw;
@@ -7,7 +7,7 @@
 }
 
 /* Sidebar */
-.homestaff-container .sidebar {
+.homestudent-sidebar {
     width: 280px;
     background: #f5f5f5;
     padding: 20px;
@@ -19,8 +19,7 @@
     position: relative;
 }
 
-/* Điều chỉnh logo staff */
-.homestaff-container .sidebar-header {
+.homestudent-sidebar-header {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -30,17 +29,15 @@
     color: black;
 }
 
-/* Điều chỉnh menu */
-.homestaff-container .nav-links {
+.homestudent-nav-links {
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 15px; /* Tăng khoảng cách giữa các mục */
+    gap: 15px;
     margin-top: 10px;
 }
 
-/* Điều chỉnh nút menu */
-.homestaff-container .nav-item {
+.homestudent-nav-item {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -53,12 +50,11 @@
     border-radius: 8px;
 }
 
-.homestaff-container .nav-item:hover {
+.homestudent-nav-item:hover {
     background: #ddd;
 }
 
-/* Đẩy nút đăng xuất lên */
-.homestaff-container .logout-btn {
+.homestudent-logout-btn {
     background: #d9534f;
     color: white;
     border: none;
@@ -71,29 +67,28 @@
     gap: 10px;
     width: 100%;
     justify-content: center;
-    margin-top: auto; /* Đẩy nút đăng xuất lên */
-    margin-bottom: 20px; /* Đảm bảo không bị sát lề dưới */
+    margin-top: auto;
+    margin-bottom: 20px;
 }
 
-.homestaff-container .logout-btn:hover {
+.homestudent-logout-btn:hover {
     background: #c9302c;
 }
 
 /* Main Content */
-.homestaff-container .main-content {
+.homestudent-main-content {
     flex-grow: 1;
     background: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
-    overflow-y: auto; /* ✅ thanh cuộn đúng bên phải */
+    min-height: 100vh;
+    overflow-y: auto;
     box-sizing: border-box;
     padding: 0 24px 40px;
 }
 
-/* Header */
-.homestaff-container .header {
+.homestudent-header {
     position: sticky;
     top: 0;
     z-index: 99;
@@ -107,19 +102,18 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
-
-.homestaff-container .header-icons {
+.homestudent-header-icons {
     display: flex;
     gap: 15px;
 }
 
-.homestaff-container .header-icons .icon {
+.homestudent-header-icons .icon {
     font-size: 24px;
     cursor: pointer;
 }
 
 /* Status Section */
-.homestaff-container .status-section {
+.homestudent-status-section {
     width: 100%;
     max-width: 1000px;
     background: #f9f9f9;
@@ -129,9 +123,10 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
-.homestaff-container .status-box {
+.homestudent-status-box {
     background: #fff;
     padding: 20px;
     border-radius: 10px;
@@ -143,35 +138,37 @@
     align-items: center;
 }
 
-/* Nút Upload */
-.homestaff-container .upload-section {
-    display: flex;
-    justify-content: space-between;
+.homestudent-status-input {
     width: 100%;
-    max-width: 600px;
+    padding: 10px;
+    border: 1px solid #ad23f7;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.homestudent-upload-options {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
     margin-top: 10px;
 }
 
-.homestaff-container .upload-btn {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: rgb(35, 64, 209);
+.homestudent-upload-btn {
+    background: #2340d1;
     color: white;
-    cursor: pointer;
     font-weight: bold;
-    transition: background 0.3s;
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
 }
 
-.homestaff-container .upload-btn:hover {
-    background: #223eb9;
+.homestudent-upload-btn:hover {
+    background: #1d35b1;
 }
 
 /* Status Post */
-.homestaff-container .status-post {
+.homestudent-status-post {
     background: #ffffff;
     padding: 15px;
     border-radius: 10px;
@@ -182,36 +179,28 @@
     margin-bottom: 10px;
 }
 
-.homestaff-container .profile-icon {
-    font-size: 26px;
-    margin-right: 10px;
-}
-
-.homestaff-container .post-content {
+.homestudent-post-content {
     flex-grow: 1;
 }
 
-/* Input Fields */
-.homestaff-container .status-input, 
-.homestaff-container .comment-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ad23f7;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* Comment Section */
-.homestaff-container .comment-section {
+.homestudent-comment-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin-top: 10px;
 }
 
-/* Nút Tim */
-.homestaff-container .heart-icon {
-    font-size: 34px; 
+.homestudent-comment-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ad23f7;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.heart-icon {
+    font-size: 24px;
     color: red;
     cursor: pointer;
 }

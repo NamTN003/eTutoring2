@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './CreateSubject.css';
 
 const CreateSubject = () => {
     const [form, setForm] = useState({
@@ -16,54 +17,58 @@ const CreateSubject = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:5000/subject", form, {
+            await axios.post("http://localhost:5000/subject", form, {
                 headers: { "Content-Type": "application/json" }
             });
-            alert("Môn học đã được tạo thành công!");
+            alert("✅ Môn học đã được tạo thành công!");
             setForm({
                 subject_code: "",
                 subject_name: "",
                 description: ""
             });
         } catch (error) {
-            console.error("Lỗi khi tạo môn học:", error.response ? error.response.data : error);
-            alert("Lỗi khi tạo môn học!");
+            console.error("❌ Lỗi khi tạo môn học:", error.response ? error.response.data : error);
+            alert("Đã xảy ra lỗi!");
         }
     };
 
     return (
-        <div>
-            <h2>Tạo môn học mới</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Mã môn học:</label>
+        <div className="subject-container">
+            <h2 className="subject-title">📘 Tạo Môn Học Mới</h2>
+            <form className="subject-form" onSubmit={handleSubmit}>
+                <div className="subject-group">
+                    <label>Mã môn học</label>
                     <input
                         type="text"
                         name="subject_code"
                         value={form.subject_code}
                         onChange={handleChange}
+                        placeholder="VD: MTH001"
                         required
                     />
                 </div>
-                <div>
-                    <label>Tên môn học:</label>
+                <div className="subject-group">
+                    <label>Tên môn học</label>
                     <input
                         type="text"
                         name="subject_name"
                         value={form.subject_name}
                         onChange={handleChange}
+                        placeholder="VD: Toán học"
                         required
                     />
                 </div>
-                <div>
-                    <label>Mô tả:</label>
+                <div className="subject-group">
+                    <label>Mô tả</label>
                     <textarea
                         name="description"
                         value={form.description}
                         onChange={handleChange}
+                        placeholder="Nhập mô tả về môn học..."
+                        rows="4"
                     />
                 </div>
-                <button type="submit">Tạo môn học</button>
+                <button type="submit" className="subject-submit">➕ Tạo Môn Học</button>
             </form>
         </div>
     );

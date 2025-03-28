@@ -29,7 +29,7 @@ const EditStudent = () => {
         try {
             await axios.put(`http://localhost:5000/user/${id}`, student);
             alert("✅ Cập nhật nhân viên thành công!");
-            navigate("/studentlist");
+            navigate("/homeauthorized/studentlist");
         } catch (error) {
             console.error("❌ Lỗi khi cập nhật nhân viên:", error);
             alert("❌ Không thể cập nhật nhân viên");

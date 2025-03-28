@@ -1,0 +1,144 @@
+/* CreateMeeting.css */
+
+.createmeeting-container {
+    max-width: 720px;
+    margin: 60px ;
+    padding: 24px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.createmeeting-title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    text-align: center;
+    color: #333;
+}
+
+.createmeeting-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+    max-height: 85vh;
+}
+
+.createmeeting-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.createmeeting-group label {
+    width: 130px;
+    font-weight: 600;
+    color: #333;
+    flex-shrink: 0;
+}
+
+.createmeeting-group input[type="text"],
+.createmeeting-group input[type="date"],
+.createmeeting-group input[type="time"],
+.createmeeting-group select {
+    flex-grow: 1;
+    padding: 10px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+.createmeeting-group input:focus,
+.createmeeting-group select:focus {
+    border-color: #4a90e2;
+}
+/* .createmeeting-students {
+    flex-grow: 1;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.createmeeting-student {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 15px;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+.createmeeting-student:hover {
+    background-color: #e6f0ff;
+}
+
+
+.createmeeting-student input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #4a90e2;
+} */
+
+.createmeeting-students {
+    flex-grow: 1;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.createmeeting-student {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.createmeeting-student input {
+    margin-right: 8px;
+}
+
+.createmeeting-submit {
+    background-color: #4a90e2;
+    color: white;
+    font-weight: bold;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 12px;
+    align-self: center;
+    width: 200px;
+}
+
+.createmeeting-submit:hover {
+    background-color: #357ab8;
+}
+
+@media (max-width: 768px) {
+    .createmeeting-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .createmeeting-group label {
+        width: auto;
+    }
+
+    .createmeeting-submit {
+        width: 100%;
+    }
+}
+

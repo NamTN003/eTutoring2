@@ -55,7 +55,7 @@ const StudentList = () => {
                     {studentlist.map((student) => (
                         <li key={student._id}>
                             <strong>{student.name}</strong> - {student.email} - {student.gender}
-                            <Link to={`/editstudent/${student._id}`}>✏ Sửa</Link>
+                            <Link to={`../editstudent/${student._id}`} style={{ marginRight: "10px" }}>✏ Sửa</Link>
                             <button onClick={() => handleDelete(student._id)}>🗑 Xóa</button>
                         </li>
                     ))}

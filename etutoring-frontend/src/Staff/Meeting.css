@@ -1,0 +1,66 @@
+.meeting-table-container {
+    padding: 300px 24px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+}
+
+.meeting-table-title {
+    font-size: 28px;
+    text-align: center;
+    margin-bottom: 32px;
+    color: #333;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    padding: 20px;
+}
+
+.meeting-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+.meeting-table thead {
+    background-color: #f2f5f8;
+}
+
+.meeting-table th,
+.meeting-table td {
+    padding: 14px 16px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.meeting-table th {
+    font-weight: 600;
+    color: #444;
+}
+
+.meeting-table td {
+    color: #333;
+}
+
+.meeting-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}

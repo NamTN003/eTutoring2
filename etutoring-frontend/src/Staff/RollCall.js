@@ -1,27 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import './RollCall.css';
 
 const RollCall = () => {
     const navigate = useNavigate();
     const [meetings, setMeetings] = useState([]);
+
     useEffect(() => {
-        // 📌 Gọi API để lấy danh sách cuộc họp
         axios.get("http://localhost:5000/meeting")
-            .then((response) => {
-                setMeetings(response.data);
+            .then((res) => {
+                setMeetings(res.data);
             })
             .catch((error) => {
                 console.error("Lỗi khi lấy danh sách cuộc họp:", error);
             });
     }, []);
+
     return (
-        <div>
-            {meetings.map((meeting) => (
-                    <button key={meeting._id} onClick={() => navigate(`/updatemeeting/${meeting._id}`)} className="edit-btn">
-                        Điểm danh {meeting.name}
-                    </button>
-                ))}
+        <div className="rollcall-table-container">
+            <h2 className="rollcall-title">Danh sách cuộc họp</h2>
+            <table className="rollcall-table">
+                <thead>
+                    <tr>
+                        <th>Ngày</th>
+                        <th>Giờ</th>
+                        <th>Địa điểm</th>
+                        <th>Gia sư</th>
+                        <th>Môn học</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {meetings.map(meeting => (
+                        <tr key={meeting._id}>
+                            <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
+                            <td>{meeting.meeting_time}</td>
+                            <td>{meeting.location}</td>
+                            <td>{meeting.tutor_id?.name}</td>
+                            <td>{meeting.subject_id?.name}</td>
+                            <td>
+                                <button
+                                    className="rollcall-btn"
+                                    onClick={() => navigate(`/homestaff/updatemeeting/${meeting._id}`)}
+                                >
+                                    Điểm danh
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

@@ -13,12 +13,12 @@ body, html {
 /* Bố cục chung của trang */
 .login-page {
     display: flex;
-    width: 80%;
-    max-width: 1000px;
+    width: 100%;
+    height: 100%;
+    max-width: 1300px; /* Giới hạn chiều rộng */
     align-items: center;
     justify-content: center;
     background: white;
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
@@ -47,12 +47,16 @@ body, html {
     border-radius: 8px;
     width: 100%;
     text-align: center;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 /* Tiêu đề */
 h2 {
     margin-bottom: 20px;
-    font-size: 24px;
+    font-size: 28px;
     color: #333;
     font-weight: bold;
     border-bottom: 2px solid #ddd;
@@ -70,8 +74,8 @@ form {
 .form-group {
     width: 100%;
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+    flex-direction: column;
+    margin-bottom: 20px;
 }
 
 /* Nhãn (Email, Password) */
@@ -79,21 +83,18 @@ label {
     font-size: 14px;
     font-weight: bold;
     color: #333;
-    width: 1400px; /* Increase the width for better alignment */
-    text-align: right;
-    margin-right: 10px;
+    margin-bottom: 8px;
 }
 
 /* Input Fields */
 input {
-    flex: 1;
-    padding: 10px;
+    width: 100%;
+    padding: 12px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 14px;
     box-sizing: border-box;
     transition: border 0.3s;
-    min-width: 200px;
 }
 
 input:focus {
@@ -104,7 +105,7 @@ input:focus {
 /* Nút Đăng nhập */
 button {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     margin-top: 10px;
     background-color: #007BFF;
     color: white;
@@ -134,20 +135,39 @@ button:hover {
     text-decoration: underline;
 }
 
-/* Nút tạo tài khoản mới */
-.create-account {
-    background-color: #28a745;
-    margin-top: 5px;
-}
-
-.create-account:hover {
-    background-color: #218838;
-}
-
 /* Đoạn text tạo tài khoản */
 .create-account-text {
     font-size: 14px;
     margin-top: 15px;
     text-align: center;
     color: #555;
+}
+
+/* Chỉnh lại giao diện ảnh bên phải */
+.login-image-container {
+    flex: 1;
+    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7byX-CBwMv6l9sPIobJ5smfd10cy1QRjRHQ&s') no-repeat center center;
+    background-size: cover;
+    height: 100%;
+}
+
+/* Responsive - Khi màn hình nhỏ hơn */
+@media screen and (max-width: 768px) {
+    .login-page {
+        flex-direction: column;
+        max-width: 100%;
+        padding: 10px;
+    }
+
+    .login-container {
+        margin-bottom: 20px;
+    }
+
+    .logo-container {
+        display: none; /* Ẩn logo bên trái */
+    }
+
+    .login-image-container {
+        display: none;
+    }
 }

@@ -1,0 +1,198 @@
+/* ========== Homeauthorized Layout ========== */
+.homeauthorized-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    background: #ebf0f5;
+}
+
+/* Sidebar */
+.homeauthorized-sidebar {
+    width: 280px;
+    background: #f5f5f5;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100vh; /* đảm bảo đủ chiều cao */
+    position: sticky;
+    top: 0;
+    left: 0;
+    overflow-y: auto; /* ✅ scroll nếu nội dung dài */
+    box-sizing: border-box;
+}
+
+.homeauthorized-sidebar-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+.homeauthorized-nav-links {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.homeauthorized-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+    text-decoration: none;
+    color: #333;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background 0.3s;
+}
+
+.homeauthorized-nav-item:hover {
+    background: #e1e1e1;
+}
+
+/* ✅ Đảm bảo nút logout nằm dưới cùng sidebar */
+.homeauthorized-logout-btn {
+    margin-top: auto;
+    background: #d9534f;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.homeauthorized-logout-btn:hover {
+    background: #c9302c;
+}
+
+/* Main Content */
+.homeauthorized-main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    min-height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+    padding: 0 24px 40px;
+}
+
+/* Header */
+.homeauthorized-header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    padding: 16px 24px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 10;
+}
+
+.homeauthorized-header-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.homeauthorized-header-icons .icon {
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Status Section */
+.homeauthorized-status-section {
+    width: 100%;
+    max-width: 1000px;
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 24px;
+}
+
+.homeauthorized-status-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.homeauthorized-status-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ad23f7;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.homeauthorized-upload-options {
+    margin-top: 10px;
+    display: flex;
+    gap: 12px;
+}
+
+.homeauthorized-upload-btn {
+    background: #2340d1;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.homeauthorized-upload-btn:hover {
+    background: #1d35b1;
+}
+
+/* Status Post */
+.homeauthorized-status-post {
+    display: flex;
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 12px;
+    box-shadow: 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.homeauthorized-post-content {
+    flex-grow: 1;
+}
+
+.homeauthorized-comment-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.homeauthorized-comment-input {
+    flex-grow: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ad23f7;
+    font-size: 14px;
+}
+
+.heart-icon {
+    color: red;
+    font-size: 24px;
+    cursor: pointer;
+}
