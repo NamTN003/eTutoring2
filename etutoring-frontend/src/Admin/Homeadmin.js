@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Logout from '../Utils/Logout';
 import { FaUsers, FaUserPlus, FaUserShield, FaInfoCircle, FaSignOutAlt } from "react-icons/fa";
 import "./Homeadmin.css";
+import BlogList from '../compo/BlogList';
 
 const Homeadmin = () => {
     const handleLogout = Logout();
@@ -25,6 +26,9 @@ const Homeadmin = () => {
                     <Link to="/imformation">
                         <FaInfoCircle /> Thông tin bản thân
                     </Link>
+                    <Link to="/admindashboard">
+                        <FaInfoCircle /> Dashboard
+                    </Link>
                 </nav>
                 <button className="logout-btn" onClick={handleLogout}>
                     <FaSignOutAlt /> Đăng Xuất
@@ -34,6 +38,7 @@ const Homeadmin = () => {
             {/* Main Content */}
             <main className="main-content">
                 <h1>Welcome to eTutoring</h1>
+                <BlogList />
             </main>
         </div>
     );

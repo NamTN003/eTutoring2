@@ -5,8 +5,8 @@ import Login from "./compo/Login";
 import Homeadmin from "./Admin/Homeadmin";
 import Homestudent from "./Student/Homestudent";
 import Hometutor from "./Tutor/Hometutor";
-import Register from "./compo/Register";
 import Createacount from "./Admin/Createacount";
+import Register from "./compo/Register";
 import Homeauthorized from "./Authorized/Homeauthorized";
 import Homestaff from "./Staff/Homestaff";
 import Liststaff from "./Admin/Liststaff";
@@ -21,59 +21,259 @@ import Createtutor from "./Authorized/Createtutor";
 import AssignTutor from "./Authorized/AssignTutor ";
 import ChatTutor from "./Tutor/ChatTutor";
 import ChatStudent from "./Student/ChatStudent";
-// import Chat from "./Utils/Chat";
 import Meeting from "./Staff/Meeting";
 import CreateMeeting from "./Staff/CreateMeeting";
 import UpdateMeeting from "./Staff/UpdateMeeting";
 import RollCall from "./Staff/RollCall";
-import BlogList from './Tutor/BlogList';
 import CreateBlog from './Tutor/CreateBlog';
-import StudentBlogList from './Student/StudentBlogList';
 import CreateSubject from './Staff/CreateSubject';
+import ProtectedRoute from "./Utils/ProtectedRoute";
+import NotFound from "./Utils/NotFound";
+import SendEmail from "./Authorized/SendEmail";
+import StudentEmail from "./Student/StudentEmail";
+import TutorEmail from "./Tutor/TutorEmail";
+import AdminDashboard from "./Admin/AdminDashborad";
 
 function App() {
-  // const userId = localStorage.getItem("userId");
-  // const authToken = localStorage.getItem("token");
   return (
     <div>
       <Router>
-            <div>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/homeadmin" element={<Homeadmin />} />
-                <Route path="/homestudent" element={<Homestudent />} />
-                <Route path="/hometutor" element={<Hometutor />} />
-                <Route path="/createacount" element={<Createacount />} />
-                <Route path="/homeauthorized" element={<Homeauthorized />} />
-                <Route path="/homestaff" element={<Homestaff />} />
-                <Route path="/liststaff" element={<Liststaff />} />
-                <Route path="//editstaff/:id" element={<Editstaff />} />
-                <Route path="/createstudent" element={<Createstudent />} />
-                <Route path="/requestupgrade" element={<RequestUpgrade />} />
-                <Route path="/adminrequests" element={<AdminRequests />} />
-                <Route path="/imformation" element={<Imformation />} />
-                <Route path="/studentList" element={<StudentList />} />
-                <Route path="//editstudent/:id" element={<EditStudent />} />
-                <Route path="/createtutor" element={<Createtutor />} />
-                <Route path="/assigntutor" element={<AssignTutor />} />
-                <Route path="/chatTutor" element={<ChatTutor />} />
-                <Route path="/chatStudent" element={<ChatStudent />} />
-                <Route path="/meeting" element={<Meeting />} />
-                <Route path="/createMeeting" element={<CreateMeeting />} />
-                <Route path="/rollCall" element={<RollCall />} />
-                <Route path="/updatemeeting/:id" element={<UpdateMeeting />} />
-                <Route path="/blog" element={<BlogList />} />
-                <Route path="/createblog" element={<CreateBlog />} />
-                <Route path="/studentblogs" element={<StudentBlogList />} />
-                <Route path="/createsubject" element={<CreateSubject />} /> {/* Thêm route cho CreateSubject */}
-                {/* <Route path="/chat" element={<Chat userId={userId} authToken={authToken} />} /> */}
+        <div>
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
 
-
-              </Routes>
-            </div>
-          </Router>
+            {/* Protected routes */}
+            <Route
+              path="/homeadmin"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Homeadmin />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createacount"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Createacount />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/admindashboard"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  < AdminDashboard/>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homestudent"
+              element={
+                <ProtectedRoute allowedRoles={["student"]}>
+                  <Homestudent />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/hometutor"
+              element={
+                <ProtectedRoute allowedRoles={["tutor"]}>
+                  <Hometutor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/tutoremail"
+              element={
+                <ProtectedRoute allowedRoles={["tutor"]}>
+                  <TutorEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homeauthorized"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <Homeauthorized />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/sendemail"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <SendEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/homestaff"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <Homestaff />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/liststaff"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Liststaff />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/editstaff/:id"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <Editstaff />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createstudent"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <Createstudent />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/requestupgrade"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <RequestUpgrade />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/adminrequests"
+              element={
+                <ProtectedRoute allowedRoles={["admin"]}>
+                  <AdminRequests />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/imformation"
+              element={
+                <ProtectedRoute allowedRoles={["admin", "staff", "authorized", "student", "tutor"]}>
+                  <Imformation />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/studentlist"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <StudentList />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/editstudent/:id"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <EditStudent />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createtutor"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <Createtutor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/assigntutor"
+              element={
+                <ProtectedRoute allowedRoles={["authorized"]}>
+                  <AssignTutor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chatTutor"
+              element={
+                <ProtectedRoute allowedRoles={["tutor"]}>
+                  <ChatTutor />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/chatstudent"
+              element={
+                <ProtectedRoute allowedRoles={["student"]}>
+                  <ChatStudent />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/studentemail"
+              element={
+                <ProtectedRoute allowedRoles={["student"]}>
+                  <StudentEmail />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/meeting"
+              element={
+                <ProtectedRoute allowedRoles={["staff", "tutor"]}>
+                  <Meeting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createmeeting"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <CreateMeeting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/rollcall"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <RollCall />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/updatemeeting/:id"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <UpdateMeeting />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createblog"
+              element={
+                <ProtectedRoute allowedRoles={["tutor"]}>
+                  <CreateBlog />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/createsubject"
+              element={
+                <ProtectedRoute allowedRoles={["staff"]}>
+                  <CreateSubject />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+          
+        </div>
+      </Router>
     </div>
   );
 }

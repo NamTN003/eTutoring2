@@ -3,8 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../Models/User");
 const { authMiddleware } = require("../middleware/authMiddleware");
+const Subject = require('../../Models/Subject'); // Import model Subject
+
 
 const router = express.Router();
+
 
 // Đăng nhập
 router.post("/login", async (req, res) => {
@@ -356,5 +359,7 @@ router.put("/:id", async (req, res) => {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
+
+
 
 module.exports = router;

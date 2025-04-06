@@ -6,6 +6,7 @@ const CreateBlog = () => {
     const [content, setContent] = useState('');
     const [visibility, setVisibility] = useState('all');
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [uploadedImage, setUploadedImage] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -16,11 +17,9 @@ const CreateBlog = () => {
         if (uploadedFile) {
             formData.append('uploaded_file', uploadedFile);
         }
-
-        console.log("📤 Dữ liệu gửi đi:");
-        formData.forEach((value, key) => {
-            console.log(`${key}:`, value);
-        });
+        if (uploadedImage) {
+            formData.append('uploaded_image', uploadedImage);
+        }
 
         try {
             const response = await axios.post('http://localhost:5000/blogs', formData, {
@@ -29,8 +28,10 @@ const CreateBlog = () => {
                 },
             });
             console.log('✅ Blog created successfully:', response.data);
+            alert('✅ Blog đã được tạo thành công!');
         } catch (error) {
             console.error('❌ Error creating blog:', error);
+            alert('❌ Lỗi khi tạo blog!');
         }
     };
 
@@ -63,6 +64,14 @@ const CreateBlog = () => {
                     <input
                         type="file"
                         onChange={(e) => setUploadedFile(e.target.files[0])}
+                    />
+                </div>
+                <div>
+                    <label>Upload Image:</label>
+                    <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => setUploadedImage(e.target.files[0])}
                     />
                 </div>
                 <button type="submit">Create Blog</button>

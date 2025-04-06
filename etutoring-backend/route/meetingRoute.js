@@ -49,10 +49,12 @@ router.get("/", async (req, res) => {
         const meetings = await Meeting.find()
             .populate("tutor_id", "name")
             .populate("student_ids", "name") // Sửa student_id thành student_ids
-            
+            .populate("subject_id", "subject_name") // Sửa subject_id thành subject_ids
             .populate("created_by", "name");
 
         res.json(meetings);
+        console.log(meetings);
+
     } catch (error) {
         console.error("Lỗi khi lấy danh sách cuộc họp:", error);
         res.status(500).json({ error: "Lỗi server" });
