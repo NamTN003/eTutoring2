@@ -8,20 +8,36 @@ const router = express.Router();
 // 📌 Gửi tin nhắn
 router.post("/send", authMiddleware, async (req, res) => {
     try {
-        const { content, image_url, receiver_id } = req.body; // Nhận receiver_id từ FE
+        const { content, receiver_id } = req.body;
         const sender_id = req.user.userId;
 
-        console.log("📩 Receiver ID từ frontend:", receiver_id); // Log ra để kiểm tra
-        console.log("📨 Sender ID từ token:", sender_id);
+        console.log("📩 Gửi tin nhắn:");
+        console.log("📤 Sender ID:", sender_id);
+        console.log("📥 Receiver ID:", receiver_id);
+        console.log("📜 Nội dung:", content);
 
-        const sender = await User.findById(sender_id);
-        const receiver = await User.findById(receiver_id);
-        if (!sender || !receiver) {
-            return res.status(404).json({ message: "Người gửi hoặc người nhận không tồn tại" });
+        if (!sender_id || !receiver_id) {
+            return res.status(400).json({ message: "Thiếu sender_id hoặc receiver_id" });
         }
 
-        const message = new Message({ sender_id, receiver_id, content, image_url, status: "sent" });
+        // Lưu tin nhắn vào database
+        const message = new Message({ sender_id, receiver_id, content, status: "sent" });
         await message.save();
+
+        // 🔥 Lấy userSockets từ server (đừng tạo lại)
+        const userSockets = req.app.get("userSockets"); 
+        const io = req.app.get("io"); 
+
+        // 🔎 Kiểm tra socket của người nhận
+        const receiverSocketId = userSockets.get(receiver_id.toString());
+        console.log(`🔎 Tìm socket của người nhận: ${receiver_id} -> socket ID: ${receiverSocketId}`);
+
+        if (receiverSocketId) {
+            io.to(receiverSocketId).emit("receiveMessage", message);
+            console.log(`✅ Tin nhắn đã gửi qua socket cho ${receiver_id} (socket: ${receiverSocketId})`);
+        } else {
+            console.log(`⚠️ Người nhận ${receiver_id} không online hoặc chưa joinRoom.`);
+        }
 
         res.status(201).json({ message: "Tin nhắn đã gửi", data: message });
     } catch (error) {
@@ -29,6 +45,8 @@ router.post("/send", authMiddleware, async (req, res) => {
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });
+
+
 
 // 📌 Lấy danh sách tin nhắn giữa student và tutor
 router.get("/conversation/:userId", authMiddleware, async (req, res) => {

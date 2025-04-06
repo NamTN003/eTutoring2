@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000"); // Kết nối đến server socket
 
 const ChatTutor = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  
+
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -37,8 +40,6 @@ const ChatTutor = () => {
           headers: { Authorization: `Bearer ${token}` },
         });
         setMessages(data || []);
-        
-        console.log("🔹 Tin nhắn nhận được:", data);
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn:", error.response?.data || error.message);
       }
@@ -46,6 +47,20 @@ const ChatTutor = () => {
 
     fetchMessages();
   }, [selectedStudent, token]);
+
+  // Lắng nghe tin nhắn mới từ socket
+  useEffect(() => {
+    socket.emit("joinRoom", userId); // Gửi ID user để join đúng phòng
+
+    socket.on("receiveMessage", (message) => {
+        console.log("📩 Tin nhắn mới nhận được:", message);
+        setMessages((prevMessages) => [...prevMessages, message]); // Cập nhật UI
+    });
+
+    return () => {
+        socket.off("receiveMessage");
+    };
+}, []);
 
   const sendMessage = async () => {
     if (!newMessage.trim() || !selectedStudent) return;
@@ -58,6 +73,10 @@ const ChatTutor = () => {
       );
 
       setMessages((prev) => [...prev, data.data]);
+
+      // Gửi tin nhắn đến socket server
+      socket.emit("send_message", data.data);
+
       setNewMessage("");
     } catch (error) {
       console.error("Lỗi khi gửi tin nhắn:", error.response?.data || error.message);

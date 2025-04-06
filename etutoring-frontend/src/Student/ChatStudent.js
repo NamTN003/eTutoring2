@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:5000");
 
 const ChatStudent = () => {
   const userId = localStorage.getItem("userId");
@@ -10,7 +13,6 @@ const ChatStudent = () => {
   const [tutorId, setTutorId] = useState(null);
   const messagesEndRef = useRef(null);
 
-  // ✅ Lấy thông tin gia sư của sinh viên
   useEffect(() => {
     if (!userId || !token) return;  
 
@@ -26,13 +28,16 @@ const ChatStudent = () => {
     };
 
     fetchUserData();
-  }, [userId, token]);
-  
 
+    // 🔥 Thêm đoạn emit sự kiện `joinRoom`
+    socket.emit("joinRoom", userId);
+    console.log(`📡 Đã gửi joinRoom cho userId: ${userId}`);
 
-  // ✅ Gọi fetchMessages khi userId và tutorId đã có
+}, [userId, token]);
+
   useEffect(() => {
     if (!userId || !tutorId || !token) return;
+    
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
@@ -40,35 +45,46 @@ const ChatStudent = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
     
-        console.log("Tin nhắn nhận được:", data); // Kiểm tra API trả về
+        console.log("Tin nhắn nhận được:", data);
         setMessages(data || []);
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn:", error.response?.data || error.message);
       }
     };
     fetchMessages();
+
+    socket.emit("join", { userId, tutorId });
+
+    socket.on("receiveMessage", (message) => {
+      setMessages((prev) => [...prev, message]);
+    });
+
+    return () => {
+      socket.off("receiveMessage");
+    };
   }, [userId, tutorId, token]);
 
-
-  // ✅ Gửi tin nhắn đến tutor
   const sendMessage = async () => {
     if (!newMessage.trim() || !tutorId) return;
+    
+    const messageData = { sender_id: userId, receiver_id: tutorId, content: newMessage };
 
     try {
-      const { data } = await axios.post(
-        "http://localhost:5000/message/send",
-        { receiver_id: tutorId, content: newMessage },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+        // Gửi tin nhắn qua API để lưu vào database
+        const { data } = await axios.post("http://localhost:5000/message/send", messageData, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
 
-      setMessages((prev) => [...prev, data.data]); // Cập nhật danh sách tin nhắn
-      setNewMessage("");
+        // Sau khi server lưu thành công, gửi tin nhắn qua socket
+        socket.emit("sendMessage", data.data); // `data.data` là tin nhắn từ server đã lưu
+
+        setMessages((prev) => [...prev, data.data]); // Cập nhật UI từ server
+        setNewMessage("");
     } catch (error) {
-      console.error("Lỗi khi gửi tin nhắn:", error.response?.data || error.message);
+        console.error("❌ Lỗi khi gửi tin nhắn:", error.response?.data || error.message);
     }
-  };
+};
 
-  // ✅ Cuộn xuống cuối khi có tin nhắn mới
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -84,7 +100,8 @@ const ChatStudent = () => {
       <div className="h-64 overflow-y-auto border-b mb-4 p-2">
         {messages.length > 0 ? (
           messages.map((msg) => {
-            const isSender = msg.sender_id?._id?.toString() === userId.toString();
+            const isSender =
+              msg.sender_id === userId || msg.sender_id?._id?.toString() === userId.toString();
 
             return (
               <div

@@ -5,7 +5,7 @@ const MeetingSchema = new mongoose.Schema({
     meeting_time: { type: String, required: true }, // Giờ họp
     tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, // Gia sư
     student_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }], // Học sinh
-    subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "Subject", required: true }, // Môn học
+    subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "subject", required: true }, // Môn học
     location: { type: String, required: true }, // Địa điểm hoặc link họp online
     created_by: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, // Người tạo cuộc họp
 

@@ -102,7 +102,6 @@ const Meeting = () => {
                         Học sinh: {meeting.student_ids?.map(student => student.name).join(", ") || "Không có học sinh"} - 
                         Môn học: {meeting.subject_id?.subject_name || "Không có môn học"} - 
                         Địa điểm: {meeting.location})
-                        <button onClick={() => deleteMeeting(meeting._id)}>❌ Xóa</button>
                     </li>
                 ))}
             </ul>

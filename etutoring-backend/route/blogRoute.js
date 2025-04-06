@@ -11,34 +11,33 @@ const storage = multer.diskStorage({
         cb(null, 'uploads/'); // Thư mục lưu file
     },
     filename: (req, file, cb) => {
-        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}`;
-        cb(null, `${uniqueSuffix}.jpg`); // Lưu file với định dạng .jpg
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1E9)}${path.extname(file.originalname)}`;
+        cb(null, uniqueSuffix);
     }
 });
 
 const upload = multer({
     storage,
-    limits: { fileSize: 5 * 1024 * 1024 }, // Giới hạn kích thước file: 5MB
+    limits: { fileSize: 10 * 1024 * 1024 }, // Giới hạn kích thước file: 10MB
     fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg|png/;
+        const fileTypes = /jpeg|jpg|png|pdf|doc|docx|txt/;
         const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = fileTypes.test(file.mimetype);
 
         if (extname && mimetype) {
             return cb(null, true);
         } else {
-            cb(new Error('Chỉ chấp nhận file hình ảnh (JPEG, JPG, PNG)!'));
+            cb(new Error('Chỉ chấp nhận file hình ảnh (JPEG, JPG, PNG) hoặc tài liệu (PDF, DOC, DOCX, TXT)!'));
         }
     }
 });
 
-// Route tạo blog
-router.post('/', upload.single('uploaded_file'), async (req, res) => {
+router.post('/', upload.fields([{ name: 'uploaded_file' }, { name: 'uploaded_image' }]), async (req, res) => {
     try {
         const { user_id, content, visibility } = req.body;
-        const uploadedFile = req.file ? req.file.filename : null;
+        const uploadedFile = req.files['uploaded_file'] ? req.files['uploaded_file'][0].filename : null;
+        const uploadedImage = req.files['uploaded_image'] ? req.files['uploaded_image'][0].filename : null;
 
-        // Kiểm tra dữ liệu đầu vào
         if (!user_id || !content || !visibility) {
             return res.status(400).json({ message: "Thiếu thông tin bắt buộc!" });
         }
@@ -47,7 +46,8 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
             user_id,
             content,
             visibility,
-            uploaded_file: uploadedFile ? `uploads/${uploadedFile}` : null, // Lưu đường dẫn file
+            uploaded_file: uploadedFile ? `uploads/${uploadedFile}` : null,
+            uploaded_image: uploadedImage ? `uploads/${uploadedImage}` : null,
         });
 
         await blog.save();
@@ -57,7 +57,6 @@ router.post('/', upload.single('uploaded_file'), async (req, res) => {
         res.status(500).json({ message: "Lỗi server!", error: error.message });
     }
 });
-
 // Read all blogs
 router.get('/', async (req, res) => {
     try {

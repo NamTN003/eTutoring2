@@ -20,6 +20,7 @@ const Login = () => {
                 const { token, userId, role } = response.data;
                 localStorage.setItem("userId", userId);
                 localStorage.setItem("token", token);
+                localStorage.setItem("role", role);
 
                 alert("✅ Đăng nhập thành công!");
 

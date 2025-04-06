@@ -20,4 +20,14 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
+const checkRole = (roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: "Bạn không có quyền vào đây" });
+    }
+    next();
+  };
+};
+module.exports = { authMiddleware, checkRole };
+
 module.exports = { authMiddleware };
