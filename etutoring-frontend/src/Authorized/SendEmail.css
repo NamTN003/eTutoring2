@@ -1,0 +1,105 @@
+.sendemail-container {
+    max-width: 1000px;
+    margin: 10px auto;
+    padding: 0px 40px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .sendemail-container h2 {
+    text-align: center;
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .sendemail-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .form-group {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .form-group label {
+    width: 120px;
+    font-weight: bold;
+    color: #222;
+    margin-top: 10px;
+  }
+  
+  .form-group input[type="text"],
+  .form-group textarea {
+    flex: 1;
+    padding: 10px 14px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+  }
+  
+  .form-group textarea {
+    resize: vertical;
+    height: 120px;
+  }
+  
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  /* ✅ Chỉnh kích thước hộp người nhận */
+  .recipient-list {
+    flex: 1;
+    background: #f8f9fa;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 14px 18px;
+    max-height: 220px;    
+    overflow-y: auto;      
+    overflow-x: hidden;  
+  }
+  
+   .recipient-item {
+    justify-content: space-between;   
+    padding: 6px 0;
+    overflow: hidden;
+
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 17px;
+    font-weight: bold;
+    background-color: #007bff;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 20px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .email-status {
+    margin-top: 16px;
+    text-align: center;
+    font-weight: bold;
+    color: green;
+  }
+  

@@ -1,173 +1,84 @@
-/* Reset chung */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #e3eaf5, #d1d9e6);
+/* Wrapper full screen + background giữ nguyên */
+.greenwich-login-page {
+    background-image: url("https://s3-alpha-sig.figma.com/img/1cd9/c961/10bf2fa8ce14bc40aa2442229c96482b?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=St8hkgs3Hi7zykGuTJfMqbgwvc-vU6hIbjwGZ1jjnGcSFdjBcuG6BKZEeAW32YBQOgAmtdFDAAo3qeyHW8mhUBtPr3HVUW3QZIwHJkLkumRd-S141ktByaHoBnlxCX~WSkNGkbMir~MYDAt3yG8WVXNuydKh5wlpPyVfQGhMjZBncF0vMeOEJzf9mXulNJuPl2uu6OukrZGcz4rPJPymLP~AduuSkfzcTxYm9drG7ucCz8zcwA8tWAfH~SU72s3tnjamSyLmbzpI4spTOKtJItc7Zjyd1aSel-ivWON1hRRHG~eizO6zqjtQErDN-C42tZ4x1Mj3elYC2bO0cqDM2w__");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
 }
 
-/* Bố cục chung của trang */
-.login-page {
+.greenwich-login-overlay {
     display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    max-width: 1300px; /* Giới hạn chiều rộng */
-    align-items: center;
-    justify-content: center;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Container của logo */
-.logo-container {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 600px;
     padding: 20px;
 }
 
-/* Ảnh logo */
-.logo {
-    width: 250px;
-    max-width: 100%;
-    height: auto;
+.greenwich-login-logo {
+    width: 550px;
+    margin-bottom: 40px;
 }
 
-/* Container của form đăng nhập */
-.login-container {
-    flex: 1;
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
+.greenwich-login-box {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 50px 35px;
+    border-radius: 20px;
     width: 100%;
-    text-align: center;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 450px;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.129);
 }
 
-/* Tiêu đề */
-h2 {
+.greenwich-login-field {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 10px 12px;
     margin-bottom: 20px;
-    font-size: 28px;
-    color: #333;
-    font-weight: bold;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
-}
-
-/* Form */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
-
-/* Căn chỉnh Label & Input trên cùng một hàng */
-.form-group {
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-}
-
-/* Nhãn (Email, Password) */
-label {
-    font-size: 14px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-}
-
-/* Input Fields */
-input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 14px;
     box-sizing: border-box;
-    transition: border 0.3s;
 }
 
-input:focus {
-    border-color: #007BFF;
-    outline: none;
+.greenwich-login-field span {
+    font-weight: bold;
+    color: #000;
+    font-size: 15px;
+    margin-right: 15px;
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
-/* Nút Đăng nhập */
-button {
-    width: 100%;
-    padding: 14px;
-    margin-top: 10px;
-    background-color: #007BFF;
-    color: white;
+.greenwich-login-field input {
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-weight: bold;
-}
-
-button:hover {
-    background-color: #0056b3;
-}
-
-/* Liên kết Forgot Password */
-.forgot-password {
-    display: block;
-    margin: 10px 0;
-    font-size: 12px;
-    color: #007BFF;
-    text-decoration: none;
-    text-align: center;
-}
-
-.forgot-password:hover {
-    text-decoration: underline;
-}
-
-/* Đoạn text tạo tài khoản */
-.create-account-text {
-    font-size: 14px;
-    margin-top: 15px;
-    text-align: center;
-    color: #555;
-}
-
-/* Chỉnh lại giao diện ảnh bên phải */
-.login-image-container {
+    outline: none;
+    background: transparent;
+    font-size: 15px;
+    color: #333;
     flex: 1;
-    background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7byX-CBwMv6l9sPIobJ5smfd10cy1QRjRHQ&s') no-repeat center center;
-    background-size: cover;
-    height: 100%;
+    padding-bottom: 2px;
+    
 }
 
-/* Responsive - Khi màn hình nhỏ hơn */
-@media screen and (max-width: 768px) {
-    .login-page {
-        flex-direction: column;
-        max-width: 100%;
-        padding: 10px;
-    }
+/* Nút đăng nhập */
+.greenwich-login-box button {
+    width: 100%;
+    padding: 16px;
+    background-color: #3c1e70;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
 
-    .login-container {
-        margin-bottom: 20px;
-    }
-
-    .logo-container {
-        display: none; /* Ẩn logo bên trái */
-    }
-
-    .login-image-container {
-        display: none;
-    }
+.greenwich-login-box button:hover {
+    background-color: #2a1250;
 }

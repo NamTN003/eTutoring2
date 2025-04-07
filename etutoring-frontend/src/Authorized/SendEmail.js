@@ -1,58 +1,72 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './SendEmail.css';
 
 const SendEmail = () => {
   const [sender, setSender] = useState('');
-  const [recipientIds, setRecipientIds] = useState([]); // Lưu mảng các recipientId
-  const [recipientNames, setRecipientNames] = useState([]); // Lưu tên các recipient đã chọn
+  const [recipientIds, setRecipientIds] = useState([]);
+  const [recipientNames, setRecipientNames] = useState([]);
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
   const [status, setStatus] = useState('');
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Lấy danh sách tất cả sinh viên và gia sư
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:5000/email/users');
-        setUsers(response.data); // Lưu danh sách người dùng vào state
+        setUsers(response.data);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error('Lỗi khi lấy danh sách người dùng:', error);
       }
     };
-
     fetchUsers();
   }, []);
 
-  const handleRecipientChange = (e) => {
-    const selectedIds = Array.from(e.target.selectedOptions, option => option.value); // Lấy các recipientId đã chọn
-    setRecipientIds(selectedIds);
-    const selectedNames = users.filter(user => selectedIds.includes(user._id)).map(user => user.name); // Lấy tên của các recipient đã chọn
-    setRecipientNames(selectedNames);
+  const handleCheckboxChange = (userId, name) => {
+    if (recipientIds.includes(userId)) {
+      setRecipientIds(recipientIds.filter(id => id !== userId));
+      setRecipientNames(recipientNames.filter(n => n !== name));
+    } else {
+      setRecipientIds([...recipientIds, userId]);
+      setRecipientNames([...recipientNames, name]);
+    }
+  };
+
+  const handleSelectAllChange = (e) => {
+    if (e.target.checked) {
+      const allIds = users.map(user => user._id);
+      const allNames = users.map(user => user.name);
+      setRecipientIds(allIds);
+      setRecipientNames(allNames);
+    } else {
+      setRecipientIds([]);
+      setRecipientNames([]);
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/email/send-email', {
-        sender,          // Gửi sender
-        recipientIds,    // Gửi mảng recipientIds
-        recipientNames,  // Gửi mảng tên recipient
-        subject,         // Gửi subject
-        message,         // Gửi message
+      await axios.post('http://localhost:5000/email/send-email', {
+        sender,
+        recipientIds,
+        recipientNames,
+        subject,
+        message,
       });
-      setStatus('Email sent successfully!');
+      setStatus('✅ Gửi email thành công!');
     } catch (error) {
-      setStatus('Error sending email');
+      setStatus('❌ Gửi email thất bại.');
     }
   };
 
   return (
-    <div>
-      <h2>Send Email</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Sender:</label>
+    <div className="sendemail-container">
+      <h2>📨 Gửi Email</h2>
+      <form onSubmit={handleSubmit} className="sendemail-form">
+        <div className="form-group">
+          <label>Người gửi:</label>
           <input
             type="text"
             value={sender}
@@ -60,23 +74,35 @@ const SendEmail = () => {
             required
           />
         </div>
-        <div>
-          <label>Recipients:</label>
-          <select
-            multiple // Cho phép chọn nhiều người
-            value={recipientIds}
-            onChange={handleRecipientChange}
-            required
-          >
-            {users.map(user => (
-              <option key={user._id} value={user._id}>
-                {user.name}
-              </option>
-            ))}
-          </select>
+
+        <div className="form-group">
+          <label>Người nhận:</label>
+                  <div className="recipient-list">
+          <label className="recipient-item select-all-item">
+            <span>Chọn tất cả</span>
+            <input
+              type="checkbox"
+              onChange={handleSelectAllChange}
+              checked={users.length > 0 && recipientIds.length === users.length}
+            />
+          </label>
+
+          {users.map(user => (
+            <label key={user._id} className="recipient-item">
+              <span>{user.name} - {user.email}</span>
+              <input
+                type="checkbox"
+                checked={recipientIds.includes(user._id)}
+                onChange={() => handleCheckboxChange(user._id, user.name)}
+              />
+            </label>
+          ))}
         </div>
-        <div>
-          <label>Subject:</label>
+
+        </div>
+
+        <div className="form-group">
+          <label>Tiêu đề:</label>
           <input
             type="text"
             value={subject}
@@ -84,17 +110,19 @@ const SendEmail = () => {
             required
           />
         </div>
-        <div>
-          <label>Message:</label>
+
+        <div className="form-group">
+          <label>Nội dung:</label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Send Email</button>
+
+        <button type="submit">Gửi Email</button>
+        {status && <p className="email-status">{status}</p>}
       </form>
-      {status && <p>{status}</p>}
     </div>
   );
 };

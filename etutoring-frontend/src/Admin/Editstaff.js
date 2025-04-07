@@ -12,14 +12,18 @@ const Editstaff = () => {
         role: "",
         address: "",
     });
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchStaff = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/user/${id}`);
-                setFormData(response.data);
+                console.log("🔍 Dữ liệu nhân viên:", response.data);
+                setFormData(response.data); // Hoặc response.data.user nếu dữ liệu lồng
             } catch (error) {
                 console.error("❌ Lỗi khi lấy thông tin nhân viên:", error);
+            } finally {
+                setLoading(false);
             }
         };
         fetchStaff();
@@ -34,12 +38,14 @@ const Editstaff = () => {
         try {
             await axios.put(`http://localhost:5000/user/${id}`, formData);
             alert("✅ Cập nhật nhân viên thành công!");
-            navigate("/liststaff");
+            navigate("/homeadmin/liststaff");
         } catch (error) {
             console.error("❌ Lỗi khi cập nhật nhân viên:", error);
             alert("❌ Không thể cập nhật nhân viên");
         }
     };
+
+    if (loading) return <p>Đang tải dữ liệu nhân viên...</p>;
 
     return (
         <div>
@@ -55,4 +61,5 @@ const Editstaff = () => {
         </div>
     );
 };
+
 export default Editstaff;

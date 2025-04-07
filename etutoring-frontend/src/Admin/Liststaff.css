@@ -5,20 +5,19 @@ body, html {
     height: 100%;
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #e3eaf5, #d1d9e6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 
-/* Container cho danh sách nhân viên */
+/* Container ngoài cùng căn giữa theo chiều ngang */
 .staff-list-container {
     width: 80%;
     max-width: 1000px;
+    margin: 40px auto; /* 👈 giúp căn giữa ngang */
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
+
 
 /* Tiêu đề */
 h2 {

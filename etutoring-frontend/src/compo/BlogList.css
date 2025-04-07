@@ -1,0 +1,150 @@
+.blog-wrapper {
+    padding: 40px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.blog-wrapper h2 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #2a1250;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+/* Dàn hàng ngang các blog */
+.blog-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+}
+
+/* Card blog */
+.blog-card {
+    flex: 0 1 calc(50% - 30px); /* mỗi hàng 2 blog */
+    box-sizing: border-box;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    font-size: 18px;
+}
+
+.blog-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.blog-card h3 {
+    margin-top: 0;
+    color: #3c1e70;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.blog-card p {
+    margin: 6px 0;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Ảnh đính kèm */
+.blog-image {
+    margin: 15px 0;
+    text-align: center;
+}
+
+.blog-image img {
+    max-width: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease;
+}
+
+.blog-image img:hover {
+    transform: scale(1.03);
+    cursor: pointer;
+}
+
+/* File đính kèm */
+.blog-download {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.blog-download a {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3c1e70;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.blog-download a:hover {
+    background-color: #2a1250;
+}
+
+/* Bình luận */
+.comment-section {
+    margin-top: 25px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+}
+
+.comment-section h4 {
+    margin-bottom: 10px;
+    color: #3c1e70;
+    font-size: 16px;
+}
+
+.comment {
+    padding: 10px;
+    border-radius: 8px;
+    background: #f8f8f8;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.comment strong {
+    color: #2a1250;
+}
+
+/* Form bình luận */
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+.comment-form textarea {
+    resize: none;
+    min-height: 60px;
+}
+
+.comment-form button {
+    margin-top: 10px;
+    padding: 10px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}

@@ -1,22 +1,61 @@
 import React from 'react';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 import Logout from '../Utils/Logout';
-import { Link } from "react-router-dom";
 import BlogList from '../compo/BlogList';
+import {
+    FiGrid, FiLogOut, FiMail, FiEdit3, FiBell
+} from 'react-icons/fi';
+import { BsPersonCircle } from 'react-icons/bs';
+import './Hometutor.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
 const Hometutor = () => {
     const handleLogout = Logout();
+    const location = useLocation();
+    const isMainDashboard = location.pathname === '/hometutor';
 
     return (
-        <div>
-            <h2>Ứng dụng eTutoring</h2>
-            <Link to="/imformation">thông tin bản thân</Link>
-            <Link to="/chattutor">nhắn tin</Link>
-            <Link to="/meeting">lịch hẹn</Link>
-            <Link to="/meeting">lịch hẹn của tôi</Link>
-            <Link to="/createblog">Đăng blog</Link>
-            <Link to="/tutoremail">Email</Link>
-            <BlogList />
-            <button onClick={handleLogout}>Đăng Xuất</button>
+        <div className="hometutor-container">
+            {/* Sidebar */}
+            <aside className="hometutor-sidebar">
+                <div className="hometutor-sidebar-header">
+                    <BsPersonCircle size={32} className="icon tutor-icon" />
+                    <span className="tutor-text">Tutor</span>
+                </div>
+                <nav className="hometutor-nav-links">
+                    <Link to="/hometutor" className="hometutor-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
+                    <Link to="imformation" className="hometutor-nav-item"><i className="fa-solid fa-user"></i> Thông tin bản thân</Link>
+                    <Link to="chattutor" className="hometutor-nav-item"><i className="fa-solid fa-comments"></i> Nhắn tin</Link>
+                    <Link to="meeting" className="hometutor-nav-item"><FiGrid className="icon" /> Lịch học</Link>
+                    <Link to="createblog" className="hometutor-nav-item"><FiEdit3 className="icon" /> Đăng blog</Link>
+                    <Link to="tutoremail" className="hometutor-nav-item"><FiMail className="icon" /> Email</Link>
+                </nav>
+                <button onClick={handleLogout} className="hometutor-logout-btn">
+                    <FiLogOut className="icon" /> Đăng Xuất
+                </button>
+            </aside>
+
+            {/* Main Content */}
+            <main className="hometutor-main-content">
+                <header className="hometutor-header">
+                    <h2>eTutoring – Tutor</h2>
+                    <div className="hometutor-header-icons">
+                        <Link to="#"><FiBell className="icon" /></Link>
+                        <Link to="#"><FiGrid className="icon" /></Link>
+                        <Link to="imformation"><BsPersonCircle className="icon" /></Link>
+                    </div>
+                </header>
+
+                <div className="hometutor-content-area">
+                    {isMainDashboard ? (
+                        <div className="bloglist-wrapper">
+                            <BlogList />
+                        </div>
+                    ) : (
+                        <Outlet />
+                    )}
+                </div>
+            </main>
         </div>
     );
 };

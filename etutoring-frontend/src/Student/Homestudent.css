@@ -10,13 +10,15 @@
 .homestudent-sidebar {
     width: 280px;
     background: #f5f5f5;
-    padding: 20px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    align-items: start;
-    min-height: 100vh;
-    justify-content: flex-start;
-    position: relative;
+    align-items: flex-start;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    left: 0;
+    box-sizing: border-box;
 }
 
 .homestudent-sidebar-header {
@@ -26,35 +28,35 @@
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 20px;
-    color: black;
+    color: #222;
 }
 
 .homestudent-nav-links {
     display: flex;
     flex-direction: column;
-    width: 100%;
     gap: 15px;
-    margin-top: 10px;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .homestudent-nav-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 12px 10px;
+    padding: 12px;
     text-decoration: none;
     color: #333;
-    font-size: 16px;
+    border-radius: 8px;
     font-weight: 500;
     transition: background 0.3s;
-    border-radius: 8px;
 }
 
 .homestudent-nav-item:hover {
-    background: #ddd;
+    background: #e1e1e1;
 }
 
 .homestudent-logout-btn {
+    margin-top: auto;
     background: #d9534f;
     color: white;
     border: none;
@@ -63,12 +65,10 @@
     cursor: pointer;
     font-size: 14px;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     width: 100%;
-    justify-content: center;
-    margin-top: auto;
-    margin-bottom: 20px;
 }
 
 .homestudent-logout-btn:hover {
@@ -78,28 +78,29 @@
 /* Main Content */
 .homestudent-main-content {
     flex-grow: 1;
-    background: #fff;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background: #fff;
     min-height: 100vh;
     overflow-y: auto;
     box-sizing: border-box;
     padding: 0 24px 40px;
 }
 
+/* Header */
 .homestudent-header {
     position: sticky;
     top: 0;
-    z-index: 99;
-    background-color: #fff;
+    background: #fff;
+    padding: 16px 24px;
+    width: 100%;
+    border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    padding: 16px 24px;
-    border-bottom: 1px solid #ccc;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    z-index: 10;
 }
 
 .homestudent-header-icons {
@@ -108,99 +109,18 @@
 }
 
 .homestudent-header-icons .icon {
-    font-size: 24px;
+    font-size: 22px;
     cursor: pointer;
 }
 
-/* Status Section */
-.homestudent-status-section {
+/* Blog list */
+.bloglist-wrapper {
     width: 100%;
     max-width: 1000px;
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.homestudent-status-box {
-    background: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 100%;
-    margin-bottom: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.homestudent-status-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ad23f7;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-.homestudent-upload-options {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    margin-top: 10px;
-}
-
-.homestudent-upload-btn {
-    background: #2340d1;
-    color: white;
-    font-weight: bold;
-    padding: 10px 20px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-}
-
-.homestudent-upload-btn:hover {
-    background: #1d35b1;
-}
-
-/* Status Post */
-.homestudent-status-post {
-    background: #ffffff;
-    padding: 15px;
-    border-radius: 10px;
-    width: 100%;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.homestudent-post-content {
-    flex-grow: 1;
-}
-
-.homestudent-comment-section {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.homestudent-comment-input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ad23f7;
-    border-radius: 5px;
-    font-size: 14px;
-    margin-right: 10px;
-}
-
-.heart-icon {
-    font-size: 24px;
-    color: red;
-    cursor: pointer;
+    padding: 0px 20px;
+    background: #fefefe;
+    border-radius: 16px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+    font-size: 18px;
+    line-height: 1.6;
 }

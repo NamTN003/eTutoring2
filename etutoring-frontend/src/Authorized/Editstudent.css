@@ -1,0 +1,69 @@
+/* EditStudent.css */
+
+.editstudent-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0px auto 20x auto;
+    padding: 0px 50px;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .editstudent-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 26px;
+    color: #333;
+  }
+  
+  .editstudent-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  
+  .editstudent-container input,
+  .editstudent-container select {
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .editstudent-container input:focus,
+  .editstudent-container select:focus {
+    border-color: #1a73e8;
+  }
+  
+  .editstudent-container button {
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .editstudent-container button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .editstudent-container button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .editstudent-container button[type="button"] {
+    background-color: #ccc;
+    color: #333;
+  }
+  
+  .editstudent-container button[type="button"]:hover {
+    background-color: #999;
+  }
+  

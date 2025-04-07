@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
 import axios from "axios";
+import "./AdminDashborad.css";
 
 const AdminDashboard = () => {
   const [accounts, setAccounts] = useState([
@@ -21,7 +22,6 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Gọi API tổng số tài khoản
         const accountRes = await axios.get("http://localhost:5000/dashboard/total-accounts");
 
         if (accountRes.data) {
@@ -33,7 +33,6 @@ const AdminDashboard = () => {
           ]);
         }
 
-        // Gọi API thống kê lượt đăng nhập
         const loginRes = await axios.get("http://localhost:5000/dashboard/login-stats");
 
         if (loginRes.data) {
@@ -45,7 +44,6 @@ const AdminDashboard = () => {
           ]);
         }
 
-        // Gọi API tổng số lượt đăng nhập
         const totalLoginRes = await axios.get("http://localhost:5000/dashboard/total-login-count");
 
         if (totalLoginRes.data) {
@@ -62,59 +60,62 @@ const AdminDashboard = () => {
     fetchData();
   }, []);
 
-  if (loading) {
-    return <p>Loading data...</p>;
-  }
-
   const adjustedMax = totalLogins > 5 ? totalLogins + 5 : 5;
 
+  if (loading) {
+    return <p className="dashboard-loading">Đang tải dữ liệu...</p>;
+  }
+
   return (
-    <div style={{ maxWidth: "900px", margin: "auto", padding: "20px" }}>
-      <h2>Admin Dashboard</h2>
+    <div className="dashboard-container">
+      <h2 className="dashboard-title">📊 Admin Dashboard</h2>
 
-      {/* Biểu đồ Tổng số tài khoản */}
-      <Chart
-        chartType="PieChart"
-        data={accounts}
-        options={{
-          title: "User Roles Distribution",
-          chartArea: { width: "80%", height: "80%" },
-          pieHole: 0.3,
-        }}
-        width={"100%"}
-        height={"400px"}
-      />
+      <div className="dashboard-grid">
+        <div className="dashboard-card">
+          <h3 className="chart-title">Phân bố vai trò người dùng</h3>
+          <Chart
+            chartType="PieChart"
+            data={accounts}
+            options={{
+              chartArea: { width: "90%", height: "80%" },
+              pieHole: 0.3,
+            }}
+            width={"100%"}
+            height={"300px"}
+          />
+        </div>
 
-      {/* Biểu đồ Lượt đăng nhập */}
-      <Chart
-        chartType="ColumnChart"
-        data={logins}
-        options={{
-          title: "User Logins",
-          chartArea: { width: "80%", height: "70%" },
-          hAxis: { title: "Time Period" },
-          vAxis: { title: "Logins", minValue: 0 },
-        }}
-        width={"100%"}
-        height={"400px"}
-      />
+        <div className="dashboard-card">
+          <h3 className="chart-title">Lượt đăng nhập theo thời gian</h3>
+          <Chart
+            chartType="ColumnChart"
+            data={logins}
+            options={{
+              chartArea: { width: "90%", height: "70%" },
+              hAxis: { title: "Thời gian" },
+              vAxis: { title: "Số lượt", minValue: 0 },
+            }}
+            width={"100%"}
+            height={"300px"}
+          />
+        </div>
+      </div>
 
-      {/* Biểu đồ Tổng số lượt đăng nhập */}
-      <Chart
-        chartType="Gauge"
-        data={[
-          ["Label", "Value"],
-          ["Total Logins", totalLogins],
-        ]}
-        options={{
-          width: 400,
-          height: 200,
-          minorTicks: 5,
-          max: adjustedMax, // Chỉnh giá trị max dựa trên dự đoán số logins cao nhất
-        }}
-        width={"100%"}
-        height={"300px"}
-      />
+      <div className="dashboard-card gauge-card">
+        <h3 className="chart-title">Tổng số lượt đăng nhập</h3>
+        <Chart
+          chartType="Gauge"
+          data={[["Label", "Value"], ["Tổng", totalLogins]]}
+          options={{
+            width: 400,
+            height: 120,
+            minorTicks: 5,
+            max: adjustedMax,
+          }}
+          width={"100%"}
+          height={"200px"}
+        />
+      </div>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios"; // ✅ Import Axios
+import axios from "axios";
 import { Link } from "react-router-dom";
+import './Studentlist.css';
 
 const StudentList = () => {
     const [studentlist, setStudents] = useState([]);
@@ -17,13 +18,11 @@ const StudentList = () => {
                     return;
                 }
 
-                // ✅ Gửi request bằng Axios
                 const response = await axios.get("http://localhost:5000/user/students-by-creator", {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
-                setStudents(response.data); // Lưu danh sách sinh viên vào state
-
+                setStudents(response.data);
             } catch (err) {
                 setError(err.response ? err.response.data.message : "Lỗi kết nối server.");
             } finally {
@@ -35,31 +34,44 @@ const StudentList = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa nhân viên này?")) {
+        if (window.confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
             try {
                 await axios.delete(`http://localhost:5000/user/${id}`);
                 setStudents(studentlist.filter((student) => student._id !== id));
-                alert("✅ Xóa nhân viên thành công!");
+                alert("✅ Xóa sinh viên thành công!");
             } catch (error) {
-                console.error(" Lỗi khi xóa nhân viên:", error);
-                alert(" Không thể xóa nhân viên");
+                console.error("Lỗi khi xóa sinh viên:", error);
+                alert("Không thể xóa sinh viên");
             }
         }
     };
 
     return (
-        <div style={{ maxWidth: "600px", margin: "auto", padding: "20px", border: "1px solid #ddd", borderRadius: "8px" }}>
+        <div className="studentlist-container">
             <h2>Danh sách Sinh Viên</h2>
-            {loading ? <p>Đang tải...</p> : error ? <p style={{ color: "red" }}>{error}</p> : (
-                <ul>
-                    {studentlist.map((student) => (
-                        <li key={student._id}>
-                            <strong>{student.name}</strong> - {student.email} - {student.gender}
-                            <Link to={`../editstudent/${student._id}`} style={{ marginRight: "10px" }}>✏ Sửa</Link>
-                            <button onClick={() => handleDelete(student._id)}>🗑 Xóa</button>
-                        </li>
-                    ))}
-                </ul>
+            {loading ? (
+                <p className="student-loading">Đang tải...</p>
+            ) : error ? (
+                <p className="student-error">{error}</p>
+            ) : (
+                studentlist.map((student) => (
+                    <div className="student-card" key={student._id}>
+                    <div className="student-info">
+                        <strong>{student.name}</strong> <br />
+                        {student.email} <br />
+                        Giới tính: {student.gender}
+                    </div>
+
+                    <div className="student-actions">
+                        <Link to={`../editstudent/${student._id}`} className="edit-btn">
+                        ✏ Sửa
+                        </Link>
+                        <button className="delete-btn" onClick={() => handleDelete(student._id)}>
+                        🗑 Xóa
+                        </button>
+                    </div>
+                    </div>
+                ))
             )}
         </div>
     );

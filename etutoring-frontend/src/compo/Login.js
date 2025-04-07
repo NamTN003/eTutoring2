@@ -44,42 +44,43 @@ const Login = () => {
     };
 
     return (
-        <div className="login-page">
-            <div className="logo-container">
-                <img 
-                    src="https://fpt.edu.vn/Content/images/assets/2022-Greenwich-Eng.jpg" 
-                    alt="Greenwich Logo" 
-                    className="logo"
+        <div className="greenwich-login-page">
+            <div className="greenwich-login-overlay">
+                <img
+                    src="https://s3-alpha-sig.figma.com/img/4493/f3ee/e7c83b8d7bccea7cc5fba2bd9dc93fdb?Expires=1744588800&Key-Pair-Id=APKAQ4GOSFWCW27IBOMQ&Signature=eJt0-E5IL8jKlJsbkn-NbK8cCAAdQvvEPRrsAn6sQhocFRIX-h7wR9Th0WXNm~cIOBkDO~r3trB8-MmR6G9xwcghb8216TCTIsxVgBhbNygtrJhf8EwxmETGsbgcTgABE8X~jeJZhO9308D2D56NMP0MaVyzX30ILJh93vYrzpBSHt9nU302ISHPiw9K0xOAMOqX9SkugH1ja9Dulwr2ooNcd251ie5FF6FV0796DUd9VVUzQIsIOauBsgus7WvpC9ITcbp3cENFQ1NVY8Ft8lPwt61Vt6rk8vTwtW6IPfArdYHquJPiOijar0a1ki~FEhm1m9OjjKDloAup4xHiTg__"
+                    alt="University of Greenwich"
+                    className="greenwich-login-logo"
                 />
-            </div>
 
-            <div className="login-container">
-                <h2>Sign In</h2>
-                <form onSubmit={handleLogin}>
-                    <div className="form-group">
-                        <label>Email:</label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
+                <div className="greenwich-login-box">
+                    <form onSubmit={handleLogin}>
+                        <div className="greenwich-login-field">
+                            <span className="greenwich-login-label">User Name:</span>
+                            <input
+                                type="text"
+                                placeholder="Enter UserName"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                maxLength={25}
+                            />
+                        </div>
 
-                    <div className="form-group">
-                        <label>Password:</label>
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                            autoComplete="current-password"
-                        />
-                    </div>
+                        <div className="greenwich-login-field">
+                            <span className="greenwich-login-label">Password:</span>
+                            <input
+                                type="password"
+                                placeholder="Enter Password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                required
+                                maxLength={25}
+                            />
+                        </div>
 
-                    <button type="submit">SIGN IN</button>
-                    
-                </form>
+                        <button type="submit">Login</button>
+                    </form>
+                </div>
             </div>
         </div>
     );

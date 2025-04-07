@@ -1,0 +1,61 @@
+/* Createstudent.css */
+
+.createstudent-container {
+  width: 100%;
+  max-width: 1000px;
+  margin: px auto 20px auto; 
+  padding: 20px 40px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+.createstudent-container h2 {
+  text-align: center;
+  margin-bottom: 16px;            
+}
+
+.createstudent-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;                    
+}
+
+.createstudent-container input,
+.createstudent-container select {
+  padding: 8px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  transition: border 0.3s;
+}
+
+.createstudent-container input:focus,
+.createstudent-container select:focus {
+  border-color: #1a73e8;
+}
+
+.createstudent-container button {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
+}
+
+.createstudent-container button:hover {
+  background-color: #0056b3;
+}
+
+.createstudent-message {
+  text-align: center;
+  margin-bottom: 12px;
+  font-weight: bold;
+}

@@ -60,7 +60,7 @@ const Liststaff = () => {
                                 <td>{staff.role}</td>
                                 <td>{staff.address}</td>
                                 <td>
-                                    <button onClick={() => navigate(`/editstaff/${staff._id}`)} className="edit-btn">✏ Sửa</button>
+                                    <button onClick={() => navigate(`/homeadmin/editstaff/${staff._id}`)} className="edit-btn">✏ Sửa</button>
                                     <button onClick={() => handleDelete(staff._id)} className="delete-btn">🗑 Xóa</button>
                                 </td>
                             </tr>

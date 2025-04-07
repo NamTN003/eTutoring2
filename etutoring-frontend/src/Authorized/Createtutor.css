@@ -1,0 +1,64 @@
+/* Createtutor.css */
+
+.createtutor-container {
+    width: 100%;
+    max-width: 600px; /* ✅ tăng độ rộng form */
+    margin: 0px auto 30px auto;
+    padding: 10px 50px; /* ✅ tăng khoảng đệm cho thoáng hơn */
+    background: #fff;
+    border-radius: 20px; /* ✅ góc bo lớn hơn cho đẹp */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .createtutor-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 24px; /* ✅ tiêu đề lớn hơn */
+  }
+  
+  .createtutor-container form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* ✅ khoảng cách giữa các dòng lớn hơn một chút */
+  }
+  
+  .createtutor-container input,
+  .createtutor-container select {
+    padding: 11px 12px; /* ✅ input to hơn */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.3s;
+  }
+  
+  .createtutor-container input:focus,
+  .createtutor-container select:focus {
+    border-color: #1a73e8;
+  }
+  
+  .createtutor-container button {
+    background-color: #007bff;
+    color: white;
+    padding: 12px; /* ✅ nút cao hơn */
+    font-size: 17px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 12px;
+  }
+  
+  .createtutor-container button:hover {
+    background-color: #0056b3;
+  }
+  
+  .createtutor-message {
+    text-align: center;
+    margin-bottom: 16px;
+    font-weight: bold;
+    font-size: 15px;
+  }
+  
