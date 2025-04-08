@@ -1,0 +1,58 @@
+.tutor-email-wrapper {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 0px;
+  }
+  
+  .tutor-email-title {
+    font-size: 45px;
+    font-weight: bold;
+    color: #3c1e70;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .email-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .email-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .email-item:hover {
+    transform: scale(1.01);
+  }
+  
+  .email-item-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+  
+  .email-detail {
+    background: #fff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+  
+  .back-button {
+    margin-bottom: 20px;
+    background-color: #3c1e70;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  

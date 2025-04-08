@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "./UpdateMeeting.css";
 
 const UpdateMeeting = () => {
-    const { id } = useParams(); // Lấy meeting_id từ URL
+    const { id } = useParams();
     const [meeting, setMeeting] = useState(null);
 
     useEffect(() => {
-        // 🟢 Fetch chi tiết cuộc họp
         const fetchMeeting = async () => {
             try {
                 const res = await axios.get(`http://localhost:5000/meeting/${id}`);
@@ -19,7 +19,6 @@ const UpdateMeeting = () => {
         fetchMeeting();
     }, [id]);
 
-    // 📝 Cập nhật trạng thái điểm danh
     const updateAttendance = async (studentId, status) => {
         try {
             await axios.put(`http://localhost:5000/meeting/${id}/attendance`, {
@@ -27,14 +26,13 @@ const UpdateMeeting = () => {
                 status: status
             });
 
-            // Cập nhật state ngay lập tức
             setMeeting(prev => ({
                 ...prev,
                 attendance: prev.attendance.map(a =>
                     a.user_id._id === studentId ? { ...a, status } : a
                 )
             }));
-            alert("Cập nhật điểm danh thành công!");
+            alert("✅ Cập nhật điểm danh thành công!");
         } catch (error) {
             console.error("Lỗi khi cập nhật điểm danh:", error);
         }
@@ -43,22 +41,42 @@ const UpdateMeeting = () => {
     if (!meeting) return <p>Đang tải...</p>;
 
     return (
-        <div>
-            <h2>Cập nhật điểm danh</h2>
-            <h3>Gia sư: {meeting.tutor_id.name}</h3>
-            <h3>Danh sách học sinh:</h3>
-            <ul>
-                {meeting.student_ids.map(student => {
-                    const attendanceStatus = meeting.attendance.find(a => a.user_id.toString() === student._id.toString())?.status || "Not yet";
-                    return (
-                        <li key={student._id}>
-                            {student.name} - Trạng thái: {attendanceStatus}
-                            <button onClick={() => updateAttendance(student._id, "present")}>✅ Có mặt</button>
-                            <button onClick={() => updateAttendance(student._id, "absent")}>❌ Vắng mặt</button>
-                        </li>
-                    );
-                })}
-            </ul>
+        <div className="attendance-wrapper">
+            <h2>📋 Cập nhật điểm danh</h2>
+            <h3>👨‍🏫 Gia sư: {meeting.tutor_id.name}</h3>
+
+            <table className="attendance-table">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên học sinh</th>
+                        <th>Trạng thái</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {meeting.student_ids.map((student, index) => {
+                        const attendanceStatus =
+                            meeting.attendance.find(a => a.user_id.toString() === student._id.toString())?.status || "Not yet";
+                        return (
+                            <tr key={student._id}>
+                                <td>{index + 1}</td>
+                                <td>{student.name}</td>
+                                <td>
+                                    <span className={`status-tag ${attendanceStatus}`}>
+                                        {attendanceStatus === "present" ? "✅ Có mặt" :
+                                            attendanceStatus === "absent" ? "❌ Vắng mặt" : "🕓 Chưa điểm danh"}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button className="present-btn" onClick={() => updateAttendance(student._id, "present")}>Có mặt</button>
+                                    <button className="absent-btn" onClick={() => updateAttendance(student._id, "absent")}>Vắng mặt</button>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
         </div>
     );
 };

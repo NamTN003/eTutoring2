@@ -25,6 +25,7 @@
 }
 
 /* Card blog */
+
 .blog-card {
     flex: 0 1 calc(50% - 30px); /* mỗi hàng 2 blog */
     box-sizing: border-box;
@@ -33,6 +34,12 @@
     border-radius: 16px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
     font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 500px; /* 👈 đảm bảo mọi card có chiều cao bằng nhau */
+    position: relative;
+    transition: transform 0.3s ease;
 }
 
 .blog-card:hover {

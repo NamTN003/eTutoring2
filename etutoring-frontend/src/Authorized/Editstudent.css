@@ -3,7 +3,7 @@
 .editstudent-container {
     width: 100%;
     max-width: 600px;
-    margin: 0px auto 20x auto;
+    margin: 20px auto 20x auto;
     padding: 0px 50px;
     background: #fff;
     border-radius: 20px;
@@ -43,7 +43,7 @@
     padding: 12px;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 10px;
     border: none;
     cursor: pointer;
     transition: background 0.3s;

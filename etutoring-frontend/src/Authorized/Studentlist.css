@@ -4,7 +4,7 @@
     width: 100%;
     max-width: 900px; /* ✅ Rộng hơn */
     margin: 40px auto;
-    padding: 40px 50px;
+    padding: 0px 50px;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);

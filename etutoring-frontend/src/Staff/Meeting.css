@@ -1,0 +1,59 @@
+.meeting-container {
+    padding: 20px;
+    max-width: 100%;
+    overflow-x: auto;
+    font-family: Arial, sans-serif;
+}
+
+.meeting-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.meeting-table {
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    min-width: 800px;
+}
+
+.meeting-table th,
+.meeting-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+}
+
+.meeting-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.meeting-table tr:hover {
+    background-color: #f9f9f9;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}
+
+.no-data {
+    text-align: center;
+    color: gray;
+    padding: 20px;
+}

@@ -1,0 +1,72 @@
+.create-blog-wrapper {
+    max-width: 1100px;
+    margin: 10px auto; 
+    padding: 2px; 
+    background-color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: 'Segoe UI', sans-serif;
+    color: #2c3e50;
+}
+
+.create-blog-wrapper h2 {
+    text-align: center;
+    margin-bottom: 16px; /* 👈 Giảm khoảng cách dưới tiêu đề */
+    color: #3c1e70;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+/* Giao diện theo kiểu hàng ngang */
+.create-blog-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 👈 Giảm khoảng cách giữa các hàng */
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-group label {
+    flex: 0 0 180px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.form-group textarea,
+.form-group select,
+.form-group input[type="file"] {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #2c1d1d;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Nút */
+button[type="submit"] {
+    align-self: center;
+    padding: 14px 28px;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+    background-color: #3c1e70;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    background-color: #2a1250;
+}

@@ -1,138 +1,155 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { io } from "socket.io-client";
+import "./ChatStudent.css";
 
 const socket = io("http://localhost:5000");
 
 const ChatStudent = () => {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  
+
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [tutorId, setTutorId] = useState(null);
+  const [tutorName, setTutorName] = useState("Gia sư");
+  const [hasNewMessage, setHasNewMessage] = useState(false); // 👈 Thêm flag kiểm soát scroll
   const messagesEndRef = useRef(null);
 
+  // Lấy thông tin người dùng và tutor
   useEffect(() => {
-    if (!userId || !token) return;  
+    if (!userId || !token) return;
 
     const fetchUserData = async () => {
       try {
         const { data } = await axios.get(`http://localhost:5000/user/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
+
         setTutorId(data.tutor_id);
+
+        // Lấy tên tutor nếu có
+        if (data.tutor_id) {
+          const res = await axios.get(`http://localhost:5000/user/${data.tutor_id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setTutorName(res.data.name || "Gia sư");
+        }
       } catch (error) {
-        console.error("Lỗi khi lấy thông tin người dùng:", error.response?.data || error.message);
+        console.error("Lỗi khi lấy thông tin người dùng:", error);
       }
     };
 
     fetchUserData();
-
-    // 🔥 Thêm đoạn emit sự kiện `joinRoom`
     socket.emit("joinRoom", userId);
-    console.log(`📡 Đã gửi joinRoom cho userId: ${userId}`);
+  }, [userId, token]);
 
-}, [userId, token]);
-
+  // Lấy tin nhắn
   useEffect(() => {
     if (!userId || !tutorId || !token) return;
-    
+
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
           `http://localhost:5000/message/conversation/${userId}?tutor_id=${tutorId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
-    
-        console.log("Tin nhắn nhận được:", data);
         setMessages(data || []);
       } catch (error) {
-        console.error("Lỗi khi lấy tin nhắn:", error.response?.data || error.message);
+        console.error("Lỗi khi lấy tin nhắn:", error);
       }
     };
-    fetchMessages();
 
+    fetchMessages();
     socket.emit("join", { userId, tutorId });
 
     socket.on("receiveMessage", (message) => {
       setMessages((prev) => [...prev, message]);
+      setHasNewMessage(true); // 👈 Cuộn khi có tin nhắn socket
     });
 
-    return () => {
-      socket.off("receiveMessage");
-    };
+    return () => socket.off("receiveMessage");
   }, [userId, tutorId, token]);
 
+  // Gửi tin nhắn
   const sendMessage = async () => {
     if (!newMessage.trim() || !tutorId) return;
-    
-    const messageData = { sender_id: userId, receiver_id: tutorId, content: newMessage };
 
     try {
-        // Gửi tin nhắn qua API để lưu vào database
-        const { data } = await axios.post("http://localhost:5000/message/send", messageData, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
+      const { data } = await axios.post("http://localhost:5000/message/send", {
+        sender_id: userId,
+        receiver_id: tutorId,
+        content: newMessage,
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-        // Sau khi server lưu thành công, gửi tin nhắn qua socket
-        socket.emit("sendMessage", data.data); // `data.data` là tin nhắn từ server đã lưu
-
-        setMessages((prev) => [...prev, data.data]); // Cập nhật UI từ server
-        setNewMessage("");
+      socket.emit("sendMessage", data.data);
+      setMessages((prev) => [...prev, data.data]);
+      setNewMessage("");
+      setHasNewMessage(true); // 👈 Cuộn khi gửi tin nhắn
     } catch (error) {
-        console.error("❌ Lỗi khi gửi tin nhắn:", error.response?.data || error.message);
+      console.error("Lỗi khi gửi tin nhắn:", error);
     }
-};
+  };
 
+  // Cuộn xuống nếu có tin nhắn mới
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
-
-  if (!userId || !token) {
-    return <p>Vui lòng chọn gia sư để bắt đầu chat</p>;
-  }
+    if (hasNewMessage) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+      setHasNewMessage(false);
+    }
+  }, [messages, hasNewMessage]);
 
   return (
-    <div className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-4">
-      <h2 className="text-center text-lg font-bold mb-2">💬 Chat với Gia Sư</h2>
+    <div className="chat-container">
+      {/* Sidebar - Tutor info */}
+      <aside className="chat-sidebar">
+        <h2 className="sidebar-title">🎓 Gia sư</h2>
+        <div className="student-info-box">
+          <p><strong>Tên:</strong> {tutorName}</p>
+        </div>
+      </aside>
 
-      <div className="h-64 overflow-y-auto border-b mb-4 p-2">
-        {messages.length > 0 ? (
-          messages.map((msg) => {
-            const isSender =
-              msg.sender_id === userId || msg.sender_id?._id?.toString() === userId.toString();
+      {/* Main Chat Area */}
+      <main className="chat-main">
+        <div className="chat-header">
+          💬 Chat với: <strong>{tutorName}</strong>
+        </div>
 
-            return (
-              <div
-                key={msg._id}
-                className={`mb-2 p-2 rounded w-fit ${
-                  isSender ? "bg-blue-500 text-white ml-auto" : "bg-gray-200"
-                }`}
-              >
-                <p className="text-sm font-bold">{isSender ? "Bạn" : "Gia sư của bạn"}</p>
-                <p>{msg.content}</p>
-              </div>
-            );
-          })
-        ) : (
-          <p className="text-center text-gray-500">Chưa có tin nhắn nào.</p>
-        )}
-        <div ref={messagesEndRef} />
-      </div>
+        <div className="chat-messages">
+          {messages.length > 0 ? (
+            messages.map((msg) => {
+              const senderId = msg.sender_id?._id || msg.sender_id;
+              const isSender = String(senderId) === String(userId);
 
-      <div className="flex gap-2">
-        <input
-          type="text"
-          className="flex-1 p-2 border rounded-lg"
-          placeholder="Nhập tin nhắn..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-        />
-        <button onClick={sendMessage} className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-          Gửi
-        </button>
-      </div>
+              return (
+                <div key={msg._id} className={`message ${isSender ? "sent" : "received"}`}>
+                  <p className="sender">{isSender ? "Bạn" : tutorName}</p>
+                  <p>{msg.content}</p>
+                </div>
+              );
+            })
+          ) : (
+            <p className="no-message">Chưa có tin nhắn nào.</p>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input box */}
+        <div className="chat-input-container">
+          <div className="chat-input">
+            <input
+              type="text"
+              placeholder="Nhập tin nhắn..."
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              disabled={!tutorId}
+            />
+            <button onClick={sendMessage} disabled={!tutorId}>Gửi</button>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
