@@ -17,7 +17,6 @@ const Homeauthorized = () => {
 
     return (
         <div className="homeauthorized-container">
-            {/* Sidebar */}
             <aside className="homeauthorized-sidebar">
             <div className="sidebar-logo">
             <img
@@ -41,7 +40,6 @@ const Homeauthorized = () => {
                 </button>
             </aside>
 
-            {/* Main Content */}
             <main className="homeauthorized-main-content">
                 <header className="homeauthorized-header">
                     <h2>  eTutoring – Authorized </h2>

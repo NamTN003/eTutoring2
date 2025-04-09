@@ -26,7 +26,6 @@ const RequestUpgrade = () => {
       <h2 className="upgrade-title">Gửi yêu cầu nâng cấp</h2>
       <form className="upgrade-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
         
-        {/* ✅ Nhóm label và textarea nằm ngang */}
         <div className="upgrade-group">
           <label className="upgrade-label">Lý do</label>
           <textarea

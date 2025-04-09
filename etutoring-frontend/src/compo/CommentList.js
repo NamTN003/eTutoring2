@@ -32,7 +32,6 @@ const CommentList = ({ blogId }) => {
             setComments([...comments, response.data]);
             setNewComment('');
 
-            // Cuộn xuống bình luận mới nhất
             setTimeout(() => {
                 if (scrollRef.current) {
                     scrollRef.current.scrollTop = scrollRef.current.scrollHeight;

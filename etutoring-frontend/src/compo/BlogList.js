@@ -10,8 +10,7 @@ const BlogList = () => {
         const fetchBlogs = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/blogs');
-                setBlogs(response.data.data); // Lấy mảng blogs từ response
-                console.log('Blogs:', response.data.data); // Log dữ liệu blogs
+                setBlogs(response.data.data);
             } catch (error) {
                 console.error('❌ Lỗi khi lấy danh sách blog:', error);
             }

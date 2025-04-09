@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Editstudent.css"; // Dùng lại CSS của EditStudent
+import "./Editstudent.css";
 
 const EditTutor = () => {
   const { id } = useParams();

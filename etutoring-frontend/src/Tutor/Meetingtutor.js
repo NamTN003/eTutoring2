@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './MeetingTutor.css'; // 👉 Import CSS riêng
+import './MeetingTutor.css';
 
-const MeetingTutor = () => {
+const Meetingtutor = () => {
     const [meetings, setMeetings] = useState([]);
     const tutorId = localStorage.getItem("userId");
 
@@ -54,4 +54,4 @@ const MeetingTutor = () => {
     );
 };
 
-export default MeetingTutor;
+export default Meetingtutor;

@@ -7,28 +7,27 @@ const CreateMeeting = () => {
     const [form, setForm] = useState({
         meeting_date: "",
         meeting_time: "",
-        end_time: "", // Thêm end_time
+        end_time: "",
         tutor_id: "",
         student_ids: [],
-        subject_id: "", // Thêm subject_id
+        subject_id: "",
         location: "",
         created_by: userId,
     });
 
     const [tutors, setTutors] = useState([]);
     const [students, setStudents] = useState([]);
-    const [subjects, setSubjects] = useState([]); // Thêm subjects
+    const [subjects, setSubjects] = useState([]);
     const [filteredStudents, setFilteredStudents] = useState([]);
 
-    // 📌 Fetch danh sách Tutors, Students
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [tutorRes, studentRes, subjectRes] = await Promise.all([
                     axios.get("http://localhost:5000/user/role?tutors=true"),
                     axios.get("http://localhost:5000/user/role?students=true"),
-                    // axios.get("http://localhost:5000/meeting"), // Lấy danh sách subjects
-                    axios.get("http://localhost:5000/subject") // Lấy danh sách subjects
+                    axios.get("http://localhost:5000/subject")
                 ]);
                 setTutors(tutorRes.data);
                 setStudents(studentRes.data);
@@ -40,40 +39,35 @@ const CreateMeeting = () => {
         fetchData();
     }, []);
 
-    // 📌 Chọn gia sư => Cập nhật danh sách học sinh thuộc gia sư đó
     const handleTutorChange = (e) => {
         const tutorId = e.target.value;
 
-        // Lọc danh sách học sinh theo tutor_id
         const tutorStudents = students.filter(student => student.tutor_id === tutorId);
 
         setFilteredStudents(tutorStudents);
         setForm(prev => ({
             ...prev,
             tutor_id: tutorId,
-            student_ids: tutorStudents.map(student => student._id) // Chọn tất cả học sinh
+            student_ids: tutorStudents.map(student => student._id)
         }));
     };
 
-    // 📌 Chọn/bỏ chọn từng học sinh
     const handleStudentSelect = (studentId) => {
         setForm(prev => {
             const isSelected = prev.student_ids.includes(studentId);
             return {
                 ...prev,
                 student_ids: isSelected
-                    ? prev.student_ids.filter(id => id !== studentId) // Bỏ chọn
-                    : [...prev.student_ids, studentId] // Thêm vào danh sách
+                    ? prev.student_ids.filter(id => id !== studentId)
+                    : [...prev.student_ids, studentId]
             };
         });
     };
 
-    // 📌 Xử lý nhập liệu trong form
     const handleChange = (e) => {
         setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    // 📌 Gửi dữ liệu lên server
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log("📤 Dữ liệu gửi lên:", form);
@@ -82,13 +76,13 @@ const CreateMeeting = () => {
             const res = await axios.post("http://localhost:5000/meeting/create", form, {
                 headers: { "Content-Type": "application/json" },
             });
-            alert(res.data.message); // Thông báo thành công
+            alert(res.data.message);
         } catch (error) {
             const errorMessage = error.response?.data?.message || "Lỗi không xác định!";
             if (errorMessage.includes("45 phút")) {
                 alert("Không thể tạo cuộc họp! Cuộc họp mới phải cách giờ kết thúc của cuộc họp trước ít nhất 45 phút."); // Thông báo lỗi
             } else {
-                alert(errorMessage); // Thông báo lỗi khác
+                alert(errorMessage);
             }
         }
     };
@@ -120,7 +114,6 @@ const CreateMeeting = () => {
                     required 
                 />
 
-                {/* Chọn gia sư */}
                 <select name="tutor_id" value={form.tutor_id} onChange={handleTutorChange} required>
                     <option value="">Chọn gia sư</option>
                     {tutors.map(tutor => (

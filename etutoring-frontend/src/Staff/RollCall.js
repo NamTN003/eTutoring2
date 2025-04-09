@@ -27,7 +27,7 @@ const RollCall = () => {
                         <th>Giờ</th>
                         <th>Địa điểm</th>
                         <th>Gia sư</th>
-                        <th>Môn học</th> {/* Thêm cột Môn học */}
+                        <th>Môn học</th>
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -38,7 +38,7 @@ const RollCall = () => {
                             <td>{meeting.meeting_time}</td>
                             <td>{meeting.location}</td>
                             <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
-                            <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td> {/* Hiển thị tên môn học */}
+                            <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td>
                             <td>
                                 <button
                                     className="rollcall-btn"

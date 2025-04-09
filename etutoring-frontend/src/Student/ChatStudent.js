@@ -13,10 +13,9 @@ const ChatStudent = () => {
   const [newMessage, setNewMessage] = useState("");
   const [tutorId, setTutorId] = useState(null);
   const [tutorName, setTutorName] = useState("Gia sư");
-  const [hasNewMessage, setHasNewMessage] = useState(false); // 👈 Thêm flag kiểm soát scroll
+  const [hasNewMessage, setHasNewMessage] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Lấy thông tin người dùng và tutor
   useEffect(() => {
     if (!userId || !token) return;
 
@@ -28,7 +27,6 @@ const ChatStudent = () => {
 
         setTutorId(data.tutor_id);
 
-        // Lấy tên tutor nếu có
         if (data.tutor_id) {
           const res = await axios.get(`http://localhost:5000/user/${data.tutor_id}`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -44,7 +42,6 @@ const ChatStudent = () => {
     socket.emit("joinRoom", userId);
   }, [userId, token]);
 
-  // Lấy tin nhắn
   useEffect(() => {
     if (!userId || !tutorId || !token) return;
 
@@ -65,13 +62,12 @@ const ChatStudent = () => {
 
     socket.on("receiveMessage", (message) => {
       setMessages((prev) => [...prev, message]);
-      setHasNewMessage(true); // 👈 Cuộn khi có tin nhắn socket
+      setHasNewMessage(true);
     });
 
     return () => socket.off("receiveMessage");
   }, [userId, tutorId, token]);
 
-  // Gửi tin nhắn
   const sendMessage = async () => {
     if (!newMessage.trim() || !tutorId) return;
 
@@ -87,13 +83,12 @@ const ChatStudent = () => {
       socket.emit("sendMessage", data.data);
       setMessages((prev) => [...prev, data.data]);
       setNewMessage("");
-      setHasNewMessage(true); // 👈 Cuộn khi gửi tin nhắn
+      setHasNewMessage(true);
     } catch (error) {
       console.error("Lỗi khi gửi tin nhắn:", error);
     }
   };
 
-  // Cuộn xuống nếu có tin nhắn mới
   useEffect(() => {
     if (hasNewMessage) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -103,7 +98,6 @@ const ChatStudent = () => {
 
   return (
     <div className="chat-container">
-      {/* Sidebar - Tutor info */}
       <aside className="chat-sidebar">
         <h2 className="sidebar-title">🎓 Gia sư</h2>
         <div className="student-info-box">
@@ -111,7 +105,6 @@ const ChatStudent = () => {
         </div>
       </aside>
 
-      {/* Main Chat Area */}
       <main className="chat-main">
         <div className="chat-header">
           💬 Chat với: <strong>{tutorName}</strong>
@@ -136,7 +129,6 @@ const ChatStudent = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input box */}
         <div className="chat-input-container">
           <div className="chat-input">
             <input

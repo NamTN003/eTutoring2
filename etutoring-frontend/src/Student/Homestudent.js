@@ -16,7 +16,6 @@ const Homestudent = () => {
 
     return (
         <div className="homestudent-container">
-            {/* Sidebar */}
             <aside className="homestudent-sidebar">
             <div className="sidebar-logo">
             <img
@@ -37,7 +36,6 @@ const Homestudent = () => {
                 </button>
             </aside>
 
-            {/* Main Content */}
             <main className="homestudent-main-content">
                 <header className="homestudent-header">
                     <h2>eTutoring – Student</h2>

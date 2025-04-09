@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import './Adminreques.css';  // Importing the CSS file for styling
+import './Adminreques.css';
 
 const AdminRequests = () => {
   const [requests, setRequests] = useState([]);

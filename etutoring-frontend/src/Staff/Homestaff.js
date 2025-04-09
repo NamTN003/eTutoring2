@@ -16,7 +16,6 @@ const Homestaff = () => {
 
     return (
         <div className="homestaff-container">
-            {/* Sidebar */}
             <aside className="homestaff-sidebar">
             <div className="sidebar-logo">
             <img
@@ -39,7 +38,6 @@ const Homestaff = () => {
                 </button>
             </aside>
 
-            {/* Main Content */}
             <main className="homestaff-main-content">
                 <header className="homestaff-header">
                     <h2>eTutoring – Staff </h2>

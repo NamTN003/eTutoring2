@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const RollCallTutor = () => {
-    const tutorId = localStorage.getItem("userId"); // Lấy ID của Tutor từ localStorage
+    const tutorId = localStorage.getItem("userId");
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
@@ -12,7 +12,6 @@ const RollCallTutor = () => {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
 
-                // Lọc các cuộc họp mà Tutor hiện tại phụ trách
                 const filteredMeetings = response.data.filter(meeting => meeting.tutor_id?._id === tutorId);
                 setMeetings(filteredMeetings);
             } catch (error) {

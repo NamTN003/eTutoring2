@@ -36,7 +36,7 @@ import TutorEmail from "./Tutor/TutorEmail";
 import AdminDashboard from "./Admin/AdminDashborad";
 import BlogList from "./compo/BlogList";
 import MeetingStudent from "./Student/MeetingStudent";
-import MeetingTutor from "./Tutor/MeetingTutor";
+import Meetingtutor from "./Tutor/Meetingtutor";
 import ListTutor from "./Authorized/ListTutor";
 import EditTutor from "./Authorized/EditTutor";
 import RollCallTutor from "./Tutor/RollCallTutor";
@@ -52,7 +52,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
 
-          {/* 🔒 Admin */}
+
           <Route path="/homeadmin" element={<ProtectedRoute allowedRoles={["admin"]}><Homeadmin /></ProtectedRoute>}>
             <Route index element={<div><h1>Welcome to eTutoring</h1></div>} />
             <Route path="createacount" element={<Createacount />} />
@@ -63,7 +63,7 @@ function App() {
             <Route path="imformation" element={<Imformation />} />
           </Route>
 
-          {/* 🔒 Authorized */}
+
           <Route path="/homeauthorized" element={<ProtectedRoute allowedRoles={["authorized"]}><Homeauthorized /></ProtectedRoute>}>
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="createstudent" element={<Createstudent />} />
@@ -77,7 +77,7 @@ function App() {
             <Route path="sendemail" element={<SendEmail />} />
           </Route>
 
-          {/* 🔒 Staff */}
+
           <Route path="/homestaff" element={<ProtectedRoute allowedRoles={["staff"]}><Homestaff /></ProtectedRoute>}>
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="imformation" element={<Imformation />} />
@@ -88,7 +88,7 @@ function App() {
             <Route path="createsubject" element={<CreateSubject />} />
           </Route>
 
-          {/* 🔒 Student */}
+
           <Route path="/homestudent" element={<ProtectedRoute allowedRoles={["student"]}><Homestudent /></ProtectedRoute>}>
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="imformation" element={<Imformation />} />
@@ -97,13 +97,13 @@ function App() {
             <Route path="studentemail" element={<StudentEmail />} />
           </Route>
 
-          {/* 🔒 Tutor */}
+
           <Route path="/hometutor" element={<ProtectedRoute allowedRoles={["tutor"]}><Hometutor /></ProtectedRoute>}>
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="imformation" element={<Imformation />} />
             <Route path="chattutor" element={<ChatTutor />} />
             <Route path="rollcalltutor" element={<RollCallTutor/>} />
-            <Route path="meetingtutor" element={<MeetingTutor />} />
+            <Route path="meetingtutor" element={<Meetingtutor />} />
             <Route path="createblog" element={<CreateBlog />} />
             <Route path="tutoremail" element={<TutorEmail />} />
           </Route>

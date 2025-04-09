@@ -13,10 +13,9 @@ const ChatTutor = () => {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [justSent, setJustSent] = useState(false); // ✅ đánh dấu tin vừa gửi
+  const [justSent, setJustSent] = useState(false);
   const messagesEndRef = useRef(null);
 
-  // Load danh sách sinh viên
   useEffect(() => {
     if (!userId || !token) return;
 
@@ -35,7 +34,6 @@ const ChatTutor = () => {
     fetchStudents();
   }, [userId, token]);
 
-  // Load tin nhắn khi chọn sinh viên
   useEffect(() => {
     if (!selectedStudent) return;
 
@@ -46,7 +44,6 @@ const ChatTutor = () => {
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setMessages(data || []);
-        // ❌ Không scroll ở đây
       } catch (error) {
         console.error("Lỗi khi lấy tin nhắn:", error);
       }
@@ -55,17 +52,16 @@ const ChatTutor = () => {
     fetchMessages();
   }, [selectedStudent, token]);
 
-  // Nhận tin nhắn mới từ socket
+
   useEffect(() => {
     socket.emit("joinRoom", userId);
     socket.on("receiveMessage", (message) => {
       setMessages((prev) => [...prev, message]);
-      setJustSent(true); // ✅ đánh dấu cần cuộn xuống
+      setJustSent(true);
     });
     return () => socket.off("receiveMessage");
   }, [userId]);
 
-  // Gửi tin nhắn
   const sendMessage = async () => {
     if (!newMessage.trim() || !selectedStudent) return;
     try {
@@ -77,13 +73,12 @@ const ChatTutor = () => {
       setMessages((prev) => [...prev, data.data]);
       socket.emit("send_message", data.data);
       setNewMessage("");
-      setJustSent(true); // ✅ đánh dấu cần cuộn
+      setJustSent(true);
     } catch (error) {
       console.error("Lỗi khi gửi tin nhắn:", error);
     }
   };
 
-  // Cuộn xuống đáy khi có tin nhắn mới vừa gửi/nhận
   useEffect(() => {
     if (justSent) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -93,7 +88,6 @@ const ChatTutor = () => {
 
   return (
     <div className="chat-container">
-      {/* Sidebar bên trái */}
       <aside className="chat-sidebar">
         <h2 className="sidebar-title">👥 Sinh viên</h2>
         <ul className="student-list">
@@ -109,7 +103,6 @@ const ChatTutor = () => {
         </ul>
       </aside>
 
-      {/* Vùng chat chính */}
       <main className="chat-main">
         <div className="chat-header">
           💬 Chat với:{" "}
@@ -138,7 +131,6 @@ const ChatTutor = () => {
           <div ref={messagesEndRef} />
         </div>
 
-        {/* Input & Gửi */}
         <div className="chat-input-container">
           <div className="chat-input">
             <input

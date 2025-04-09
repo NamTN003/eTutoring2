@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./Createtutor.css"; // ✅ Import CSS giao diện đẹp
+import "./Createtutor.css";
 
 const Createtutor = () => {
     const navigate = useNavigate();

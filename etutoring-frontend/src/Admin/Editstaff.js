@@ -19,7 +19,7 @@ const Editstaff = () => {
             try {
                 const response = await axios.get(`http://localhost:5000/user/${id}`);
                 console.log("🔍 Dữ liệu nhân viên:", response.data);
-                setFormData(response.data); // Hoặc response.data.user nếu dữ liệu lồng
+                setFormData(response.data);
             } catch (error) {
                 console.error("❌ Lỗi khi lấy thông tin nhân viên:", error);
             } finally {

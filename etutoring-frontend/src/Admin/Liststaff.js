@@ -10,11 +10,11 @@ const Liststaff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/user"); // 🔗 API lấy danh sách user
-                const staffMembers = response.data.filter(user => user.role === "staff"); // 🏷 Lọc chỉ lấy nhân viên
+                const response = await axios.get("http://localhost:5000/user/liststaff");
+                const staffMembers = response.data.filter(user => user.role === "staff");
                 setStaffList(staffMembers);
             } catch (error) {
-                console.error("❌ Lỗi khi lấy danh sách nhân viên:", error);
+                console.error(" Lỗi khi lấy danh sách nhân viên:", error);
             }
         };
 
@@ -28,8 +28,8 @@ const Liststaff = () => {
                 setStaffList(staffList.filter((staff) => staff._id !== id));
                 alert("✅ Xóa nhân viên thành công!");
             } catch (error) {
-                console.error("❌ Lỗi khi xóa nhân viên:", error);
-                alert("❌ Không thể xóa nhân viên");
+                console.error(" Lỗi khi xóa nhân viên:", error);
+                alert(" Không thể xóa nhân viên");
             }
         }
     };

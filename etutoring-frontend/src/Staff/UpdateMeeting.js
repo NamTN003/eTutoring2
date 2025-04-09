@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams, useNavigate } from "react-router-dom"; // ✅ thêm useNavigate
+import { useParams, useNavigate } from "react-router-dom";
 import "./UpdateMeeting.css";
 
 const UpdateMeeting = () => {
     const { id } = useParams();
-    const navigate = useNavigate(); // ✅ hook điều hướng
+    const navigate = useNavigate();
     const [meeting, setMeeting] = useState(null);
 
     useEffect(() => {
@@ -26,13 +26,10 @@ const UpdateMeeting = () => {
                 user_id: studentId,
                 status: status
             });
-
-            setMeeting(prev => ({
-                ...prev,
-                attendance: prev.attendance.map(a =>
-                    a.user_id._id === studentId ? { ...a, status } : a
-                )
-            }));
+    
+            const res = await axios.get(`http://localhost:5000/meeting/${id}`);
+            setMeeting(res.data);
+    
             alert("✅ Cập nhật điểm danh thành công!");
         } catch (error) {
             console.error("Lỗi khi cập nhật điểm danh:", error);
@@ -43,7 +40,6 @@ const UpdateMeeting = () => {
 
     return (
         <div className="attendance-wrapper">
-            {/* ✅ Nút quay lại */}
             <button className="back-btn" onClick={() => navigate(-1)}>← Quay lại</button>
 
             <h2>📋 Cập nhật điểm danh</h2>
@@ -69,7 +65,7 @@ const UpdateMeeting = () => {
                                 <td>
                                     <span className={`status-tag ${attendanceStatus}`}>
                                         {attendanceStatus === "present" ? "✅ Có mặt" :
-                                            attendanceStatus === "absent" ? "❌ Vắng mặt" : "🕓 Chưa điểm danh"}
+                                        attendanceStatus === "absent" ? "❌ Vắng mặt" : "🕓 Chưa điểm danh"}
                                     </span>
                                 </td>
                                 <td>

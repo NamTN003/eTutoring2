@@ -10,7 +10,7 @@ const roleHomePages = {
 };
 
 const ProtectedRoute = ({ children, allowedRoles }) => {
-  const role = localStorage.getItem("role"); // Lấy role từ localStorage
+  const role = localStorage.getItem("role");
 
   if (!allowedRoles.includes(role)) {
     alert("Bạn không có quyền vào đây");

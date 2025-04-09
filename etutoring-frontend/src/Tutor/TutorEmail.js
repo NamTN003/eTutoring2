@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import './TutorEmail.css'; // 👉 tạo file CSS giống StudentEmail.css
+import './TutorEmail.css';
 
 const TutorEmail = () => {
   const recipientId = localStorage.getItem("userId");
