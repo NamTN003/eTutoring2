@@ -1,26 +1,18 @@
-/* Reset chung */
-body, html {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #e3eaf5, #d1d9e6);
-}
-
-/* Container ngoài cùng căn giữa theo chiều ngang */
-.staff-list-container {
+/* Reset chung cho thành phần này */
+.liststaff-container {
     width: 80%;
     max-width: 1000px;
-    margin: 40px auto; /* 👈 giúp căn giữa ngang */
+    margin: 40px auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, white,  white);
 }
 
-
 /* Tiêu đề */
-h2 {
+.liststaff-title {
     font-size: 24px;
     color: #333;
     font-weight: bold;
@@ -31,38 +23,40 @@ h2 {
 }
 
 /* Table Styling */
-.staff-table {
+.liststaff-table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-.staff-table th, .staff-table td {
+.liststaff-table th, .liststaff-table td {
     padding: 12px;
     border: 1px solid #ccc;
     text-align: left;
 }
 
-.staff-table th {
+.liststaff-table {
+    background-color: white;
+}
+
+.liststaff-table th {
     background-color: #007BFF;
     color: white;
-    font-weight: bold;
 }
 
-.staff-table tr:nth-child(even) {
-    background-color: #f9f9f9;
+.liststaff-table td {
+    background-color: white;
+    color: #000;
 }
 
-.staff-table tr:hover {
-    background-color: #f1f1f1;
+.liststaff-table tr:nth-child(even) td {
+    background-color: white;
 }
 
-.staff-table td {
-    font-size: 14px;
-}
 
 /* Action Buttons */
-.edit-btn, .delete-btn {
+.liststaff-edit-btn,
+.liststaff-delete-btn {
     padding: 6px 12px;
     margin: 5px;
     font-size: 14px;
@@ -71,26 +65,26 @@ h2 {
     border-radius: 5px;
 }
 
-.edit-btn {
+.liststaff-edit-btn {
     background-color: #28a745;
     color: white;
 }
 
-.edit-btn:hover {
+.liststaff-edit-btn:hover {
     background-color: #218838;
 }
 
-.delete-btn {
+.liststaff-delete-btn {
     background-color: #dc3545;
     color: white;
 }
 
-.delete-btn:hover {
+.liststaff-delete-btn:hover {
     background-color: #c82333;
 }
 
-/* Loader text */
-p {
+/* Loader */
+.liststaff-loading-text {
     text-align: center;
     font-size: 16px;
     color: #333;

@@ -1,51 +1,97 @@
-/* Container cho thông tin tài khoản */
-.information-container {
-    max-width: 600px;
+.info-container {
+    max-width: 1000px;
     margin: auto;
-    padding: 20px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 40px 20px;
+    font-family: 'Segoe UI', sans-serif;
+    color: #2c2c2c;
 }
 
-/* Tiêu đề */
-.information-container h2 {
-    font-size: 24px;
-    color: #333;
+.info-title {
     text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Mỗi phần thông tin người dùng */
-.information-container p {
-    font-size: 16px;
-    color: #333;
-    line-height: 1.6;
-    margin-bottom: 12px;
-}
-
-/* Các nhãn mạnh mẽ để phân biệt thông tin */
-.information-container strong {
-    color: #007BFF;
+    font-size: 28px;
     font-weight: bold;
+    color: #3e2d63;
+    margin-bottom: 30px;
 }
 
-/* Trường hợp thông tin chưa được cập nhật */
-.information-container p span {
-    color: #888;
-    font-style: italic;
+.info-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    flex-wrap: wrap;
 }
 
-/* Loader text */
-.information-container p {
+.info-form {
+    background-color: #c8bedc;
+    padding: 40px;
+    border-radius: 16px;
+    flex: 1;
+    min-width: 320px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 20px;
+}
+
+.info-field {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-field label {
+    flex: 0 0 120px;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: right;
+}
+
+.info-field input {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 14px;
+    color: #555;
+}
+
+.edit-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 10px 25px;
+    background-color: #3e2d63;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.info-avatar {
+    flex-shrink: 0;
     text-align: center;
-    font-size: 16px;
-    color: #333;
 }
 
-/* Style khi chưa có dữ liệu */
-.information-container p {
-    font-size: 16px;
-    color: #333;
+.avatar-img {
+    background-color: #3e2d63;
+    width: 160px;
+    height: 160px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+}
+
+.avatar-name {
+    margin-top: 16px;
+    background-color: #e3ddec;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: bold;
 }

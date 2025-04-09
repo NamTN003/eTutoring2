@@ -35,40 +35,51 @@ const Liststaff = () => {
     };
 
     return (
-        <div className="staff-list-container">
-            <h2>Danh sách nhân viên</h2>
-            {staffList.length === 0 ? (
-                <p>⏳ Đang tải dữ liệu hoặc không có nhân viên nào...</p>
-            ) : (
-                <table className="staff-table">
-                    <thead>
-                        <tr>
-                            <th>Tên</th>
-                            <th>Email</th>
-                            <th>Số điện thoại</th>
-                            <th>Vai trò</th>
-                            <th>Địa chỉ</th>
-                            <th>Hành động</th>
+        <div className="liststaff-container">
+        <h2 className="liststaff-title">Danh sách nhân viên</h2>
+        {staffList.length === 0 ? (
+            <p className="liststaff-loading-text">⏳ Đang tải dữ liệu hoặc không có nhân viên nào...</p>
+        ) : (
+            <table className="liststaff-table">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Vai trò</th>
+                        <th>Địa chỉ</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {staffList.map((staff) => (
+                        <tr key={staff._id}>
+                            <td>{staff.name}</td>
+                            <td>{staff.email}</td>
+                            <td>{staff.phone}</td>
+                            <td>{staff.role}</td>
+                            <td>{staff.address}</td>
+                            <td>
+                                <button 
+                                    onClick={() => navigate(`/homeadmin/editstaff/${staff._id}`)} 
+                                    className="liststaff-edit-btn"
+                                >
+                                    ✏ Sửa
+                                </button>
+                                <button 
+                                    onClick={() => handleDelete(staff._id)} 
+                                    className="liststaff-delete-btn"
+                                >
+                                    🗑 Xóa
+                                </button>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        {staffList.map((staff) => (
-                            <tr key={staff._id}>
-                                <td>{staff.name}</td>
-                                <td>{staff.email}</td>
-                                <td>{staff.phone}</td>
-                                <td>{staff.role}</td>
-                                <td>{staff.address}</td>
-                                <td>
-                                    <button onClick={() => navigate(`/homeadmin/editstaff/${staff._id}`)} className="edit-btn">✏ Sửa</button>
-                                    <button onClick={() => handleDelete(staff._id)} className="delete-btn">🗑 Xóa</button>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            )}
-        </div>
+                    ))}
+                </tbody>
+            </table>
+        )}
+    </div>
+    
     );
 };
 

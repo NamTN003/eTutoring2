@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import './Studentlist.css'; 
 
 const ListTutor = () => {
   const [tutors, setTutors] = useState([]);
@@ -48,21 +49,21 @@ const ListTutor = () => {
   };
 
   return (
-    <div className="list-tutor-container">
+    <div className="studentlist-container">
       <h2>Danh sách Gia Sư</h2>
       {loading ? (
-        <p>Đang tải...</p>
+        <p className="student-loading">Đang tải...</p>
       ) : error ? (
-        <p className="error-message">{error}</p>
+        <p className="student-error">{error}</p>
       ) : (
         tutors.map((tutor) => (
-          <div className="tutor-card" key={tutor._id}>
-            <div className="tutor-info">
+          <div className="student-card" key={tutor._id}>
+            <div className="student-info">
               <strong>{tutor.name}</strong> <br />
               {tutor.email} <br />
               Giới tính: {tutor.gender || "Chưa cập nhật"}
             </div>
-            <div className="tutor-actions">
+            <div className="student-actions">
               <Link to={`../edittutor/${tutor._id}`} className="edit-btn">
                 ✏ Sửa
               </Link>

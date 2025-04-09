@@ -1,3 +1,4 @@
+/* 📦 blog-wrapper */
 .blog-wrapper {
     padding: 40px 20px;
     max-width: 1200px;
@@ -16,7 +17,7 @@
     text-transform: uppercase;
 }
 
-/* Dàn hàng ngang các blog */
+/* 📐 Dàn hàng ngang các blog */
 .blog-list {
     display: flex;
     flex-wrap: wrap;
@@ -24,10 +25,9 @@
     gap: 30px;
 }
 
-/* Card blog */
-
+/* 📄 Card blog */
 .blog-card {
-    flex: 0 1 calc(50% - 30px); /* mỗi hàng 2 blog */
+    flex: 0 1 calc(50% - 30px);
     box-sizing: border-box;
     background-color: #fff;
     padding: 25px;
@@ -36,10 +36,33 @@
     font-size: 18px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 500px; /* 👈 đảm bảo mọi card có chiều cao bằng nhau */
+    justify-content: flex-start;
+    min-height: 500px;
     position: relative;
     transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+.blog-main-content {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 5px;
+}
+
+.blog-main-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.blog-main-content::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.blog-footer {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    background-color: white;
 }
 
 .blog-card:hover {
@@ -60,7 +83,7 @@
     color: #555;
 }
 
-/* Ảnh đính kèm */
+/* 🖼️ Ảnh đính kèm */
 .blog-image {
     margin: 15px 0;
     text-align: center;
@@ -77,7 +100,7 @@
     cursor: pointer;
 }
 
-/* File đính kèm */
+/* 📎 File đính kèm */
 .blog-download {
     margin-top: 10px;
     text-align: center;
@@ -98,11 +121,9 @@
     background-color: #2a1250;
 }
 
-/* Bình luận */
+/* 💬 Bình luận */
 .comment-section {
-    margin-top: 25px;
-    border-top: 1px solid #eee;
-    padding-top: 15px;
+    margin-top: 15px;
 }
 
 .comment-section h4 {
@@ -111,39 +132,60 @@
     font-size: 16px;
 }
 
-.comment {
-    padding: 10px;
-    border-radius: 8px;
-    background: #f8f8f8;
+.comment-body {
+    display: flex;
+    flex-direction: column;
+    height: 230px;
+}
+
+.comment-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 6px;
     margin-bottom: 10px;
+}
+
+.comment-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+
+.comment-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 10px;
+}
+
+.comment-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.comment-item {
+    margin-bottom: 6px;
     font-size: 14px;
+    line-height: 1.4;
 }
 
-.comment strong {
-    color: #2a1250;
+.comment-form {
+    display: flex;
+    flex-direction: column;
 }
 
-/* Form bình luận */
-.comment-form input,
-.comment-form textarea {
+.comment-input {
     width: 100%;
     padding: 10px;
-    margin-top: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 14px;
+    resize: none;
+    min-height: 60px;
     box-sizing: border-box;
 }
 
-.comment-form textarea {
-    resize: none;
-    min-height: 60px;
-}
-
-.comment-form button {
+.comment-button {
     margin-top: 10px;
     padding: 10px 16px;
-    background-color: #007bff;
+    background-color: #3c1e70;
     color: white;
     border: none;
     border-radius: 8px;
@@ -152,6 +194,6 @@
     transition: background-color 0.2s ease;
 }
 
-.comment-form button:hover {
-    background-color: #0056b3;
+.comment-button:hover {
+    background-color: #2a1250;
 }

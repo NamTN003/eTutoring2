@@ -18,10 +18,13 @@ const Homestudent = () => {
         <div className="homestudent-container">
             {/* Sidebar */}
             <aside className="homestudent-sidebar">
-                <div className="homestudent-sidebar-header">
-                    <BsPersonCircle size={32} className="icon student-icon" />
-                    <span className="student-text">Student</span>
-                </div>
+            <div className="sidebar-logo">
+            <img
+            src="https://www.unialliance.ac.uk/wp-content/uploads/2023/08/Greenwich-LOGO_2022-N-01.png"
+            alt="Greenwich Logo"
+            className="sidebar-logo-img"
+            />
+            </div>
                 <nav className="homestudent-nav-links">
                     <Link to="/homestudent" className="homestudent-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
                     <Link to="imformation" className="homestudent-nav-item"><i className="fa-solid fa-user"></i> Thông tin bản thân</Link>
@@ -39,7 +42,6 @@ const Homestudent = () => {
                 <header className="homestudent-header">
                     <h2>eTutoring – Student</h2>
                     <div className="homestudent-header-icons">
-                        <Link to="#"><FiBell className="icon" /></Link>
                         <Link to="#"><FiGrid className="icon" /></Link>
                         <Link to="imformation"><BsPersonCircle className="icon" /></Link>
                     </div>

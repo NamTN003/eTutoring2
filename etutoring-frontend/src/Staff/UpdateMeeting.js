@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom"; // ✅ thêm useNavigate
 import "./UpdateMeeting.css";
 
 const UpdateMeeting = () => {
     const { id } = useParams();
+    const navigate = useNavigate(); // ✅ hook điều hướng
     const [meeting, setMeeting] = useState(null);
 
     useEffect(() => {
@@ -42,6 +43,9 @@ const UpdateMeeting = () => {
 
     return (
         <div className="attendance-wrapper">
+            {/* ✅ Nút quay lại */}
+            <button className="back-btn" onClick={() => navigate(-1)}>← Quay lại</button>
+
             <h2>📋 Cập nhật điểm danh</h2>
             <h3>👨‍🏫 Gia sư: {meeting.tutor_id.name}</h3>
 

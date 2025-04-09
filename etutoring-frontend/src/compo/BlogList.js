@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import CommentList from './CommentList';
-import './BlogList.css'; 
+import './BlogList.css';
 
 const BlogList = () => {
     const [blogs, setBlogs] = useState([]);
@@ -28,37 +28,38 @@ const BlogList = () => {
                 <div className="blog-list">
                     {blogs.map(blog => (
                         <div key={blog._id} className="blog-card">
-                            <h3>{blog.content}</h3>
-                            <p><strong>Người đăng:</strong> {blog.user_id}</p>
-                            <p><strong>Ngày đăng:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
+                            <div className="blog-main-content">
+                                <h3>{blog.content}</h3>
+                                <p><strong>Người đăng:</strong> {blog.user_id}</p>
+                                <p><strong>Ngày đăng:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
 
-                            {blog.uploaded_image && (
-                                <div className="blog-image">
-                                    <a
-                                        href={`http://localhost:5000/${blog.uploaded_image}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <img
-                                            src={`http://localhost:5000/${blog.uploaded_image}`}
-                                            alt="Blog"
-                                        />
-                                    </a>
-                                </div>
-                            )}
+                                {blog.uploaded_image && (
+                                    <div className="blog-image">
+                                        <a
+                                            href={`http://localhost:5000/${blog.uploaded_image}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <img
+                                                src={`http://localhost:5000/${blog.uploaded_image}`}
+                                                alt="Blog"
+                                            />
+                                        </a>
+                                    </div>
+                                )}
 
-                            {blog.uploaded_file && (
-                                <div className="blog-download">
-                                    <a
-                                        href={`http://localhost:5000/${blog.uploaded_file}`}
-                                        download
-                                    >
-                                        📄 Tải file đính kèm
-                                    </a>
-                                </div>
-                            )}
-
-                            <div className="comment-section">
+                                {blog.uploaded_file && (
+                                    <div className="blog-download">
+                                        <a
+                                            href={`http://localhost:5000/${blog.uploaded_file}`}
+                                            download
+                                        >
+                                            📄 Tải file đính kèm
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="blog-footer">
                                 <CommentList blogId={blog._id} />
                             </div>
                         </div>

@@ -19,10 +19,13 @@ const Homeauthorized = () => {
         <div className="homeauthorized-container">
             {/* Sidebar */}
             <aside className="homeauthorized-sidebar">
-                <div className="homeauthorized-sidebar-header">
-                    <BsPersonCircle size={32} className="icon authorized-icon" />
-                    <span className="authorized-text">Authorized</span>
-                </div>
+            <div className="sidebar-logo">
+            <img
+            src="https://www.unialliance.ac.uk/wp-content/uploads/2023/08/Greenwich-LOGO_2022-N-01.png"
+            alt="Greenwich Logo"
+            className="sidebar-logo-img"
+            />
+            </div>
                 <nav className="homeauthorized-nav-links"> 
                     <Link to="/homeauthorized" className="homeauthorized-nav-item"><i class="fa-solid fa-house"></i> Homepage</Link>
                     <Link to="imformation" className="homeauthorized-nav-item"><FiKey className="icon" /> Thông tin bản thân</Link>
@@ -43,7 +46,6 @@ const Homeauthorized = () => {
                 <header className="homeauthorized-header">
                     <h2>  eTutoring – Authorized </h2>
                     <div className="homeauthorized-header-icons">
-                        <Link to="#"><FiBell className="icon" /></Link>
                         <Link to="#"><FiGrid className="icon" /></Link>
                         <Link to="imformation"><BsPersonCircle className="icon" /></Link>
                     </div>

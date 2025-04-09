@@ -18,10 +18,13 @@ const Homestaff = () => {
         <div className="homestaff-container">
             {/* Sidebar */}
             <aside className="homestaff-sidebar">
-                <div className="homestaff-sidebar-header">
-                    <BsPersonCircle size={32} className="icon staff-icon" />
-                    <span className="staff-text">Staff</span>
-                </div>
+            <div className="sidebar-logo">
+            <img
+            src="https://www.unialliance.ac.uk/wp-content/uploads/2023/08/Greenwich-LOGO_2022-N-01.png"
+            alt="Greenwich Logo"
+            className="sidebar-logo-img"
+            />
+            </div>
                 <nav className="homestaff-nav-links">
                     <Link to="/homestaff" className="homestaff-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
                     <Link to="imformation" className="homestaff-nav-item"><FiUsers className="icon" /> Thông tin bản thân</Link>
@@ -41,9 +44,8 @@ const Homestaff = () => {
                 <header className="homestaff-header">
                     <h2>eTutoring – Staff </h2>
                     <div className="homestaff-header-icons">
-                        <Link to="#"><FiBell className="icon" /></Link>
                         <Link to="#"><FiGrid className="icon" /></Link>
-                        <Link to="imformation"><BsPersonCircle className="icon" /></Link>
+                        <Link to="imformation">< BsPersonCircle className="icon" /></Link>
                     </div>
                 </header>
 

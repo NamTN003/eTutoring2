@@ -1,76 +1,20 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-
-// const Meeting = () => {
-//     const [meetings, setMeetings] = useState([]);
-
-//     useEffect(() => {
-//         fetchMeetings();
-//     }, []);
-
-//     // 🟢 Lấy danh sách cuộc họp
-//     const fetchMeetings = async () => {
-//         try {
-//             const response = await axios.get("http://localhost:5000/meeting");
-//             setMeetings(response.data);
-//         } catch (error) {
-//             console.error("Lỗi khi lấy danh sách cuộc họp:", error);
-//         }
-//     };
-
-//     // ❌ Xóa cuộc họp
-//     const deleteMeeting = async (meetingId) => {
-//         if (!window.confirm("Bạn có chắc chắn muốn xóa cuộc họp này?")) return;
-
-//         try {
-//             await axios.delete(`http://localhost:5000/meeting/${meetingId}`);
-//             setMeetings(meetings.filter(meeting => meeting._id !== meetingId));
-//             alert("Xóa cuộc họp thành công!");
-//         } catch (error) {
-//             console.error("Lỗi khi xóa cuộc họp:", error);
-//             alert("Không thể xóa cuộc họp. Vui lòng thử lại!");
-//         }
-//     };
-
-//     return (
-// <div>
-//     <h2>Danh sách cuộc họp</h2>
-//     <ul>
-//         {meetings.map(meeting => (
-//             <li key={meeting._id}>
-//                 {new Date(meeting.meeting_date).toLocaleDateString()} - {meeting.meeting_time} 
-//                 (Gia sư: {meeting.tutor_id?.name} - 
-//                 Học sinh: {meeting.student_ids?.map(student => student.name).join(", ") || "Không có học sinh"} 
-//                 - Môn học: {meeting.subject_id?.subject_name || "Không có môn học"} 
-//                 - Địa điểm: {meeting.location})
-//                 <button onClick={() => deleteMeeting(meeting._id)}>❌ Xóa</button>
-//             </li>
-//         ))}
-//     </ul>
-// </div>
-//     );
-// };
-
-// export default Meeting;
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import './MeetingStudent.css'; // 👉 Import CSS riêng
 
 const MeetingStudent = () => {
     const [meetings, setMeetings] = useState([]);
-    const studentId = localStorage.getItem("userId"); // Lấy studentId từ localStorage
+    const studentId = localStorage.getItem("userId");
 
     useEffect(() => {
         fetchMeetings();
     }, []);
 
-    // 🟢 Lấy danh sách cuộc họp liên quan đến học sinh hiện tại
     const fetchMeetings = async () => {
         try {
             const response = await axios.get(`http://localhost:5000/meeting?studentId=${studentId}`);
             const filteredMeetings = response.data.filter(meeting =>
-                meeting.student_ids.some(student => student._id === studentId)
+                meeting.student_ids?.some(student => student._id === studentId)
             );
             const sortedMeetings = filteredMeetings.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
             setMeetings(sortedMeetings);
@@ -80,20 +24,34 @@ const MeetingStudent = () => {
     };
 
     return (
-        <div>
-            <h2>Danh sách cuộc họp của bạn</h2>
-            <ul>
-                {meetings.map(meeting => (
-                    <li key={meeting._id}>
-                        {new Date(meeting.meeting_date).toLocaleDateString()} - {meeting.meeting_time} 
-                        (Gia sư: {meeting.tutor_id?.name || "Không có gia sư"} - 
-                        Học sinh: {meeting.student_ids?.map(student => student.name).join(", ") || "Không có học sinh"} - 
-                        Môn học: {meeting.subject_id?.subject_name || "Không có môn học"} - 
-                        Địa điểm: {meeting.location})
-                    </li>
-                ))}
-                {meetings.length === 0 && <p>Không có cuộc họp nào.</p>}
-            </ul>
+        <div className="meeting-container">
+            <h2 className="meeting-title">📅 Lịch học của bạn</h2>
+            {meetings.length > 0 ? (
+                <table className="meeting-table">
+                    <thead>
+                        <tr>
+                            <th>📆 Ngày</th>
+                            <th>⏰ Giờ</th>
+                            <th>📚 Môn học</th>
+                            <th>👨‍🏫 Gia sư</th>
+                            <th>📍 Địa điểm</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {meetings.map(meeting => (
+                            <tr key={meeting._id}>
+                                <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
+                                <td>{meeting.meeting_time}</td>
+                                <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td>
+                                <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
+                                <td>{meeting.location}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            ) : (
+                <p className="no-meeting">Không có cuộc họp nào.</p>
+            )}
         </div>
     );
 };

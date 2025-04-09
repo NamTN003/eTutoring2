@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
+import './CommentList.css';
 
 const CommentList = ({ blogId }) => {
     const [comments, setComments] = useState([]);
     const [newComment, setNewComment] = useState('');
     const userId = localStorage.getItem('userId');
+    const scrollRef = useRef(null);
 
     useEffect(() => {
         const fetchComments = async () => {
@@ -29,34 +31,43 @@ const CommentList = ({ blogId }) => {
             });
             setComments([...comments, response.data]);
             setNewComment('');
+
+            // Cuộn xuống bình luận mới nhất
+            setTimeout(() => {
+                if (scrollRef.current) {
+                    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+                }
+            }, 100);
         } catch (error) {
             console.error('❌ Lỗi khi thêm comment:', error);
         }
     };
 
     return (
-        <div style={{ marginTop: "20px" }}>
-            <h4>Bình luận</h4>
-            <ul>
+        <div className="comment-section">
+    <h4>Bình luận</h4>
+    <div className="comment-body">
+        <div className="comment-scroll">
+            <ul className="comment-list">
                 {comments.map(comment => (
-                    <li key={comment._id} style={{ marginBottom: "10px" }}>
-                        <strong>{comment.user_name }:</strong> {comment.content}
+                    <li key={comment._id} className="comment-item">
+                        <strong>{comment.user_name}:</strong> {comment.content}
                     </li>
                 ))}
             </ul>
-            <form onSubmit={handleAddComment}>
-                <textarea
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                    placeholder="Thêm bình luận..."
-                    required
-                    style={{ width: "100%", padding: "10px", marginBottom: "10px" }}
-                />
-                <button type="submit" style={{ padding: "10px 20px", background: "#007BFF", color: "#fff", border: "none", borderRadius: "5px" }}>
-                    Gửi
-                </button>
-            </form>
         </div>
+        <form onSubmit={handleAddComment} className="comment-form">
+            <textarea
+                value={newComment}
+                onChange={(e) => setNewComment(e.target.value)}
+                placeholder="Thêm bình luận..."
+                required
+                className="comment-input"
+            />
+            <button type="submit" className="comment-button">Gửi</button>
+        </form>
+    </div>
+</div>
     );
 };
 
