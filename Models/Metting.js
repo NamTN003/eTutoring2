@@ -1,22 +1,21 @@
 const mongoose = require('mongoose');
 
 const MeetingSchema = new mongoose.Schema({
-    meeting_date: { type: Date, required: true }, // Ngày họp
-    meeting_time: { type: String, required: true }, // Giờ họp
-    end_time: { type: String, required: true }, // Giờ kết thúc
-    tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, // Gia sư
-    student_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }], // Học sinh
-    subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "subject", required: true }, // Môn học
-    location: { type: String, required: true }, // Địa điểm hoặc link họp online
-    created_by: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, // Người tạo cuộc họp
+    meeting_date: { type: Date, required: true },
+    meeting_time: { type: String, required: true },
+    end_time: { type: String, required: true },
+    tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
+    student_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }],
+    subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "subject", required: true },
+    location: { type: String, required: true },
+    created_by: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true },
 
-    // Ghi nhận người tham gia
+
     attendance: [{
         user_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
         status: { type: String, enum: ["present", "absent"], default: "absent" }
     }],
 
-    // Lý do hủy (nếu có)
     cancellation_reason: { type: String, default: "" }
 
 }, { timestamps: true });

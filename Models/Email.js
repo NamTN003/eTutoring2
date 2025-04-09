@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
 const EmailSchema = new mongoose.Schema({
-    sender: { type: String, required: true }, // Người gửi
-    recipientId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }], // Mảng các ID người nhận (sinh viên hoặc gia sư)
-    recipient: { type: String, required: true }, // Người nhận
-    subject: { type: String, required: true }, // Tiêu đề
-    message: { type: String, required: true }, // Nội dung
-    sentAt: { type: Date, default: Date.now }, // Thời gian gửi
+    sender: { type: String, required: true },
+    recipientId: [{ type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }],
+    recipient: { type: String, required: true },
+    subject: { type: String, required: true },
+    message: { type: String, required: true },
+    sentAt: { type: Date, default: Date.now },
 });
 
 const Email = mongoose.model('email', EmailSchema,'email');

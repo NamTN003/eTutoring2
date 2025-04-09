@@ -12,8 +12,8 @@ const userSchema = new mongoose.Schema({
   },
   gender: { type: String, enum: ["Male", "Female", "Other"], required: true },
   address: { type: String },
-  created_by: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, // Ai đã tạo user này
-  tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" }, // Nếu là student, lưu ID tutor
+  created_by: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+  tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
   subjects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
   requestReason: { type: String, default: null }, 
   requestDate: { type: Date, default: null },
