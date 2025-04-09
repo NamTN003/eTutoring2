@@ -1,54 +1,41 @@
 const express = require("express");
 const Message = require("../../Models/Message");
-const User = require("../../Models/User"); // Thêm User model
+const User = require("../../Models/User");
 const { authMiddleware } = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
-// 📌 Gửi tin nhắn
+
 router.post("/send", authMiddleware, async (req, res) => {
     try {
         const { content, receiver_id } = req.body;
         const sender_id = req.user.userId;
 
-        console.log("📩 Gửi tin nhắn:");
-        console.log("📤 Sender ID:", sender_id);
-        console.log("📥 Receiver ID:", receiver_id);
-        console.log("📜 Nội dung:", content);
-
         if (!sender_id || !receiver_id) {
             return res.status(400).json({ message: "Thiếu sender_id hoặc receiver_id" });
         }
 
-        // Lưu tin nhắn vào database
         const message = new Message({ sender_id, receiver_id, content, status: "sent" });
         await message.save();
 
-        // 🔥 Lấy userSockets từ server (đừng tạo lại)
         const userSockets = req.app.get("userSockets"); 
         const io = req.app.get("io"); 
 
-        // 🔎 Kiểm tra socket của người nhận
         const receiverSocketId = userSockets.get(receiver_id.toString());
-        console.log(`🔎 Tìm socket của người nhận: ${receiver_id} -> socket ID: ${receiverSocketId}`);
 
         if (receiverSocketId) {
             io.to(receiverSocketId).emit("receiveMessage", message);
-            console.log(`✅ Tin nhắn đã gửi qua socket cho ${receiver_id} (socket: ${receiverSocketId})`);
-        } else {
-            console.log(`⚠️ Người nhận ${receiver_id} không online hoặc chưa joinRoom.`);
         }
 
         res.status(201).json({ message: "Tin nhắn đã gửi", data: message });
     } catch (error) {
-        console.error("❌ Lỗi khi gửi tin nhắn:", error);
+        console.error(" Lỗi khi gửi tin nhắn:", error);
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });
 
 
 
-// 📌 Lấy danh sách tin nhắn giữa student và tutor
 router.get("/conversation/:userId", authMiddleware, async (req, res) => {
     try {
         const { userId } = req.params;
@@ -63,16 +50,16 @@ router.get("/conversation/:userId", authMiddleware, async (req, res) => {
                 { sender_id: userId , receiver_id: currentUserId }
 
             ]
-        }).sort({ createdAt: 1 }).populate("sender_id receiver_id", "name email"); // Thêm thông tin user
+        }).sort({ createdAt: 1 }).populate("sender_id receiver_id", "name email");
 
         res.json(messages);
     } catch (error) {
-        console.error("❌ Lỗi khi lấy tin nhắn:", error);
+        console.error(" Lỗi khi lấy tin nhắn:", error);
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });
 
-// 📌 Lấy danh sách hội thoại gần đây
+
 router.get("/recent", authMiddleware, async (req, res) => {
     try {
         const currentUserId = req.user.userId;
@@ -102,12 +89,12 @@ router.get("/recent", authMiddleware, async (req, res) => {
 
         res.json(recentMessages);
     } catch (error) {
-        console.error("❌ Lỗi khi lấy danh sách hội thoại:", error);
+        console.error(" Lỗi khi lấy danh sách hội thoại:", error);
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });
 
-// 📌 Đánh dấu tin nhắn là đã đọc
+
 router.put("/mark-as-read/:messageId", authMiddleware, async (req, res) => {
     try {
         const { messageId } = req.params;
@@ -122,12 +109,12 @@ router.put("/mark-as-read/:messageId", authMiddleware, async (req, res) => {
 
         res.json({ message: "Tin nhắn đã đọc", data: updatedMessage });
     } catch (error) {
-        console.error("❌ Lỗi khi cập nhật trạng thái tin nhắn:", error);
+        console.error(" Lỗi khi cập nhật trạng thái tin nhắn:", error);
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });
 
-// 📌 Xóa tin nhắn
+
 router.delete("/:messageId", authMiddleware, async (req, res) => {
     try {
         const { messageId } = req.params;
@@ -137,7 +124,7 @@ router.delete("/:messageId", authMiddleware, async (req, res) => {
 
         res.json({ message: "Tin nhắn đã xóa", data: deletedMessage });
     } catch (error) {
-        console.error("❌ Lỗi khi xóa tin nhắn:", error);
+        console.error(" Lỗi khi xóa tin nhắn:", error);
         res.status(500).json({ message: "Lỗi server", error: error.message });
     }
 });

@@ -2,18 +2,16 @@ const express = require('express');
 const router = express.Router();
 const Subject = require('../../Models/Subject');
 
-// Tạo một môn học mới
 router.post('/', async (req, res) => {
     try {
         const subject = new Subject(req.body);
         await subject.save();
         res.status(201).send(subject);
     } catch (error) {
-        res.status(400).send(error); // Lỗi xảy ra khi dữ liệu không hợp lệ
+        res.status(400).send(error);
     }
 });
 
-// Lấy danh sách tất cả các môn học
 router.get('/', async (req, res) => {
     try {
         const subjects = await Subject.find({});
@@ -23,7 +21,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// Lấy thông tin chi tiết một môn học theo ID
 router.get('/:id', async (req, res) => {
     try {
         const subject = await Subject.findById(req.params.id);
@@ -36,7 +33,7 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-// Cập nhật thông tin một môn học theo ID
+
 router.patch('/:id', async (req, res) => {
     try {
         const subject = await Subject.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
@@ -49,7 +46,7 @@ router.patch('/:id', async (req, res) => {
     }
 });
 
-// Xóa một môn học theo ID
+
 router.delete('/:id', async (req, res) => {
     try {
         const subject = await Subject.findByIdAndDelete(req.params.id);

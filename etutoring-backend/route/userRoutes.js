@@ -3,13 +3,12 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../Models/User");
 const { authMiddleware } = require("../middleware/authMiddleware");
-const Subject = require('../../Models/Subject'); // Import model Subject
+const Subject = require('../../Models/Subject');
 
 
 const router = express.Router();
 
 
-// Đăng nhập
 router.post("/login", async (req, res) => {
   try {
     console.log("🔹 Nhận request đăng nhập:", req.body);
@@ -26,7 +25,7 @@ router.post("/login", async (req, res) => {
     res.json({ 
       message: "Đăng nhập thành công", 
       token, 
-      userId: user._id, // ✅ Trả về userId
+      userId: user._id,
       role: user.role 
   });
   } catch (error) {
@@ -34,7 +33,6 @@ router.post("/login", async (req, res) => {
   }
 });
 
-// Đăng ký
 router.post("/register", async (req, res) => {
   try {
     let { name, email, phone, password, role, gender, address, created_by, tutor_id, subjects } = req.body;
@@ -55,14 +53,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// Đăng xuất
 router.post("/logout", authMiddleware, (req, res) => {
   console.log(`📤 Người dùng ${req.user.userId} đã đăng xuất.`);
   res.json({ message: "Đăng xuất thành công" });
 });
 
 
-// Xóa người dùng
 router.delete("/:id" , async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
@@ -104,7 +100,15 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Xử lý yêu cầu duyệt hoặc từ chối nâng cấp
+router.get("/liststaff", async (req, res) => {
+  try {
+    const users = await User.find({ role : "staff" });
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: "Lỗi server", error });
+  }
+});
+
 router.put("/approve/:id", authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
@@ -116,8 +120,8 @@ router.put("/approve/:id", authMiddleware, async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy yêu cầu nâng cấp hợp lệ" });
     }
 
-    user.role = "authorized"; // Thay đổi role
-    user.requestStatus = "approved"; // Cập nhật trạng thái
+    user.role = "authorized";
+    user.requestStatus = "approved";
     await user.save();
 
     res.json({ message: "Duyệt yêu cầu thành công", user });
@@ -137,7 +141,7 @@ router.put("/reject/:id", authMiddleware, async (req, res) => {
       return res.status(404).json({ message: "Không tìm thấy yêu cầu nâng cấp hợp lệ" });
     }
 
-    user.requestStatus = "rejected"; // Từ chối yêu cầu
+    user.requestStatus = "rejected";
     await user.save();
 
     res.json({ message: "Từ chối yêu cầu thành công", user });
@@ -149,88 +153,82 @@ router.put("/reject/:id", authMiddleware, async (req, res) => {
 
 router.post("/create-student", authMiddleware, async (req, res) => {
   try {
-      const { name, email, phone, gender, address, tutor_id } = req.body;
-      const created_by = req.user.userId; // Lấy ID của người tạo
+    const { name, email, phone, gender, address, tutor_id, password } = req.body;
+    const created_by = req.user.userId;
 
-      // Kiểm tra nếu người tạo không phải là tutor hoặc admin
-      if (!["authorized"].includes(req.user.role)) {
-          return res.status(403).json({ message: "Bạn không có quyền tạo sinh viên" });
-      }
-
-      // Kiểm tra email có tồn tại không
-      const existingUser = await User.findOne({ email });
-      if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
-
-      // Kiểm tra tutor_id có hợp lệ không
-      if (tutor_id) {
-        const tutor = await User.findById(tutor_id);
-        if (!tutor || tutor.role !== "tutor") {
-            return res.status(400).json({ message: "Gia sư không hợp lệ" });
-        }
+    if (!["authorized"].includes(req.user.role)) {
+      return res.status(403).json({ message: "Bạn không có quyền tạo sinh viên" });
     }
 
-      const hashedPassword = await bcrypt.hash("123456", 10); // Mật khẩu mặc định
+    if (!password) {
+      return res.status(400).json({ message: "Vui lòng nhập mật khẩu" });
+    }
 
-      const newStudent = new User({
-          name,
-          email,
-          phone,  
-          password: hashedPassword,
-          role: "student",
-          gender,
-          address,
-          tutor_id, // Lưu ID của gia sư
-          created_by, // Gán ID của tutor/admin làm người tạo
-      });
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
 
-      await newStudent.save();
-      res.status(201).json({ message: "Tạo sinh viên thành công", student: newStudent });
+    if (tutor_id) {
+      const tutor = await User.findById(tutor_id);
+      if (!tutor || tutor.role !== "tutor") {
+        return res.status(400).json({ message: "Gia sư không hợp lệ" });
+      }
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newStudent = new User({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      role: "student",
+      gender,
+      address,
+      tutor_id,
+      created_by,
+    });
+
+    await newStudent.save();
+    res.status(201).json({ message: "Tạo sinh viên thành công", student: newStudent });
   } catch (error) {
-      res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
 
-// 📌 API lấy danh sách sinh viên do người tạo tạo ra
-// router.get("/students-by-creator", authMiddleware, async (req, res) => {
-//   try {
-//       const students = await User.find({ created_by: req.user.userId, role: "student" });
-//       res.json(students);
-//   } catch (error) {
-//       res.status(500).json({ message: "Lỗi server", error: error.message });
-//   }
-// });
 
 router.post("/create-tutor", authMiddleware, async (req, res) => {
   try {
-      const { name, email, phone, gender, address } = req.body;
-      const created_by = req.user.userId; // Lấy ID của người tạo
+    const { name, email, phone, gender, address, password } = req.body;
+    const created_by = req.user.userId;
 
-      // Chỉ admin mới có quyền tạo tutor
-      if (req.user.role !== "authorized") {
-          return res.status(403).json({ message: "Bạn không có quyền tạo gia sư" });
-      }
+    if (req.user.role !== "authorized") {
+      return res.status(403).json({ message: "Bạn không có quyền tạo gia sư" });
+    }
 
-      // Kiểm tra email có tồn tại không
-      const existingUser = await User.findOne({ email });
-      if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
+    if (!password) {
+      return res.status(400).json({ message: "Vui lòng nhập mật khẩu" });
+    }
 
-      const hashedPassword = await bcrypt.hash("123456", 10); // Mật khẩu mặc định
+    const existingUser = await User.findOne({ email });
+    if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
 
-      const newTutor = new User({
-          name,
-          email,
-          phone,
-          password: hashedPassword,
-          role: "tutor",
-          gender,
-          address,
-          created_by, // Gán ID của admin làm người tạo
-      });
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-      await newTutor.save();
-      res.status(201).json({ message: "Tạo gia sư thành công", tutor: newTutor });
+    const newTutor = new User({
+      name,
+      email,
+      phone,
+      password: hashedPassword,
+      role: "tutor",
+      gender,
+      address,
+      created_by,
+    });
+
+    await newTutor.save();
+    res.status(201).json({ message: "Tạo gia sư thành công", tutor: newTutor });
   } catch (error) {
-      res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
 
@@ -239,18 +237,15 @@ router.put("/assign-tutor", authMiddleware, async (req, res) => {
   try {
     const { studentIds, tutorId } = req.body;
 
-    // Kiểm tra số lượng sinh viên tối đa
     if (studentIds.length > 10) {
       return res.status(400).json({ message: "Chỉ có thể phân bổ tối đa 10 sinh viên cùng lúc" });
     }
 
-    // Kiểm tra tutor có hợp lệ không
     const tutor = await User.findById(tutorId);
     if (!tutor || tutor.role !== "tutor") {
       return res.status(400).json({ message: "Gia sư không hợp lệ" });
     }
 
-    // Cập nhật tutor_id cho các sinh viên được chọn
     await User.updateMany(
       { _id: { $in: studentIds }, role: "student" },
       { tutor_id: tutorId }
@@ -258,7 +253,7 @@ router.put("/assign-tutor", authMiddleware, async (req, res) => {
 
     res.json({ message: "Phân bổ gia sư thành công" });
   } catch (error) {
-    console.error("❌ Lỗi khi phân bổ gia sư:", error);
+    console.error("Lỗi khi phân bổ gia sư:", error);
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
@@ -267,7 +262,7 @@ router.get("/students-by-creator", authMiddleware, async (req, res) => {
   try {
     const users = await User.find({ 
         created_by: req.user.userId, 
-        role: { $in: ["student", "tutor"] } // Lấy cả student & tutor
+        role: { $in: ["student", "tutor"] }
     });
     res.json(users);
 } catch (error) {
@@ -287,11 +282,11 @@ router.get("/tutors", authMiddleware, async (req, res) => {
 router.get("/students-with-tutors", authMiddleware, async (req, res) => {
   try {
     const students = await User.find({ role: "student" })
-      .populate({ path: "tutor_id", model: "user", select: "name email" }); // ✅ Chỉ định model "user"
+      .populate({ path: "tutor_id", model: "user", select: "name email" });
 
     res.json(students);
   } catch (error) {
-    console.error("❌ Lỗi khi lấy danh sách sinh viên:", error);
+    console.error("Lỗi khi lấy danh sách sinh viên:", error);
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
@@ -301,7 +296,7 @@ router.get("/all-tutors", authMiddleware, async (req, res) => {
     const tutors = await User.find({ role: "tutor" }).select("_id name email");
     res.json(tutors);
   } catch (error) {
-    console.error("❌ Lỗi khi lấy danh sách gia sư:", error);
+    console.error("Lỗi khi lấy danh sách gia sư:", error);
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
 });
@@ -323,7 +318,7 @@ router.get('/role', async (req, res) => {
 
 router.get("/students", authMiddleware, async (req, res) => {
   try {
-    const { tutor_id } = req.query; // Lấy từ query thay vì params
+    const { tutor_id } = req.query;
     if (!tutor_id) {
       return res.status(400).json({ message: "Thiếu tutor_id" });
     }
@@ -335,7 +330,6 @@ router.get("/students", authMiddleware, async (req, res) => {
   }
 });
 
-// Lấy thông tin người dùng theo ID
 router.get("/:id" , async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
@@ -347,7 +341,6 @@ router.get("/:id" , async (req, res) => {
   }
 });
 
-// Cập nhật thông tin người dùng
 router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
