@@ -60,17 +60,35 @@ router.post('/', upload.fields([{ name: 'uploaded_file' }, { name: 'uploaded_ima
 // Read all blogs
 router.get('/', async (req, res) => {
     try {
-        const blogs = await Blog.find({});
-        res.status(200).send(blogs);
+        // Lấy danh sách tất cả blogs và populate thông tin user (name, email)
+        const blogs = await Blog.find({})
+            .populate({
+                path: 'user_id', // Trường tham chiếu đến bảng User
+                select: 'name email' // Chỉ lấy các trường name và email
+            });
+
+        // Trả về danh sách blogs
+        res.status(200).json({
+            success: true,
+            message: "Lấy danh sách blogs thành công!",
+            data: blogs
+        });
     } catch (error) {
-        res.status(500).send(error);
+        console.error("❌ Lỗi khi lấy danh sách blogs:", error);
+
+        // Trả về lỗi server
+        res.status(500).json({
+            success: false,
+            message: "Lỗi server!",
+            error: error.message
+        });
     }
 });
 
 // Read a single blog by ID
 router.get('/:id', async (req, res) => {
     try {
-        const blog = await Blog.findById(req.params.id);
+        const blog = await Blog.findById(req.params.id).populate('user_id', 'name email');
         if (!blog) {
             return res.status(404).send();
         }
@@ -92,6 +110,8 @@ router.patch('/:id', async (req, res) => {
         res.status(400).send(error);
     }
 });
+
+
 
 // Delete a blog by ID
 router.delete('/:id', async (req, res) => {

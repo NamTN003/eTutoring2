@@ -108,6 +108,14 @@ function App() {
             <Route path="tutoremail" element={<TutorEmail />} />
           </Route>
           <Route
+                    path="hometutor/updatemeeting/:id"
+                    element={
+                        <ProtectedRoute allowedRoles={["staff", "tutor"]}>
+                            <UpdateMeeting />
+                        </ProtectedRoute>
+                    }
+                />
+                          <Route
                     path="homestaff/updatemeeting/:id"
                     element={
                         <ProtectedRoute allowedRoles={["staff", "tutor"]}>
