@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const MeetingSchema = new mongoose.Schema({
     meeting_date: { type: Date, required: true }, // Ngày họp
     meeting_time: { type: String, required: true }, // Giờ họp
+    end_time: { type: String, required: true }, // Giờ kết thúc
     tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }, // Gia sư
     student_ids: [{ type: mongoose.Schema.Types.ObjectId, ref: "user", required: true }], // Học sinh
     subject_id: { type: mongoose.Schema.Types.ObjectId, ref: "subject", required: true }, // Môn học

@@ -28,6 +28,7 @@ const Homeauthorized = () => {
                     <Link to="imformation" className="homeauthorized-nav-item"><FiKey className="icon" /> Thông tin bản thân</Link>
                     <Link to="createstudent" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Tạo tài khoản sinh viên</Link>
                     <Link to="createtutor" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Tạo tài khoản gia sư</Link>
+                    <Link to="listtutor" className="homeauthorized-nav-item"><FiUsers className="icon" /> Danh sách Gia Sư</Link>
                     <Link to="studentlist" className="homeauthorized-nav-item"><FiUsers className="icon" /> Danh sách sinh viên</Link>
                     <Link to="assigntutor" className="homeauthorized-nav-item"><FiKey className="icon" /> Phân bổ gia sư</Link>
                     <Link to="sendemail" className="homeauthorized-nav-item"><FiMail className="icon" /> Gửi Email</Link>

@@ -27,7 +27,7 @@ const RollCall = () => {
                         <th>Giờ</th>
                         <th>Địa điểm</th>
                         <th>Gia sư</th>
-                        <th>Môn học</th>
+                        <th>Môn học</th> {/* Thêm cột Môn học */}
                         <th>Hành động</th>
                     </tr>
                 </thead>
@@ -37,8 +37,8 @@ const RollCall = () => {
                             <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
                             <td>{meeting.meeting_time}</td>
                             <td>{meeting.location}</td>
-                            <td>{meeting.tutor_id?.name}</td>
-                            <td>{meeting.subject_id?.name}</td>
+                            <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
+                            <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td> {/* Hiển thị tên môn học */}
                             <td>
                                 <button
                                     className="rollcall-btn"

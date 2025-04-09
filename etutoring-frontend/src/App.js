@@ -316,6 +316,11 @@ import StudentEmail from "./Student/StudentEmail";
 import TutorEmail from "./Tutor/TutorEmail";
 import AdminDashboard from "./Admin/AdminDashborad";
 import BlogList from "./compo/BlogList";
+import MeetingStudent from "./Student/MeetingStudent";
+import MeetingTutor from "./Tutor/MeetingTutor";
+import ListTutor from "./Authorized/ListTutor";
+import RollCallTutor from "./Tutor/RollCallTutor";
+import UpdateMeetingTutor from "./Tutor/UpdateMeetingTutor";
 
 function App() {
   return (
@@ -345,6 +350,7 @@ function App() {
             <Route path="createtutor" element={<Createtutor />} />
             <Route path="imformation" element={<Imformation />} />
             <Route path="studentlist" element={<StudentList />} />
+            <Route path="listtutor" element={<ListTutor />} />
             <Route path="editstudent/:id" element={<EditStudent />} />
             <Route path="assigntutor" element={<AssignTutor />} />
             <Route path="sendemail" element={<SendEmail />} />
@@ -359,7 +365,6 @@ function App() {
             <Route path="createmeeting" element={<CreateMeeting />} />
             <Route path="requestupgrade" element={<RequestUpgrade />} />
             <Route path="createsubject" element={<CreateSubject />} />
-            <Route path="updatemeeting/:id" element={<UpdateMeeting />} />
           </Route>
 
           {/* 🔒 Student */}
@@ -367,7 +372,7 @@ function App() {
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="imformation" element={<Imformation />} />
             <Route path="chatstudent" element={<ChatStudent />} />
-            <Route path="meeting" element={<Meeting />} />
+            <Route path="meetingstudent" element={<MeetingStudent />} />
             <Route path="studentemail" element={<StudentEmail />} />
           </Route>
 
@@ -376,10 +381,19 @@ function App() {
             <Route index element={<div className="bloglist-wrapper"><BlogList /></div>} />
             <Route path="imformation" element={<Imformation />} />
             <Route path="chattutor" element={<ChatTutor />} />
-            <Route path="meeting" element={<Meeting />} />
+            <Route path="rollcalltutor" element={<RollCallTutor/>} />
+            <Route path="meetingtutor" element={<MeetingTutor />} />
             <Route path="createblog" element={<CreateBlog />} />
             <Route path="tutoremail" element={<TutorEmail />} />
           </Route>
+          <Route
+                    path="homestaff/updatemeeting/:id"
+                    element={
+                        <ProtectedRoute allowedRoles={["staff", "tutor"]}>
+                            <UpdateMeeting />
+                        </ProtectedRoute>
+                    }
+                />
         </Routes>
       </Router>
     </div>

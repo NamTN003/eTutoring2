@@ -54,46 +54,34 @@
 // export default Meeting;
 
 
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const Meeting = () => {
+const MeetingStudent = () => {
     const [meetings, setMeetings] = useState([]);
+    const studentId = localStorage.getItem("userId"); // Lấy studentId từ localStorage
 
     useEffect(() => {
         fetchMeetings();
     }, []);
 
-    // 🟢 Lấy danh sách cuộc họp
+    // 🟢 Lấy danh sách cuộc họp liên quan đến học sinh hiện tại
     const fetchMeetings = async () => {
         try {
-            const response = await axios.get("http://localhost:5000/meeting");
-            // Sắp xếp danh sách cuộc họp theo ngày tháng
-            const sortedMeetings = response.data.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
+            const response = await axios.get(`http://localhost:5000/meeting?studentId=${studentId}`);
+            const filteredMeetings = response.data.filter(meeting =>
+                meeting.student_ids.some(student => student._id === studentId)
+            );
+            const sortedMeetings = filteredMeetings.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
             setMeetings(sortedMeetings);
         } catch (error) {
             console.error("Lỗi khi lấy danh sách cuộc họp:", error);
         }
     };
 
-    // ❌ Xóa cuộc họp
-    const deleteMeeting = async (meetingId) => {
-        if (!window.confirm("Bạn có chắc chắn muốn xóa cuộc họp này?")) return;
-
-        try {
-            await axios.delete(`http://localhost:5000/meeting/${meetingId}`);
-            setMeetings(meetings.filter(meeting => meeting._id !== meetingId));
-            alert("Xóa cuộc họp thành công!");
-        } catch (error) {
-            console.error("Lỗi khi xóa cuộc họp:", error);
-            alert("Không thể xóa cuộc họp. Vui lòng thử lại!");
-        }
-    };
-
     return (
         <div>
-            <h2>Danh sách cuộc họp</h2>
+            <h2>Danh sách cuộc họp của bạn</h2>
             <ul>
                 {meetings.map(meeting => (
                     <li key={meeting._id}>
@@ -104,9 +92,10 @@ const Meeting = () => {
                         Địa điểm: {meeting.location})
                     </li>
                 ))}
+                {meetings.length === 0 && <p>Không có cuộc họp nào.</p>}
             </ul>
         </div>
     );
 };
 
-export default Meeting;
+export default MeetingStudent;

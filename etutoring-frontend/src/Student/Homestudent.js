@@ -26,7 +26,7 @@ const Homestudent = () => {
                     <Link to="/homestudent" className="homestudent-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
                     <Link to="imformation" className="homestudent-nav-item"><i className="fa-solid fa-user"></i> Thông tin bản thân</Link>
                     <Link to="chatstudent" className="homestudent-nav-item"><i className="fa-solid fa-comments"></i> Nhắn tin</Link>
-                    <Link to="meeting" className="homestudent-nav-item"><FiGrid className="icon" /> Lịch học</Link>
+                    <Link to="meetingstudent" className="homestudent-nav-item"><FiGrid className="icon" /> Lịch học</Link>
                     <Link to="studentemail" className="homestudent-nav-item"><FiMail className="icon" /> Email</Link>
                 </nav>
                 <button onClick={handleLogout} className="homestudent-logout-btn">

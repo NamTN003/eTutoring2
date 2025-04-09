@@ -40,7 +40,8 @@ const Meeting = () => {
                     <thead>
                         <tr>
                             <th>Ngày</th>
-                            <th>Giờ</th>
+                            <th>Giờ bắt đầu</th>
+                            <th>Giờ kết thúc</th>
                             <th>Gia sư</th>
                             <th>Học sinh</th>
                             <th>Môn học</th>
@@ -53,6 +54,7 @@ const Meeting = () => {
                             <tr key={meeting._id}>
                                 <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
                                 <td>{meeting.meeting_time}</td>
+                                <td>{meeting.end_time}</td>
                                 <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
                                 <td>{meeting.student_ids?.map(s => s.name).join(", ") || "Không có học sinh"}</td>
                                 <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td>

@@ -8,14 +8,10 @@ const Subject = require('../../Models/Subject');
 // 📌 1️⃣ Tạo một cuộc họp mới
 router.post("/create", async (req, res) => {
     try {
-        console.log("📥 Dữ liệu nhận từ client:", req.body); // Log dữ liệu nhận vào
-        
-        // Lấy dữ liệu từ request
-        const { meeting_date, meeting_time, tutor_id, student_ids, subject_id, location, created_by } = req.body;
+        const { meeting_date, meeting_time, end_time, tutor_id, student_ids, subject_id, location, created_by } = req.body;
 
-        // 🛑 Kiểm tra nếu thiếu trường nào thì báo lỗi
-        if (!meeting_date || !meeting_time || !tutor_id || !student_ids || !subject_id || !location || !created_by) {
-            console.log("⚠️ Thiếu dữ liệu:", req.body);
+        // Kiểm tra nếu thiếu trường nào thì báo lỗi
+        if (!meeting_date || !meeting_time || !end_time || !tutor_id || !student_ids || !subject_id || !location || !created_by) {
             return res.status(400).json({ message: "Vui lòng điền đầy đủ thông tin!" });
         }
 
@@ -23,10 +19,43 @@ router.post("/create", async (req, res) => {
             return res.status(400).json({ message: "Danh sách học sinh không hợp lệ!" });
         }
 
-        // 🟢 Tạo cuộc họp với nhiều học sinh
+        // Kiểm tra giờ kết thúc phải sau giờ bắt đầu
+        if (new Date(`1970-01-01T${end_time}:00Z`) <= new Date(`1970-01-01T${meeting_time}:00Z`)) {
+            return res.status(400).json({ message: "Giờ kết thúc phải sau giờ bắt đầu!" });
+        }
+
+        // Kiểm tra khoảng cách 45 phút giữa các cuộc họp của gia sư
+        const existingMeetings = await Meeting.find({
+            tutor_id,
+            meeting_date,
+        });
+
+        for (const meeting of existingMeetings) {
+            const existingStart = new Date(`1970-01-01T${meeting.meeting_time}:00Z`);
+            const existingEnd = new Date(`1970-01-01T${meeting.end_time}:00Z`);
+            const newStart = new Date(`1970-01-01T${meeting_time}:00Z`);
+            const newEnd = new Date(`1970-01-01T${end_time}:00Z`);
+
+            // Kiểm tra khoảng cách 45 phút
+            if (
+                (newStart >= existingStart && newStart <= existingEnd) || // Trùng giờ
+                (newEnd >= existingStart && newEnd <= existingEnd) || // Trùng giờ
+                (newStart <= existingStart && newEnd >= existingEnd) // Bao trùm
+            ) {
+                return res.status(400).json({ message: "Cuộc họp mới phải cách giờ kết thúc của cuộc họp trước ít nhất 45 phút!" });
+            }
+
+            const diff = Math.abs(existingEnd - newStart) / (1000 * 60); // Tính khoảng cách phút
+            if (diff < 45) {
+                return res.status(400).json({ message: "Cuộc họp mới phải cách giờ kết thúc của cuộc họp trước ít nhất 45 phút!" });
+            }
+        }
+
+        // Tạo cuộc họp mới
         const newMeeting = new Meeting({
             meeting_date,
             meeting_time,
+            end_time,
             tutor_id,
             student_ids,
             subject_id,
@@ -34,13 +63,11 @@ router.post("/create", async (req, res) => {
             created_by,
         });
 
-        await newMeeting.save(); // Lưu vào database
-        console.log("✅ Cuộc họp đã được tạo thành công");
+        await newMeeting.save();
         res.status(201).json({ message: "Cuộc họp đã được tạo thành công" });
-
     } catch (error) {
-        console.error("❌ Lỗi khi tạo cuộc họp:", error); // Log lỗi chi tiết
-        res.status(500).json({ message: "Lỗi khi tạo cuộc họp!", error });
+        console.error("❌ Lỗi khi tạo cuộc họp:", error);
+        res.status(500).json({ message: "Lỗi server", error });
     }
 });
 
@@ -132,7 +159,7 @@ router.delete("/:id", async (req, res) => {
 
         if (!deletedMeeting) {
             return res.status(404).json({ message: "Không tìm thấy cuộc họp!" });
-        }
+        }  
 
         res.status(200).json({ message: "Xóa cuộc họp thành công!" });
     } catch (error) {

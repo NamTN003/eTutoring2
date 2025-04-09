@@ -29,7 +29,7 @@ const BlogList = () => {
                     {blogs.map(blog => (
                         <div key={blog._id} className="blog-card">
                             <h3>{blog.content}</h3>
-                            <p><strong>Người đăng:</strong> {blog.user_id?.name}</p>
+                            <p><strong>Người đăng:</strong> {blog.user_id}</p>
                             <p><strong>Ngày đăng:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
 
                             {blog.uploaded_image && (

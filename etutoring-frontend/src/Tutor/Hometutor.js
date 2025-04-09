@@ -26,9 +26,10 @@ const Hometutor = () => {
                     <Link to="/hometutor" className="hometutor-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
                     <Link to="imformation" className="hometutor-nav-item"><i className="fa-solid fa-user"></i> Thông tin bản thân</Link>
                     <Link to="chattutor" className="hometutor-nav-item"><i className="fa-solid fa-comments"></i> Nhắn tin</Link>
-                    <Link to="meeting" className="hometutor-nav-item"><FiGrid className="icon" /> Lịch học</Link>
+                    <Link to="meetingtutor" className="hometutor-nav-item"><FiGrid className="icon" /> Lịch học</Link>
                     <Link to="createblog" className="hometutor-nav-item"><FiEdit3 className="icon" /> Đăng blog</Link>
                     <Link to="tutoremail" className="hometutor-nav-item"><FiMail className="icon" /> Email</Link>
+                    <Link to="rollcalltutor" className="hometutor-nav-item"><i className="fa-solid fa-user-check"></i> Điểm danh</Link>
                 </nav>
                 <button onClick={handleLogout} className="hometutor-logout-btn">
                     <FiLogOut className="icon" /> Đăng Xuất
