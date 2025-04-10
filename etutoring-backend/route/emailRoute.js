@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const Email = require("../../Models/Email");
-const User = require("../../Models/User");
+const Email = require("../Models/Email");
+const User = require("../Models/User");
 
 router.get('/emails/:recipientId', async (req, res) => {
     const { recipientId } = req.params;

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
-const Meeting = require('../../Models/Metting');
-const User = require('../../Models/User');
-const Subject = require('../../Models/Subject');
+const Meeting = require('../Models/Metting');
+const User = require('../Models/User');
+const Subject = require('../Models/Subject');
 
 
 router.post("/create", async (req, res) => {

@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const Comment = require('../../Models/Comment');
-const User = require('../../Models/User');
+const Comment = require('../Models/Comment');
+const User = require('../Models/User');
 
 router.post('/', async (req, res) => {
     try {

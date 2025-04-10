@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 const mongoose = require('mongoose');
-const Blog = require('../../Models/Blogs');
+const Blog = require('../Models/Blogs');
 
 // Cấu hình multer để lưu file
 const storage = multer.diskStorage({

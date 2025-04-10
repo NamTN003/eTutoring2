@@ -1,10 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = express.Router();
-const User = require("../../Models/User");
-const Meeting = require("../../Models/Metting");
-const Message = require("../../Models/Message");
-const Subject = require("../../Models/Subject");
+const User = require("../Models/User");
+const Meeting = require("../Models/Metting");
+const Message = require("../Models/Message");
+const Subject = require("../Models/Subject");
 const {authMiddleware} = require("../middleware/authMiddleware");
 const moment = require("moment");
 
