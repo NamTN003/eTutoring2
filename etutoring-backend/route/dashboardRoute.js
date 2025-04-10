@@ -1,9 +1,13 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const router = express.Router();
 const User = require("../../Models/User");
 const Meeting = require("../../Models/Metting");
-const Message = require("../../Models/Message")
+const Message = require("../../Models/Message");
 const Subject = require("../../Models/Subject");
+const {authMiddleware} = require("../middleware/authMiddleware");
+const moment = require("moment");
+
 
 router.get("/total-accounts", async (req, res) => {
   try {
@@ -30,83 +34,6 @@ router.get("/total-login-count", async (req, res) => {
     }
   });
   
-
-  router.get("/login-daily-count", async (req, res) => {
-    try {
-      const now = new Date();
-      const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-      const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-  
-      const result = await LoginLog.aggregate([
-        {
-          $match: {
-            login_time: { $gte: startOfMonth, $lte: endOfMonth },
-          },
-        },
-        {
-          $group: {
-            _id: {
-              day: { $dayOfMonth: "$login_time" },
-            },
-            loginCount: { $sum: 1 },
-          },
-        },
-        {
-          $sort: { "_id.day": 1 },
-        },
-      ]);
-  
-      const totalDays = endOfMonth.getDate();
-      const data = [];
-  
-      for (let i = 1; i <= totalDays; i++) {
-        const found = result.find((r) => r._id.day === i);
-        data.push({
-          day: `${i < 10 ? "0" + i : i}/${now.getMonth() + 1}`,
-          loginCount: found ? found.loginCount : 0,
-        });
-      }
-  
-      res.json(data);
-    } catch (err) {
-      res.status(500).json({ message: "Lỗi server", error: err.message });
-    }
-  });
-  
-
-router.get("/login-stats", async (req, res) => {
-  try {
-    const today = new Date();
-    const startOfDay = new Date(today.setHours(0, 0, 0, 0));
-    const startOfWeek = new Date(today.setDate(today.getDate() - today.getDay()));
-    const startOfMonth = new Date(today.setDate(1));
-
-    const daily = await User.countDocuments({ lastLogin: { $gte: startOfDay } });
-    const weekly = await User.countDocuments({ lastLogin: { $gte: startOfWeek } });
-    const monthly = await User.countDocuments({ lastLogin: { $gte: startOfMonth } });
-
-    res.json({ daily, weekly, monthly });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
-});
-
-
-router.get("/student-count/:tutorId", async (req, res) => {
-  const tutorId = req.params.tutorId;
-
-  if (!tutorId) {
-    return res.status(400).json({ message: "Missing tutor ID" });
-  }
-
-  try {
-    const studentCount = await User.countDocuments({ role: "student", tutor_id: tutorId });
-    res.json({ studentCount });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
-});
-
 
 router.get("/meeting-tutor-count", async (req, res) => {
   try {
@@ -148,62 +75,6 @@ router.get("/meeting-tutor-count", async (req, res) => {
   }
 });
 
-router.get("/meeting-subject-count", async (req, res) => {
-  try {
-    const now = new Date();
-    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
-
-    const meetingsPerSubject = await Meeting.aggregate([
-      {
-        $match: {
-          meeting_date: {
-            $gte: startOfMonth,
-            $lte: endOfMonth,
-          },
-        },
-      },
-      {
-        $group: {
-          _id: "$subject_id",
-          meetingCount: { $sum: 1 },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          subject_id: "$_id",
-          meetingCount: 1,
-        },
-      },
-      {
-        $sort: { meetingCount: -1 },
-      },
-    ]);
-
-    res.json(meetingsPerSubject);
-  } catch (error) {
-    console.error("Lỗi khi thống kê cuộc họp:", error);
-    res.status(500).json({ message: "Server error", error: error.message });
-  }
-});
-
-
-router.get("/student-meeting-count/:studentId", async (req, res) => {
-  const studentId = req.params.studentId;
-
-  if (!studentId) {
-    return res.status(400).json({ message: "Missing student ID" });
-  }
-
-  try {
-    const meetingCount = await Meeting.countDocuments({ student_ids: studentId });
-    res.json({ meetingCount });
-  } catch (error) {
-    res.status(500).json({ message: "Server Error", error: error.message });
-  }
-});
-
 router.get("/message-count", async (req, res) => {
   try {
     const result = await Message.aggregate([
@@ -242,6 +113,7 @@ router.get("/message-count", async (req, res) => {
 });
 
 
+
 router.get("/staff-auth-request-count", async (req, res) => {
   try {
     const startOfMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
@@ -277,5 +149,168 @@ router.get("/staff-auth-request-count", async (req, res) => {
     res.status(500).json({ message: "Server Error", error: err.message });
   }
 });
+
+
+router.get("/user-info", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const user = await User.findById(userId).select("name email role");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+
+router.get("/my-simple-dashboard", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const totalMeetings = await Meeting.countDocuments({
+      "attendance": {
+        $elemMatch: {
+          student: userId,
+          status: "present"
+        }
+      }
+    });
+    
+    const subjects = await Subject.find({ tutors: userId });
+
+    res.json({ totalMeetings, subjects });
+  } catch (err) {
+    console.error("Lỗi khi lấy dashboard:", err);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+router.get("/weekly-meetings", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const startOfWeek = moment().startOf("isoWeek").toDate();
+    const endOfWeek = moment().endOf("isoWeek").toDate();
+
+    const count = await Meeting.countDocuments({
+      meeting_date: { $gte: startOfWeek, $lte: endOfWeek },
+      attendance: {
+        $elemMatch: {
+          user_id: userId,
+          status: "present"
+        }
+      }
+    });
+
+    res.json({ weeklyMeetings: count });
+  } catch (err) {
+    console.error("Lỗi khi lấy số buổi học trong tuần:", err);
+    res.status(500).json({ message: "Lỗi server" });
+  }
+});
+
+
+router.get("/my-meetings", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const meetings = await Meeting.find({ student_ids: userId })
+      .populate("subject_id", "name")
+      .sort({ date: -1 });
+
+    res.json(meetings);
+  } catch (err) {
+    res.status(500).json({ message: "Lỗi server", error: err.message });
+  }
+});
+
+router.get("/my-subjects", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const subjectIds = await Meeting.distinct("subject_id", {
+      student_ids: userId,
+    });
+
+    const subjects = await Subject.find({ _id: { $in: subjectIds } }).select("name");
+
+    res.json(subjects);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.get("/my-subjects-count", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const subjects = await Meeting.distinct("subject_id", { student_ids: userId });
+    res.json({ subjectCount: subjects.length });
+  } catch (err) {
+    res.status(500).json({ message: "Lỗi server", error: err.message });
+  }
+});
+
+router.get("/student-daily-meetings", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+
+    const data = await Meeting.aggregate([
+      {
+        $match: {
+          students: userId,
+          meeting_date: {
+            $gte: startOfMonth,
+            $lte: endOfMonth,
+          },
+          attendance: {
+            $elemMatch: {
+              student: userId,
+              status: "present",
+            },
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: { format: "%Y-%m-%d", date: "$meeting_date" },
+          },
+          count: { $sum: 1 },
+        },
+      },
+      { $sort: { _id: 1 } },
+    ]);
+
+    res.json({ dailyMeetings: data });
+  } catch (error) {
+    console.error("Lỗi khi thống kê daily meetings:", error);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+
+router.get("/tutor-summary", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const totalMeetings = await Meeting.countDocuments({ tutor_id: userId });
+
+    const subjects = await Subject.find({ tutors: userId });
+
+    res.json({ totalMeetings, subjects });
+  } catch (err) {
+    console.error("❌ Lỗi khi lấy tutor summary:", err);
+    res.status(500).json({ error: "Lỗi server" });
+  }
+});
+
+
 
 module.exports = router;

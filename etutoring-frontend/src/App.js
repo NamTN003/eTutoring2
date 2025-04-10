@@ -41,6 +41,8 @@ import ListTutor from "./Authorized/ListTutor";
 import EditTutor from "./Authorized/EditTutor";
 import RollCallTutor from "./Tutor/RollCallTutor";
 import UpdateMeetingTutor from "./Tutor/UpdateMeetingTutor";
+import TutorDashboard from "./Tutor/TutorDashboard";
+import StudentDashboard from "./Student/StudentDashboard";
 
 function App() {
   return (
@@ -95,6 +97,7 @@ function App() {
             <Route path="chatstudent" element={<ChatStudent />} />
             <Route path="meetingstudent" element={<MeetingStudent />} />
             <Route path="studentemail" element={<StudentEmail />} />
+            <Route path="studentdashboard" element={<StudentDashboard />} />
           </Route>
 
 
@@ -106,6 +109,7 @@ function App() {
             <Route path="meetingtutor" element={<Meetingtutor />} />
             <Route path="createblog" element={<CreateBlog />} />
             <Route path="tutoremail" element={<TutorEmail />} />
+            <Route path="tutordashboard" element={<TutorDashboard />} />
           </Route>
           <Route
                     path="hometutor/updatemeeting/:id"
