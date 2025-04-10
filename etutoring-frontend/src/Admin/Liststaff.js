@@ -14,7 +14,7 @@ const Liststaff = () => {
                 const staffMembers = response.data.filter(user => user.role === "staff");
                 setStaffList(staffMembers);
             } catch (error) {
-                console.error(" Lỗi khi lấy danh sách nhân viên:", error);
+                console.error(" Error when getting employee list:", error);
             }
         };
 
@@ -22,33 +22,33 @@ const Liststaff = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa nhân viên này?")) {
+        if (window.confirm("Are you sure you want to delete this employee?")) {
             try {
                 await axios.delete(`http://localhost:5000/user/${id}`);
                 setStaffList(staffList.filter((staff) => staff._id !== id));
-                alert("✅ Xóa nhân viên thành công!");
+                alert("✅ Employee deleted successfully!");
             } catch (error) {
-                console.error(" Lỗi khi xóa nhân viên:", error);
-                alert(" Không thể xóa nhân viên");
+                console.error(" Error while deleting employee:", error);
+                alert(" Cannot delete employee");
             }
         }
     };
 
     return (
         <div className="liststaff-container">
-        <h2 className="liststaff-title">Danh sách nhân viên</h2>
+        <h2 className="liststaff-title">List of employees</h2>
         {staffList.length === 0 ? (
-            <p className="liststaff-loading-text">⏳ Đang tải dữ liệu hoặc không có nhân viên nào...</p>
+            <p className="liststaff-loading-text">⏳ Loading data or no staff available...</p>
         ) : (
             <table className="liststaff-table">
                 <thead>
                     <tr>
-                        <th>Tên</th>
+                        <th>Name</th>
                         <th>Email</th>
-                        <th>Số điện thoại</th>
-                        <th>Vai trò</th>
-                        <th>Địa chỉ</th>
-                        <th>Hành động</th>
+                        <th>Phone number</th>
+                        <th>Role</th>
+                        <th>Address</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -64,13 +64,13 @@ const Liststaff = () => {
                                     onClick={() => navigate(`/homeadmin/editstaff/${staff._id}`)} 
                                     className="liststaff-edit-btn"
                                 >
-                                    ✏ Sửa
+                                    ✏ Edit
                                 </button>
                                 <button 
                                     onClick={() => handleDelete(staff._id)} 
                                     className="liststaff-delete-btn"
                                 >
-                                    🗑 Xóa
+                                    🗑 Delete
                                 </button>
                             </td>
                         </tr>

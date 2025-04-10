@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children, allowedRoles }) => {
   const role = localStorage.getItem("role");
 
   if (!allowedRoles.includes(role)) {
-    alert("Bạn không có quyền vào đây");
+    alert("You do not have permission to enter here");
     const homePage = roleHomePages[role] || "/";
     return <Navigate to={homePage} replace />;
   }

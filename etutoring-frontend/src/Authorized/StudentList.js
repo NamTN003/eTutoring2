@@ -13,7 +13,7 @@ const StudentList = () => {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) {
-                    setError("Bạn chưa đăng nhập!");
+                    setError("You are not logged in!");
                     setLoading(false);
                     return;
                 }
@@ -24,7 +24,7 @@ const StudentList = () => {
 
                 setStudents(response.data);
             } catch (err) {
-                setError(err.response ? err.response.data.message : "Lỗi kết nối server.");
+                setError(err.response ? err.response.data.message : "Server connection error.");
             } finally {
                 setLoading(false);
             }
@@ -34,23 +34,23 @@ const StudentList = () => {
     }, []);
 
     const handleDelete = async (id) => {
-        if (window.confirm("Bạn có chắc chắn muốn xóa sinh viên này?")) {
+        if (window.confirm("Are you sure you want to delete this student?")) {
             try {
                 await axios.delete(`http://localhost:5000/user/${id}`);
                 setStudents(studentlist.filter((student) => student._id !== id));
-                alert("✅ Xóa sinh viên thành công!");
+                alert("✅ Student deleted successfully!");
             } catch (error) {
-                console.error("Lỗi khi xóa sinh viên:", error);
-                alert("Không thể xóa sinh viên");
+                console.error("Error while deleting student:", error);
+                alert("Cannot delete student");
             }
         }
     };
 
     return (
         <div className="studentlist-container">
-            <h2>Danh sách Sinh Viên</h2>
+            <h2>List of Students</h2>
             {loading ? (
-                <p className="student-loading">Đang tải...</p>
+                <p className="student-loading">Loading...</p>
             ) : error ? (
                 <p className="student-error">{error}</p>
             ) : (
@@ -59,15 +59,15 @@ const StudentList = () => {
                     <div className="student-info">
                         <strong>{student.name}</strong> <br />
                         {student.email} <br />
-                        Giới tính: {student.gender}
+                        Gender: {student.gender}
                     </div>
 
                     <div className="student-actions">
                         <Link to={`../editstudent/${student._id}`} className="edit-btn">
-                        ✏ Sửa
+                        ✏ Edit
                         </Link>
                         <button className="delete-btn" onClick={() => handleDelete(student._id)}>
-                        🗑 Xóa
+                        🗑 Delete
                         </button>
                     </div>
                     </div>

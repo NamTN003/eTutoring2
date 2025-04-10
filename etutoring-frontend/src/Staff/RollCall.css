@@ -77,3 +77,14 @@
 .rollcall-btn:hover {
     background-color: #357ab8;
 }
+@media (max-width: 768px) {
+    .rollcall-table th, .rollcall-table td {
+        font-size: 13px;
+        padding: 8px 10px;
+    }
+
+    .rollcall-btn {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+}

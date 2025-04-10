@@ -7,8 +7,8 @@ const AdminDashboard = () => {
   const [meetingTutor, setMeetingTutor] = useState([["Tutor", "Meetings"]]);
   const [meetingSubject, setMeetingSubject] = useState([["Subject", "Meetings"]]);
   const [totalLogins, setTotalLogins] = useState(0);
-  const [messageData, setMessageData] = useState([["Người dùng", "Số tin nhắn"]]);
-  const [staffRequestData, setStaffRequestData] = useState([["Ngày", "Số yêu cầu"]]);
+  const [messageData, setMessageData] = useState([["user", "Number of messages"]]);
+  const [staffRequestData, setStaffRequestData] = useState([["Day", "Number of requests"]]);
 
   const [accounts, setAccounts] = useState([
     ["Role", "Total"],
@@ -72,7 +72,7 @@ const AdminDashboard = () => {
         }
 
         const messageData = await axios.get("http://localhost:5000/dashboard/message-count");
-        const data = [["Người dùng", "Số tin nhắn"]];
+        const data = [["User", "Number of messages"]];
         messageData.data.forEach((item) => {
           data.push([item.name, item.messageCount]);
         });
@@ -96,7 +96,7 @@ const AdminDashboard = () => {
   const adjustedMax = totalLogins > 5 ? totalLogins + 5 : 5;
 
   if (loading) {
-    return <p className="dashboard-loading">Đang tải dữ liệu...</p>;
+    return <p className="dashboard-loading">Loading data...</p>;
   }
 
   return (
@@ -105,7 +105,7 @@ const AdminDashboard = () => {
 
       <div className="dashboard-grid">
         <div className="dashboard-card">
-          <h3 className="chart-title">Phân bố vai trò người dùng</h3>
+          <h3 className="chart-title">User role assignment</h3>
           <Chart
             chartType="PieChart"
             data={accounts}
@@ -119,14 +119,14 @@ const AdminDashboard = () => {
         </div>
 
         <div className="dashboard-card">
-          <h3 className="chart-title">Số cuộc họp của mỗi gia sư</h3>
+          <h3 className="chart-title">Number of meetings per tutor</h3>
           <Chart
             chartType="ColumnChart"
             data={meetingTutor}
             options={{
               legend: { position: "none" },
-              hAxis: { title: "Gia sư" },
-              vAxis: { title: "Số cuộc họp" },
+              hAxis: { title: "Tutor" },
+              vAxis: { title: "Number of meetings" },
               colors: ["#4285F4"],
             }}
             width={"100%"}
@@ -135,14 +135,14 @@ const AdminDashboard = () => {
         </div>
 
         <div className="dashboard-card">
-          <h3 className="chart-title">Số cuộc họp của mỗi môn học</h3>
+          <h3 className="chart-title">Number of meetings per subject</h3>
           <Chart
             chartType="ColumnChart"
             data={meetingSubject}
             options={{
               legend: { position: "none" },
-              hAxis: { title: "Môn học" },
-              vAxis: { title: "Số cuộc họp" },
+              hAxis: { title: "Subject" },
+              vAxis: { title: "Number of meetings" },
               colors: ["#4285F4"],
             }}
             width={"100%"}
@@ -157,28 +157,28 @@ const AdminDashboard = () => {
             height="400px"
             data={logins}
             options={{
-              title: "Biểu đồ lượt đăng nhập theo ngày",
+              title: "Logins by Day Chart",
               curveType: "function",
               legend: { position: "bottom" },
-              hAxis: { title: "Ngày" },
-              vAxis: { title: "Lượt đăng nhập" },
+              hAxis: { title: "Date" },
+              vAxis: { title: "Logins" },
             }}
           />
         </div>
 
         <div className="dashboard-card gauge-card">
-          <h3 className="chart-title">Tổng số lượt đăng nhập của người dùng</h3>
+          <h3 className="chart-title">Total user logins</h3>
           <Chart
             chartType="ColumnChart"
             data={[
-              ["Thống kê", "Số lượt đăng nhập"],
-              ["Tổng login", totalLogins],
+              ["Statistical", "Number of logins"],
+              ["Total login", totalLogins],
             ]}
             options={{
-              title: "Tổng số lượt đăng nhập",
+              title: "Number of logins",
               legend: { position: "none" },
-              hAxis: { title: "Loại thống kê" },
-              vAxis: { title: "Số lượt đăng nhập" },
+              hAxis: { title: "Statistics type" },
+              vAxis: { title: "Number of logins" },
               colors: ["#fbbc05"],
             }}
             width={"100%"}
@@ -187,33 +187,33 @@ const AdminDashboard = () => {
         </div>
         
         <div>
-          <h3>💬 Số lượng tin nhắn theo người dùng</h3>
+          <h3>💬 Number of messages per user</h3>
           <Chart
             chartType="ColumnChart"
             width="100%"
             height="400px"
             data={messageData}
             options={{
-              title: "Số tin nhắn gửi bởi từng người dùng",
+              title: "Number of messages sent by each user",
               legend: { position: "none" },
-              hAxis: { title: "Người dùng" },
-              vAxis: { title: "Số tin nhắn" },
+              hAxis: { title: "User" },
+              vAxis: { title: "Number of messages" },
               colors: ["#34a853"],
             }}
           />
         </div>
 
         <div>
-          <h3>💬 Số lượng yêu cầu ủy quyền của Staff</h3>
+          <h3>💬 Number of Staff Authorization Requests</h3>
           <Chart
             chartType="LineChart"
             width="100%"
             height="400px"
             data={staffRequestData}
             options={{
-              title: "Số yêu cầu ủy quyền từ Staff theo ngày trong tháng",
-              hAxis: { title: "Ngày" },
-              vAxis: { title: "Số yêu cầu" },
+              title: "Number of authorization requests from Staff by day of the month",
+              hAxis: { title: "Day" },
+              vAxis: { title: "Number of requests" },
               curveType: "function",
               legend: { position: "bottom" },
               colors: ["#f57c00"],

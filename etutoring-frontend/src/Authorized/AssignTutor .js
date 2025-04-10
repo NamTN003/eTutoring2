@@ -24,8 +24,8 @@ const AssignTutor = () => {
         setStudents(studentRes.data);
         setTutors(tutorRes.data);
       } catch (error) {
-        console.error("❌ Lỗi khi tải dữ liệu:", error);
-        setMessage("❌ Không thể tải dữ liệu.");
+        console.error("❌ Error loading data:", error);
+        setMessage("❌ Failed to load data.");
       }
     };
 
@@ -40,12 +40,12 @@ const AssignTutor = () => {
 
   const handleAssignTutor = async () => {
     if (!selectedTutor || selectedStudents.length === 0) {
-      setMessage("⚠️ Vui lòng chọn gia sư và ít nhất một sinh viên.");
+      setMessage("⚠️ Please select a tutor and at least one student.");
       return;
     }
 
     if (selectedStudents.length > 10) {
-      setMessage("⚠️ Bạn chỉ có thể phân bổ tối đa 10 sinh viên cùng lúc.");
+      setMessage("⚠️ You can assign up to 10 students at a time.");
       return;
     }
 
@@ -63,7 +63,7 @@ const AssignTutor = () => {
         }
       );
 
-      setMessage("✅ Phân bổ gia sư thành công!");
+      setMessage("✅ Tutor assigned successfully!");
       setSelectedStudents([]);
       setSelectedTutor("");
 
@@ -72,14 +72,14 @@ const AssignTutor = () => {
       });
       setStudents(updated.data);
     } catch (error) {
-      console.error("❌ Lỗi khi phân bổ gia sư:", error);
-      setMessage("❌ Có lỗi xảy ra khi phân bổ. Vui lòng thử lại.");
+      console.error("❌ Error assigning tutor:", error);
+      setMessage("❌ An error occurred during assignment. Please try again.");
     }
   };
 
   return (
     <div className="assign-container">
-      <h2>Phân bổ Gia Sư cho Sinh Viên</h2>
+      <h2>Assign Tutor to Students</h2>
 
       {message && (
         <p className="assign-message" style={{ color: message.includes("✅") ? "green" : "red" }}>
@@ -92,7 +92,7 @@ const AssignTutor = () => {
         onChange={(e) => setSelectedTutor(e.target.value)}
         required
       >
-        <option value="">Chọn Gia Sư</option>
+        <option value="">Select Tutor</option>
         {tutors.map((tutor) => (
           <option key={tutor._id} value={tutor._id}>
             {tutor.name} - {tutor.email}
@@ -100,7 +100,7 @@ const AssignTutor = () => {
         ))}
       </select>
 
-            <ul className="assign-student-list">
+      <ul className="assign-student-list">
         {students.map((student) => (
           <li className="student-item" key={student._id}>
             <div className="checkbox-wrapper">
@@ -115,20 +115,19 @@ const AssignTutor = () => {
               <div className="email">{student.email}</div>
               <div className="tutor">
                 {student.tutor_id
-                  ? `(Gia sư: ${student.tutor_id.name})`
-                  : "(Chưa có gia sư)"}
+                  ? `(Tutor: ${student.tutor_id.name})`
+                  : "(No tutor assigned)"}
               </div>
             </div>
           </li>
         ))}
       </ul>
 
-
       <button
         onClick={handleAssignTutor}
         disabled={!selectedTutor || selectedStudents.length === 0}
       >
-        Phân bổ Gia Sư
+        Assign Tutor
       </button>
     </div>
   );

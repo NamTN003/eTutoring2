@@ -27,7 +27,7 @@ const ChatTutor = () => {
         );
         setStudents(data || []);
       } catch (error) {
-        console.error("Lỗi khi lấy danh sách sinh viên:", error);
+        console.error("Error fetching student list:", error);
       }
     };
 
@@ -45,13 +45,12 @@ const ChatTutor = () => {
         );
         setMessages(data || []);
       } catch (error) {
-        console.error("Lỗi khi lấy tin nhắn:", error);
+        console.error("Error fetching messages:", error);
       }
     };
 
     fetchMessages();
   }, [selectedStudent, token]);
-
 
   useEffect(() => {
     socket.emit("joinRoom", userId);
@@ -75,7 +74,7 @@ const ChatTutor = () => {
       setNewMessage("");
       setJustSent(true);
     } catch (error) {
-      console.error("Lỗi khi gửi tin nhắn:", error);
+      console.error("Error sending message:", error);
     }
   };
 
@@ -89,7 +88,7 @@ const ChatTutor = () => {
   return (
     <div className="chat-container">
       <aside className="chat-sidebar">
-        <h2 className="sidebar-title">👥 Sinh viên</h2>
+        <h2 className="sidebar-title">👥 Students</h2>
         <ul className="student-list">
           {students.map((student) => (
             <li
@@ -105,11 +104,11 @@ const ChatTutor = () => {
 
       <main className="chat-main">
         <div className="chat-header">
-          💬 Chat với:{" "}
+          💬 Chat with:{" "}
           <strong>
             {selectedStudent
-              ? students.find((s) => s._id === selectedStudent)?.name || "Đang tải..."
-              : "Chọn sinh viên"}
+              ? students.find((s) => s._id === selectedStudent)?.name || "Loading..."
+              : "Select a student"}
           </strong>
         </div>
 
@@ -120,13 +119,13 @@ const ChatTutor = () => {
               const isSender = String(senderId) === String(userId);
               return (
                 <div key={index} className={`message ${isSender ? "sent" : "received"}`}>
-                  <p className="sender">{isSender ? "Bạn" : "Sinh viên"}</p>
+                  <p className="sender">{isSender ? "You" : "Student"}</p>
                   <p className="content">{msg.content}</p>
                 </div>
               );
             })
           ) : (
-            <p className="no-message">Chưa có tin nhắn nào.</p>
+            <p className="no-message">No messages yet.</p>
           )}
           <div ref={messagesEndRef} />
         </div>
@@ -135,13 +134,13 @@ const ChatTutor = () => {
           <div className="chat-input">
             <input
               type="text"
-              placeholder="Nhập tin nhắn..."
+              placeholder="Type a message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               disabled={!selectedStudent}
             />
             <button onClick={sendMessage} disabled={!selectedStudent}>
-              Gửi
+              Send
             </button>
           </div>
         </div>

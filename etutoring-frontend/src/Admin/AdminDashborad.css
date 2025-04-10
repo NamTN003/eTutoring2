@@ -1,76 +1,82 @@
 .dashboard-container {
-    padding: 30px 20px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-  
+  padding: 0px 16px;
+  max-width: 1400px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 40px;
+}
+
+.dashboard-title::after {
+  content: "";
+  display: block;
+  height: 2px;
+  width: 120px;
+  background: #ccc;
+  margin: 10px auto 0;
+  border-radius: 5px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 28px;
+}
+
+.dashboard-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 24px;
+  transition: transform 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+}
+
+.chart-title {
+  font-size: 18px;
+  margin-bottom: 12px;
+  color: #333;
+  text-align: center;
+}
+
+.gauge-card {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.dashboard-loading {
+  text-align: center;
+  font-size: 18px;
+  color: #333;
+  padding: 40px 0;
+}
+
+@media (max-width: 768px) {
   .dashboard-title {
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin-bottom: 40px;
+    font-size: 24px;
   }
-  
-  .dashboard-title::after {
-    content: "";
-    display: block;
-    height: 2px;
-    width: 120px;
-    background: #ccc;
-    margin: 10px auto 0;
-    border-radius: 5px;
-  }
-  
-  /* Responsive Grid: 1 cột trên điện thoại, 2 cột trên tablet trở lên */
-  .dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 24px;
-  }
-  
-  .dashboard-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-    padding: 20px;
-    transition: transform 0.2s;
-  }
-  
-  .dashboard-card:hover {
-    transform: translateY(-4px);
-  }
-  
+
   .chart-title {
-    font-size: 18px;
-    margin-bottom: 12px;
-    color: #333;
-    text-align: center;
+    font-size: 16px;
   }
-  
-  .gauge-card {
-    margin-top: 30px;
-    text-align: center;
+
+  .dashboard-card {
+    padding: 16px;
   }
-  
-  .dashboard-loading {
-    text-align: center;
-    font-size: 18px;
-    color: #333;
+
+  .dashboard-grid {
+    grid-template-columns: 1fr; 
+    gap: 20px;
   }
-  
-  /* Responsive tweaks for smaller screens */
-  @media (max-width: 768px) {
-    .dashboard-title {
-      font-size: 26px;
-    }
-  
-    .chart-title {
-      font-size: 16px;
-    }
-  
-    .dashboard-card {
-      padding: 16px;
-    }
-  }
-  
+}

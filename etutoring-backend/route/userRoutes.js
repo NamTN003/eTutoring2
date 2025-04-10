@@ -15,21 +15,21 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({ email }); 
-    if (!user) return res.status(400).json({ message: "Email không tồn tại" });
+    if (!user) return res.status(400).json({ message: "Email does not exist" });
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Mật khẩu không đúng" });
+    if (!isMatch) return res.status(400).json({ message: "Incorrect password" });
 
     const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
 
     res.json({ 
-      message: "Đăng nhập thành công", 
+      message: "Login successful", 
       token, 
       userId: user._id,
       role: user.role 
   });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -38,7 +38,7 @@ router.post("/register", async (req, res) => {
     let { name, email, phone, password, role, gender, address, created_by, tutor_id, subjects } = req.body;
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
+    if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -47,24 +47,24 @@ router.post("/register", async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "Đăng ký thành công", user: newUser });
+    res.status(201).json({ message: "Registration successful", user: newUser });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 router.post("/logout", authMiddleware, (req, res) => {
-  console.log(`📤 Người dùng ${req.user.userId} đã đăng xuất.`);
-  res.json({ message: "Đăng xuất thành công" });
+  console.log(`📤 User ${req.user.userId} Logout successful`);
+  res.json({ message: "Logout successful" });
 });
 
 
 router.delete("/:id" , async (req, res) => {
   try {
     const user = await User.findByIdAndDelete(req.params.id);
-    if (!user) return res.status(404).json({ message: "Không tìm thấy nhân viên để xóa" });
+    if (!user) return res.status(404).json({ message: "No staff found to delete" });
 
-    res.json({ message: "Xóa nhân viên thành công" });
+    res.json({ message: "Employee deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
@@ -77,7 +77,7 @@ router.post("/request-authorization", authMiddleware, async (req, res) => {
 
     const user = await User.findById(userId);
     if (!user || user.role !== "staff") {
-      return res.status(400).json({ message: "Bạn không thể gửi yêu cầu này" });
+      return res.status(400).json({ message: "You cannot submit this request." });
     }
 
     user.requestReason = reason;
@@ -85,7 +85,7 @@ router.post("/request-authorization", authMiddleware, async (req, res) => {
     user.requestStatus = "pending";
     await user.save();
 
-    res.json({ message: "Gửi yêu cầu thành công!" });
+    res.json({ message: "Request sent successfully!" });
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
@@ -112,19 +112,19 @@ router.get("/liststaff", async (req, res) => {
 router.put("/approve/:id", authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Bạn không có quyền thực hiện thao tác này" });
+      return res.status(403).json({ message: "You do not have permission to perform this action." });
     }
 
     const user = await User.findById(req.params.id);
     if (!user || user.requestStatus !== "pending") {
-      return res.status(404).json({ message: "Không tìm thấy yêu cầu nâng cấp hợp lệ" });
+      return res.status(404).json({ message: "No valid upgrade request found" });
     }
 
     user.role = "authorized";
     user.requestStatus = "approved";
     await user.save();
 
-    res.json({ message: "Duyệt yêu cầu thành công", user });
+    res.json({ message: "Request approved successfully", user });
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
@@ -133,18 +133,18 @@ router.put("/approve/:id", authMiddleware, async (req, res) => {
 router.put("/reject/:id", authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
-      return res.status(403).json({ message: "Bạn không có quyền thực hiện thao tác này" });
+      return res.status(403).json({ message: "You do not have permission to perform this action." });
     }
 
     const user = await User.findById(req.params.id);
     if (!user || user.requestStatus !== "pending") {
-      return res.status(404).json({ message: "Không tìm thấy yêu cầu nâng cấp hợp lệ" });
+      return res.status(404).json({ message: "No valid upgrade request found" });
     }
 
     user.requestStatus = "rejected";
     await user.save();
 
-    res.json({ message: "Từ chối yêu cầu thành công", user });
+    res.json({ message: "Request denied successfully", user });
   } catch (error) {
     res.status(500).json({ message: "Lỗi server", error: error.message });
   }
@@ -157,20 +157,20 @@ router.post("/create-student", authMiddleware, async (req, res) => {
     const created_by = req.user.userId;
 
     if (!["authorized"].includes(req.user.role)) {
-      return res.status(403).json({ message: "Bạn không có quyền tạo sinh viên" });
+      return res.status(403).json({ message: "You do not have permission to create students." });
     }
 
     if (!password) {
-      return res.status(400).json({ message: "Vui lòng nhập mật khẩu" });
+      return res.status(400).json({ message: "Please enter password" });
     }
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
+    if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
     if (tutor_id) {
       const tutor = await User.findById(tutor_id);
       if (!tutor || tutor.role !== "tutor") {
-        return res.status(400).json({ message: "Gia sư không hợp lệ" });
+        return res.status(400).json({ message: "Invalid tutor" });
       }
     }
 
@@ -189,9 +189,9 @@ router.post("/create-student", authMiddleware, async (req, res) => {
     });
 
     await newStudent.save();
-    res.status(201).json({ message: "Tạo sinh viên thành công", student: newStudent });
+    res.status(201).json({ message: "Creating successful students", student: newStudent });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -202,15 +202,15 @@ router.post("/create-tutor", authMiddleware, async (req, res) => {
     const created_by = req.user.userId;
 
     if (req.user.role !== "authorized") {
-      return res.status(403).json({ message: "Bạn không có quyền tạo gia sư" });
+      return res.status(403).json({ message: "You do not have permission to create tutors" });
     }
 
     if (!password) {
-      return res.status(400).json({ message: "Vui lòng nhập mật khẩu" });
+      return res.status(400).json({ message: "Please enter password" });
     }
 
     const existingUser = await User.findOne({ email });
-    if (existingUser) return res.status(400).json({ message: "Email đã tồn tại" });
+    if (existingUser) return res.status(400).json({ message: "Email already exists" });
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -226,9 +226,9 @@ router.post("/create-tutor", authMiddleware, async (req, res) => {
     });
 
     await newTutor.save();
-    res.status(201).json({ message: "Tạo gia sư thành công", tutor: newTutor });
+    res.status(201).json({ message: "Create successful tutors", tutor: newTutor });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -238,12 +238,12 @@ router.put("/assign-tutor", authMiddleware, async (req, res) => {
     const { studentIds, tutorId } = req.body;
 
     if (studentIds.length > 10) {
-      return res.status(400).json({ message: "Chỉ có thể phân bổ tối đa 10 sinh viên cùng lúc" });
+      return res.status(400).json({ message: "Only a maximum of 10 students can be assigned at a time" });
     }
 
     const tutor = await User.findById(tutorId);
     if (!tutor || tutor.role !== "tutor") {
-      return res.status(400).json({ message: "Gia sư không hợp lệ" });
+      return res.status(400).json({ message: "Invalid tutor"});
     }
 
     await User.updateMany(
@@ -251,10 +251,10 @@ router.put("/assign-tutor", authMiddleware, async (req, res) => {
       { tutor_id: tutorId }
     );
 
-    res.json({ message: "Phân bổ gia sư thành công" });
+    res.json({ message: "Successful tutor allocation" });
   } catch (error) {
-    console.error("Lỗi khi phân bổ gia sư:", error);
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    console.error("Error allocating tutor:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -266,7 +266,7 @@ router.get("/students-by-creator", authMiddleware, async (req, res) => {
     });
     res.json(users);
 } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
 }
 });
 
@@ -275,7 +275,7 @@ router.get("/tutors", authMiddleware, async (req, res) => {
       const tutors = await User.find({ role: "tutor" }).select("_id name email");
       res.json(tutors);
   } catch (error) {
-      res.status(500).json({ message: "Lỗi server", error: error.message });
+      res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -286,8 +286,8 @@ router.get("/students-with-tutors", authMiddleware, async (req, res) => {
 
     res.json(students);
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách sinh viên:", error);
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    console.error("Error getting student list:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -296,8 +296,8 @@ router.get("/all-tutors", authMiddleware, async (req, res) => {
     const tutors = await User.find({ role: "tutor" }).select("_id name email");
     res.json(tutors);
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách gia sư:", error);
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    console.error("Error getting Tutor list:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
@@ -311,7 +311,7 @@ router.get('/role', async (req, res) => {
       const users = await User.find(query);
       res.json(users);
   } catch (error) {
-      res.status(500).json({ message: "Lỗi khi lấy danh sách người dùng", error });
+      res.status(500).json({ message: "Error while getting user list", error });
   }
 });
 
@@ -320,24 +320,24 @@ router.get("/students", authMiddleware, async (req, res) => {
   try {
     const { tutor_id } = req.query;
     if (!tutor_id) {
-      return res.status(400).json({ message: "Thiếu tutor_id" });
+      return res.status(400).json({ message: "Missing tutor_id" });
     }
     const students = await User.find({ tutor_id, role: "student" });
     res.status(200).json(students);
   } catch (error) {
-    console.error("Lỗi khi lấy danh sách học sinh:", error);
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    console.error("Error getting student list:", error);
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 
 router.get("/:id" , async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
-    if (!user) return res.status(404).json({ message: "Không tìm thấy nhân viên" });
+    if (!user) return res.status(404).json({ message: "No staff found"});
 
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server" });
+    res.status(500).json({ message: "Server error" });
   }
 });
 
@@ -345,11 +345,11 @@ router.put("/:id", async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
 
-    if (!updatedUser) return res.status(404).json({ message: "Không tìm thấy nhân viên" });
+    if (!updatedUser) return res.status(404).json({ message: "No staff found" });
 
-    res.json({ message: "Cập nhật thành công", user: updatedUser });
+    res.json({ message: "Updated successfully", user: updatedUser });
   } catch (error) {
-    res.status(500).json({ message: "Lỗi server", error: error.message });
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 });
 

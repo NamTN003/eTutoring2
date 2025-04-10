@@ -3,13 +3,16 @@ import './Imformation.css';
 
 const Imformation = () => {
     const [userData, setUserData] = useState(null);
+    const [loading, setLoading] = useState(true);  // Added loading state
+    const [error, setError] = useState(null);      // Added error state
 
     useEffect(() => {
         const fetchUserData = async () => {
             try {
                 const token = localStorage.getItem("token");
                 if (!token) {
-                    console.error("Chưa đăng nhập!");
+                    console.error("User is not logged in!");
+                    setError("User is not logged in.");
                     return;
                 }
 
@@ -25,18 +28,29 @@ const Imformation = () => {
                 });
 
                 if (!response.ok) {
-                    throw new Error("Lỗi khi lấy dữ liệu người dùng");
+                    throw new Error("Failed to fetch user data");
                 }
 
                 const data = await response.json();
                 setUserData(data);
             } catch (error) {
                 console.error(error.message);
+                setError("Failed to load user data.");
+            } finally {
+                setLoading(false); // Stop loading when done
             }
         };
 
         fetchUserData();
     }, []);
+
+    if (loading) {
+        return <div className="loading-message">Loading user data...</div>; // Loading state UI
+    }
+
+    if (error) {
+        return <div className="error-message">{error}</div>; // Error handling UI
+    }
 
     return (
         <div className="info-container">
@@ -45,7 +59,7 @@ const Imformation = () => {
                 <div className="info-form">
                     <div className="info-row">
                         <div className="info-field">
-                            <label>Họ tên:</label>
+                            <label>Full Name:</label>
                             <input type="text" value={userData?.name || "Not Provided"} readOnly />
                         </div>
                         <div className="info-field">
@@ -55,21 +69,21 @@ const Imformation = () => {
                     </div>
                     <div className="info-row">
                         <div className="info-field">
-                            <label>Số điện thoại:</label>
+                            <label>Phone Number:</label>
                             <input type="text" value={userData?.phone || "Not Provided"} readOnly />
                         </div>
                         <div className="info-field">
-                            <label>Giới tính:</label>
+                            <label>Gender:</label>
                             <input type="text" value={userData?.gender || "Not Provided"} readOnly />
                         </div>
                     </div>
                     <div className="info-row">
                         <div className="info-field">
-                            <label>Địa chỉ:</label>
+                            <label>Address:</label>
                             <input type="text" value={userData?.address || "Not Provided"} readOnly />
                         </div>
                         <div className="info-field">
-                            <label>Vai trò:</label>
+                            <label>Role:</label>
                             <input type="text" value={userData?.role || "Not Provided"} readOnly />
                         </div>
                     </div>

@@ -1,9 +1,7 @@
-/* CreateMeeting.css */
-
 .createmeeting-container {
-    max-width: 800px;
-    margin: 20px ;
-    padding: 0px 10px;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0px;
     background-color: #fff;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -13,15 +11,17 @@
 .createmeeting-title {
     font-size: 26px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 20px;
     text-align: center;
     color: #333;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
 }
 
 .createmeeting-form {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px; /* giảm khoảng cách giữa các dòng */
     overflow-y: auto;
     max-height: 85vh;
 }
@@ -29,14 +29,16 @@
 .createmeeting-group {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
+    min-height: 42px;
 }
 
 .createmeeting-group label {
-    width: 130px;
+    width: 140px;
     font-weight: 600;
     color: #333;
     flex-shrink: 0;
+    text-align: right;
 }
 
 .createmeeting-group input[type="text"],
@@ -44,7 +46,7 @@
 .createmeeting-group input[type="time"],
 .createmeeting-group select {
     flex-grow: 1;
-    padding: 10px;
+    padding: 8px 10px;
     font-size: 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -55,46 +57,22 @@
 .createmeeting-group select:focus {
     border-color: #4a90e2;
 }
-/* .createmeeting-students {
-    flex-grow: 1;
-    padding: 12px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    max-height: 150px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
 
-.createmeeting-student {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 15px;
-    color: #333;
-    padding: 4px 8px;
-    border-radius: 6px;
-    transition: background-color 0.2s ease;
+/* Học sinh */
+.createmeeting-students-box {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 auto;
+    text-align: center;
+    padding: 8px 0;
 }
-.createmeeting-student:hover {
-    background-color: #e6f0ff;
-}
-
-
-.createmeeting-student input[type="checkbox"] {
-    width: 18px;
-    height: 18px;
-    accent-color: #4a90e2;
-} */
 
 .createmeeting-students {
-    flex-grow: 1;
-    padding: 12px;
+    margin-top: 8px;
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
+    padding: 12px;
     max-height: 150px;
     overflow-y: auto;
 }
@@ -102,7 +80,20 @@
 .createmeeting-student {
     display: flex;
     align-items: center;
-    margin-bottom: 8px;
+    justify-content: center;
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.createmeeting-student input {
+    margin-right: 8px;
+}
+
+.createmeeting-student {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    margin-bottom: 6px;
 }
 
 .createmeeting-student input {
@@ -113,14 +104,14 @@
     background-color: #4a90e2;
     color: white;
     font-weight: bold;
-    padding: 12px;
+    padding: 10px 0;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    margin-top: 12px;
+    margin-top: 10px;
     align-self: center;
-    width: 200px;
+    width: 180px;
 }
 
 .createmeeting-submit:hover {
@@ -134,11 +125,12 @@
     }
 
     .createmeeting-group label {
-        width: auto;
+        width: 100%;
+        text-align: left;
+        margin-bottom: 4px;
     }
 
     .createmeeting-submit {
         width: 100%;
     }
 }
-

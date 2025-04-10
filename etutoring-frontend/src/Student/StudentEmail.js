@@ -13,7 +13,7 @@ const StudentEmail = () => {
         const response = await axios.get(`http://localhost:5000/email/emails/${recipientId}`);
         setEmails(response.data);
       } catch (error) {
-        console.error('Lỗi khi tải email:', error);
+        console.error('Error loading emails:', error);
       }
     };
 
@@ -22,19 +22,19 @@ const StudentEmail = () => {
 
   return (
     <div className="email-wrapper">
-      <h1>📬 Hộp Thư Sinh Viên</h1>
+      <h1>📬 Student Inbox</h1>
 
       {selectedEmail ? (
         <div className="email-detail">
-          <button className="back-button" onClick={() => setSelectedEmail(null)}>⬅ Quay lại</button>
+          <button className="back-button" onClick={() => setSelectedEmail(null)}>⬅ Back</button>
           <h2>{selectedEmail.subject}</h2>
           <div className="meta">
-            <p><strong>👤 Người gửi:</strong> {selectedEmail.sender}</p>
-            <p><strong>📨 Người nhận:</strong> {selectedEmail.recipient}</p>
-            <p><strong>🕒 Thời gian:</strong> {new Date(selectedEmail.sentAt).toLocaleString()}</p>
+            <p><strong>👤 Sender:</strong> {selectedEmail.sender}</p>
+            <p><strong>📨 Recipient:</strong> {selectedEmail.recipient}</p>
+            <p><strong>🕒 Time:</strong> {new Date(selectedEmail.sentAt).toLocaleString()}</p>
           </div>
           <div className="message-box">
-            <strong>Nội dung:</strong>
+            <strong>Message:</strong>
             <p>{selectedEmail.message}</p>
           </div>
         </div>

@@ -12,7 +12,7 @@ const ChatStudent = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [tutorId, setTutorId] = useState(null);
-  const [tutorName, setTutorName] = useState("Gia sư");
+  const [tutorName, setTutorName] = useState("Tutor");
   const [hasNewMessage, setHasNewMessage] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -31,10 +31,10 @@ const ChatStudent = () => {
           const res = await axios.get(`http://localhost:5000/user/${data.tutor_id}`, {
             headers: { Authorization: `Bearer ${token}` },
           });
-          setTutorName(res.data.name || "Gia sư");
+          setTutorName(res.data.name || "Tutor");
         }
       } catch (error) {
-        console.error("Lỗi khi lấy thông tin người dùng:", error);
+        console.error("Error fetching user data:", error);
       }
     };
 
@@ -53,7 +53,7 @@ const ChatStudent = () => {
         );
         setMessages(data || []);
       } catch (error) {
-        console.error("Lỗi khi lấy tin nhắn:", error);
+        console.error("Error fetching messages:", error);
       }
     };
 
@@ -85,7 +85,7 @@ const ChatStudent = () => {
       setNewMessage("");
       setHasNewMessage(true);
     } catch (error) {
-      console.error("Lỗi khi gửi tin nhắn:", error);
+      console.error("Error sending message:", error);
     }
   };
 
@@ -99,15 +99,15 @@ const ChatStudent = () => {
   return (
     <div className="chat-container">
       <aside className="chat-sidebar">
-        <h2 className="sidebar-title">🎓 Gia sư</h2>
+        <h2 className="sidebar-title">🎓 Tutor</h2>
         <div className="student-info-box">
-          <p><strong>Tên:</strong> {tutorName}</p>
+          <p><strong>Name:</strong> {tutorName}</p>
         </div>
       </aside>
 
       <main className="chat-main">
         <div className="chat-header">
-          💬 Chat với: <strong>{tutorName}</strong>
+          💬 Chatting with: <strong>{tutorName}</strong>
         </div>
 
         <div className="chat-messages">
@@ -118,13 +118,13 @@ const ChatStudent = () => {
 
               return (
                 <div key={msg._id} className={`message ${isSender ? "sent" : "received"}`}>
-                  <p className="sender">{isSender ? "Bạn" : tutorName}</p>
+                  <p className="sender">{isSender ? "You" : tutorName}</p>
                   <p>{msg.content}</p>
                 </div>
               );
             })
           ) : (
-            <p className="no-message">Chưa có tin nhắn nào.</p>
+            <p className="no-message">No messages yet.</p>
           )}
           <div ref={messagesEndRef} />
         </div>
@@ -133,12 +133,12 @@ const ChatStudent = () => {
           <div className="chat-input">
             <input
               type="text"
-              placeholder="Nhập tin nhắn..."
+              placeholder="Type a message..."
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               disabled={!tutorId}
             />
-            <button onClick={sendMessage} disabled={!tutorId}>Gửi</button>
+            <button onClick={sendMessage} disabled={!tutorId}>Send</button>
           </div>
         </div>
       </main>

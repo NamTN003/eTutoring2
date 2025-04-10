@@ -13,22 +13,23 @@ const RollCall = () => {
                 setMeetings(res.data);
             })
             .catch((error) => {
-                console.error("Lỗi khi lấy danh sách cuộc họp:", error);
+                console.error("Error fetching meetings list:", error);
             });
     }, []);
 
     return (
         <div className="rollcall-table-container">
-            <h2 className="rollcall-title">Danh sách cuộc họp</h2>
+            <h2 className="rollcall-title">Meeting List</h2>
             <table className="rollcall-table">
                 <thead>
                     <tr>
-                        <th>Ngày</th>
-                        <th>Giờ</th>
-                        <th>Địa điểm</th>
-                        <th>Gia sư</th>
-                        <th>Môn học</th>
-                        <th>Hành động</th>
+                        <th>Date</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Location</th>
+                        <th>Tutor</th>
+                        <th>Subject</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,15 +37,16 @@ const RollCall = () => {
                         <tr key={meeting._id}>
                             <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
                             <td>{meeting.meeting_time}</td>
+                            <td>{meeting.end_time || "Not available"}</td>
                             <td>{meeting.location}</td>
-                            <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
-                            <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td>
+                            <td>{meeting.tutor_id?.name || "No tutor assigned"}</td>
+                            <td>{meeting.subject_id?.subject_name || "No subject assigned"}</td>
                             <td>
                                 <button
                                     className="rollcall-btn"
                                     onClick={() => navigate(`/homestaff/updatemeeting/${meeting._id}`)}
                                 >
-                                    Điểm danh
+                                    Roll Call
                                 </button>
                             </td>
                         </tr>

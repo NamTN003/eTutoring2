@@ -42,27 +42,27 @@ const Createacount = () => {
         "http://localhost:5000/user/register",
         formattedData
       );
-      alert("✅ Đăng ký thành công!");
+      alert("✅ Registration successful!");
       console.log("User mới:", response.data);
       navigate("/homeadmin");
     } catch (error) {
-      console.error("❌ Lỗi đăng ký:", error.response?.data || error.message);
-      alert("❌ " + (error.response?.data?.message || "Đăng ký thất bại"));
+      console.error("❌ Registration error:", error.response?.data || error.message);
+      alert("❌ " + (error.response?.data?.message || "Registration failed"));
     }
   };
 
   return (
     <div className="create-account-page">
       <div className="create-account-container">
-        <h2>Đăng ký tài khoản mới cho nhân viên</h2>
+        <h2>Register new account for employee</h2>
         <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="name"
-            placeholder="Họ và Tên"
+            placeholder="Full Name"
             onChange={handleChange}
             pattern="^[^\d]+$"
-            title="Họ tên không được chứa số"
+            title="Name cannot contain numbers"
             maxLength={25}
             required
           />
@@ -73,7 +73,7 @@ const Createacount = () => {
             placeholder="Email"
             onChange={handleChange}
             pattern="^[a-zA-Z0-9._%+-]+@gmail\.com$"
-            title="Email phải là @gmail.com và không quá 25 ký tự"
+            title="Email must be @gmail.com and no more than 25 characters"
             maxLength={25}
             required
           />
@@ -81,18 +81,18 @@ const Createacount = () => {
           <input
             type="tel"
             name="phone"
-            placeholder="Số điện thoại"
+            placeholder="Phone number"
             onChange={handleChange}
             maxLength={15}
             pattern="^[0-9]{1,15}$"
-            title="Chỉ được nhập số và tối đa 15 chữ số"
+            title="Only numbers and maximum 15 digits allowed"
             required
           />
 
           <input
             type="password"
             name="password"
-            placeholder="Mật khẩu"
+            placeholder="password"
             onChange={handleChange}
             maxLength={25}
             required
@@ -101,29 +101,29 @@ const Createacount = () => {
           <input
             type="text"
             name="address"
-            placeholder="Địa chỉ"
+            placeholder="address"
             onChange={handleChange}
           />
 
           <div className="form-group">
-            <label>Giới tính:</label>
+            <label>Gender:</label>
             <select name="gender" onChange={handleChange}>
               <option></option>
-              <option value="Male">Nam</option>
-              <option value="Female">Nữ</option>
-              <option value="Other">Khác</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label>Vai trò:</label>
+            <label>Role:</label>
             <select name="role" onChange={handleChange}>
               <option></option>
-              <option value="staff">Nhân viên</option>
+              <option value="staff">Staff</option>
             </select>
           </div>
 
-          <button type="submit">Đăng ký</button>
+          <button type="submit">Register</button>
         </form>
       </div>
     </div>

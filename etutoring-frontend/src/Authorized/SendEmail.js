@@ -17,7 +17,7 @@ const SendEmail = () => {
         const response = await axios.get('http://localhost:5000/email/users');
         setUsers(response.data);
       } catch (error) {
-        console.error('Lỗi khi lấy danh sách người dùng:', error);
+        console.error('Error fetching user list:', error);
       }
     };
     fetchUsers();
@@ -55,18 +55,18 @@ const SendEmail = () => {
         subject,
         message,
       });
-      setStatus('✅ Gửi email thành công!');
+      setStatus('✅ Email sent successfully!');
     } catch (error) {
-      setStatus('❌ Gửi email thất bại.');
+      setStatus('❌ Failed to send email.');
     }
   };
 
   return (
     <div className="sendemail-container">
-      <h2>📨 Gửi Email</h2>
+      <h2>📨 Send Email</h2>
       <form onSubmit={handleSubmit} className="sendemail-form">
         <div className="form-group">
-          <label>Người gửi:</label>
+          <label>Sender:</label>
           <input
             type="text"
             value={sender}
@@ -76,33 +76,32 @@ const SendEmail = () => {
         </div>
 
         <div className="form-group">
-          <label>Người nhận:</label>
-                  <div className="recipient-list">
-          <label className="recipient-item select-all-item">
-            <span>Chọn tất cả</span>
-            <input
-              type="checkbox"
-              onChange={handleSelectAllChange}
-              checked={users.length > 0 && recipientIds.length === users.length}
-            />
-          </label>
-
-          {users.map(user => (
-            <label key={user._id} className="recipient-item">
-              <span>{user.name} - {user.email}</span>
+          <label>Recipients:</label>
+          <div className="recipient-list">
+            <label className="recipient-item select-all-item">
+              <span>Select All</span>
               <input
                 type="checkbox"
-                checked={recipientIds.includes(user._id)}
-                onChange={() => handleCheckboxChange(user._id, user.name)}
+                onChange={handleSelectAllChange}
+                checked={users.length > 0 && recipientIds.length === users.length}
               />
             </label>
-          ))}
-        </div>
 
+            {users.map(user => (
+              <label key={user._id} className="recipient-item">
+                <span>{user.name} - {user.email}</span>
+                <input
+                  type="checkbox"
+                  checked={recipientIds.includes(user._id)}
+                  onChange={() => handleCheckboxChange(user._id, user.name)}
+                />
+              </label>
+            ))}
+          </div>
         </div>
 
         <div className="form-group">
-          <label>Tiêu đề:</label>
+          <label>Subject:</label>
           <input
             type="text"
             value={subject}
@@ -112,7 +111,7 @@ const SendEmail = () => {
         </div>
 
         <div className="form-group">
-          <label>Nội dung:</label>
+          <label>Message:</label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -120,7 +119,7 @@ const SendEmail = () => {
           />
         </div>
 
-        <button type="submit">Gửi Email</button>
+        <button type="submit">Send Email</button>
         {status && <p className="email-status">{status}</p>}
       </form>
     </div>

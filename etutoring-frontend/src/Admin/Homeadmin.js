@@ -18,14 +18,14 @@ const Homeadmin = () => {
                 <h2 className="logo">eTutoring</h2>
                 <nav className="menu">
                     <Link to="/homeadmin"><i class="fa-solid fa-house"></i>HomePage</Link>
-                    <Link to="/homeadmin/createacount"><FaUserPlus /> Tạo tài khoản cho nhân viên</Link>
-                    <Link to="/homeadmin/liststaff"><FaUsers /> Danh sách nhân viên</Link>
-                    <Link to="/homeadmin/adminrequests"><FaUserShield /> Danh sách nhân viên muốn lên cấp</Link>
-                    <Link to="/homeadmin/imformation"><FaInfoCircle /> Thông tin bản thân</Link>
+                    <Link to="/homeadmin/imformation"><FaInfoCircle /> Personal information</Link>
+                    <Link to="/homeadmin/createacount"><FaUserPlus /> Create account for employees</Link>
+                    <Link to="/homeadmin/liststaff"><FaUsers /> List employees</Link>
+                    <Link to="/homeadmin/adminrequests"><FaUserShield /> List employees promoted</Link>
                     <Link to="/homeadmin/admindashboard"><FaInfoCircle /> Dashboard</Link>
                 </nav>
                 <button className="logout-btn" onClick={handleLogout}>
-                    <FaSignOutAlt /> Đăng Xuất
+                    <FaSignOutAlt /> Log Out
                 </button>
             </aside>
 

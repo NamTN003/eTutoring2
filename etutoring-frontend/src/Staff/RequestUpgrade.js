@@ -6,7 +6,7 @@ const RequestUpgrade = () => {
 
   const handleSubmit = async () => {
     const authToken = localStorage.getItem("token");
-    if (!authToken) return alert("Bạn chưa đăng nhập!");
+    if (!authToken) return alert("You are not logged in!");
 
     const res = await fetch("http://localhost:5000/user/request-authorization", {
       method: "POST",
@@ -23,21 +23,20 @@ const RequestUpgrade = () => {
 
   return (
     <div className="upgrade-container">
-      <h2 className="upgrade-title">Gửi yêu cầu nâng cấp</h2>
+      <h2 className="upgrade-title">Submit Permission Request</h2>
       <form className="upgrade-form" onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
-        
         <div className="upgrade-group">
-          <label className="upgrade-label">Lý do</label>
+          <label className="upgrade-label">Reason</label>
           <textarea
             className="upgrade-textarea"
-            placeholder="Nhập lý do của bạn..."
+            placeholder="Enter your reason..."
             value={reason}
             onChange={(e) => setReason(e.target.value)}
             required
           />
         </div>
 
-        <button type="submit" className="upgrade-submit">Gửi yêu cầu</button>
+        <button type="submit" className="upgrade-submit">Submit Request</button>
       </form>
     </div>
   );

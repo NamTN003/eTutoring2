@@ -19,29 +19,30 @@ const MeetingStudent = () => {
             const sortedMeetings = filteredMeetings.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
             setMeetings(sortedMeetings);
         } catch (error) {
-            console.error("Lỗi khi lấy danh sách cuộc họp:", error);
+            console.error("Error fetching meetings:", error);
         }
     };
 
     const getAttendanceStatus = (meeting) => {
         const record = meeting.attendance?.find(a => a.user_id === studentId || a.user_id?._id === studentId);
-        if (!record) return "🕓 Chưa điểm danh";
-        return record.status === "present" ? "✅ Có mặt" : "❌ Vắng mặt";
+        if (!record) return "🕓 Not yet";
+        return record.status === "present" ? "✅ Present" : "❌ Absent";
     };
 
     return (
         <div className="meeting-container">
-            <h2 className="meeting-title">📅 Lịch học của bạn</h2>
+            <h2 className="meeting-title">📅 Your Schedule</h2>
             {meetings.length > 0 ? (
                 <table className="meeting-table">
                     <thead>
                         <tr>
-                            <th>📆 Ngày</th>
-                            <th>⏰ Giờ</th>
-                            <th>📚 Môn học</th>
-                            <th>👨‍🏫 Gia sư</th>
-                            <th>📍 Địa điểm</th>
-                            <th>✅ Trạng thái</th>
+                            <th>📆 Date</th>
+                            <th>⏰ Start Time</th>
+                            <th>⏰ End Time</th>
+                            <th>📚 Subject</th>
+                            <th>👨‍🏫 Tutor</th>
+                            <th>📍 Location</th>
+                            <th>✅ Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,8 +50,9 @@ const MeetingStudent = () => {
                             <tr key={meeting._id}>
                                 <td>{new Date(meeting.meeting_date).toLocaleDateString()}</td>
                                 <td>{meeting.meeting_time}</td>
-                                <td>{meeting.subject_id?.subject_name || "Không có môn học"}</td>
-                                <td>{meeting.tutor_id?.name || "Không có gia sư"}</td>
+                                <td>{meeting.end_time}</td>
+                                <td>{meeting.subject_id?.subject_name || "No subject assigned"}</td>
+                                <td>{meeting.tutor_id?.name || "No tutor assigned"}</td>
                                 <td>{meeting.location}</td>
                                 <td>{getAttendanceStatus(meeting)}</td>
                             </tr>
@@ -58,7 +60,7 @@ const MeetingStudent = () => {
                     </tbody>
                 </table>
             ) : (
-                <p className="no-meeting">Không có cuộc họp nào.</p>
+                <p className="no-meeting">No meetings found.</p>
             )}
         </div>
     );

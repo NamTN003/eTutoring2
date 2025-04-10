@@ -7,7 +7,7 @@ const Logout = () => {
         const authToken = localStorage.getItem("token");
 
         if (!authToken) {
-            alert("Bạn chưa đăng nhập!");
+            alert("You are not logged in!");
             return;
         }
 
@@ -21,16 +21,16 @@ const Logout = () => {
             });
 
             if (response.ok) {
-                console.log("✅ Đăng xuất thành công.");
+                console.log("✅ Logout successful.");
             } else {
-                console.error("❌ Lỗi khi đăng xuất:", await response.json());
+                console.error("❌ Error when logging out:", await response.json());
             }
         } catch (error) {
-            console.error("❌ Lỗi kết nối server:", error);
+            console.error("❌ Server connection error:", error);
         }
 
         localStorage.removeItem("authToken");
-        alert("Bạn đã đăng xuất thành công!");
+        alert("You have successfully logged out!");
         navigate("/login");
     };
 

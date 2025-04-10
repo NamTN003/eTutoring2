@@ -27,16 +27,16 @@ const Homeauthorized = () => {
             </div>
                 <nav className="homeauthorized-nav-links"> 
                     <Link to="/homeauthorized" className="homeauthorized-nav-item"><i class="fa-solid fa-house"></i> Homepage</Link>
-                    <Link to="imformation" className="homeauthorized-nav-item"><FiKey className="icon" /> Thông tin bản thân</Link>
-                    <Link to="createstudent" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Tạo tài khoản sinh viên</Link>
-                    <Link to="createtutor" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Tạo tài khoản gia sư</Link>
-                    <Link to="listtutor" className="homeauthorized-nav-item"><FiUsers className="icon" /> Danh sách Gia Sư</Link>
-                    <Link to="studentlist" className="homeauthorized-nav-item"><FiUsers className="icon" /> Danh sách sinh viên</Link>
-                    <Link to="assigntutor" className="homeauthorized-nav-item"><FiKey className="icon" /> Phân bổ gia sư</Link>
-                    <Link to="sendemail" className="homeauthorized-nav-item"><FiMail className="icon" /> Gửi Email</Link>
+                    <Link to="imformation" className="homeauthorized-nav-item"><FiKey className="icon" /> Personal information</Link>
+                    <Link to="createstudent" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Create student account</Link>
+                    <Link to="createtutor" className="homeauthorized-nav-item"><FiUserPlus className="icon" /> Create a tutor account</Link>
+                    <Link to="listtutor" className="homeauthorized-nav-item"><FiUsers className="icon" /> List of Tutors</Link>
+                    <Link to="studentlist" className="homeauthorized-nav-item"><FiUsers className="icon" /> List of students</Link>
+                    <Link to="assigntutor" className="homeauthorized-nav-item"><FiKey className="icon" /> Tutor allocation</Link>
+                    <Link to="sendemail" className="homeauthorized-nav-item"><FiMail className="icon" /> Send Email</Link>
                 </nav>
                 <button onClick={handleLogout} className="homeauthorized-logout-btn">
-                    <FiLogOut className="icon" /> Đăng Xuất
+                    <FiLogOut className="icon" /> Log Out
                 </button>
             </aside>
 
@@ -44,7 +44,6 @@ const Homeauthorized = () => {
                 <header className="homeauthorized-header">
                     <h2>  eTutoring – Authorized </h2>
                     <div className="homeauthorized-header-icons">
-                        <Link to="#"><FiGrid className="icon" /></Link>
                         <Link to="imformation"><BsPersonCircle className="icon" /></Link>
                     </div>
                 </header>

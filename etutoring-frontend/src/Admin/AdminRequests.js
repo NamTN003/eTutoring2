@@ -30,17 +30,17 @@ const AdminRequests = () => {
 
   return (
     <div className="admin-requests-container">
-      <h2>Danh sách yêu cầu nâng cấp</h2>
+      <h2>List of upgrade requests</h2>
       {requests.length === 0 ? (
-        <p>Không có yêu cầu nào</p>
+        <p>No requirements</p>
       ) : (
         <table className="requests-table">
           <thead>
             <tr>
-              <th>Tên</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Trạng thái yêu cầu</th>
-              <th>Hành động</th>
+              <th>Request status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -50,8 +50,8 @@ const AdminRequests = () => {
                 <td>{req.email}</td>
                 <td>{req.requestStatus}</td>
                 <td>
-                  <button onClick={() => handleApprove(req._id)} className="approve-btn">Duyệt</button>
-                  <button onClick={() => handleReject(req._id)} className="reject-btn">Từ chối</button>
+                  <button onClick={() => handleApprove(req._id)} className="approve-btn">accept</button>
+                  <button onClick={() => handleReject(req._id)} className="reject-btn">refuse</button>
                 </td>
               </tr>
             ))}

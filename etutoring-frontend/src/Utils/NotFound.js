@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 const NotFound = () => {
     return (
         <div style={{ textAlign: "center", padding: "50px" }}>
-            <h1>404 - Không tìm thấy trang</h1>
-            <p>Đường dẫn bạn truy cập không tồn tại.</p>
+            <h1>404 - Page Not Found</h1>
+            <p>The path you are trying to access does not exist..</p>
             <Link to="/" style={{ color: "#007BFF", textDecoration: "none", fontWeight: "bold" }}>
-                Quay về trang chủ
+            Back to home page
             </Link>
         </div>
     );

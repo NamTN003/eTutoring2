@@ -17,22 +17,22 @@ const Homestudent = () => {
     return (
         <div className="homestudent-container">
             <aside className="homestudent-sidebar">
-            <div className="sidebar-logo">
-            <img
-            src="https://www.unialliance.ac.uk/wp-content/uploads/2023/08/Greenwich-LOGO_2022-N-01.png"
-            alt="Greenwich Logo"
-            className="sidebar-logo-img"
-            />
-            </div>
+                <div className="sidebar-logo">
+                    <img
+                        src="https://www.unialliance.ac.uk/wp-content/uploads/2023/08/Greenwich-LOGO_2022-N-01.png"
+                        alt="Greenwich Logo"
+                        className="sidebar-logo-img"
+                    />
+                </div>
                 <nav className="homestudent-nav-links">
                     <Link to="/homestudent" className="homestudent-nav-item"><i className="fa-solid fa-house"></i> Homepage</Link>
-                    <Link to="imformation" className="homestudent-nav-item"><i className="fa-solid fa-user"></i> Thông tin bản thân</Link>
-                    <Link to="chatstudent" className="homestudent-nav-item"><i className="fa-solid fa-comments"></i> Nhắn tin</Link>
-                    <Link to="meetingstudent" className="homestudent-nav-item"><FiGrid className="icon" /> Lịch học</Link>
+                    <Link to="imformation" className="homestudent-nav-item"><i className="fa-solid fa-user"></i> Personal Infomation</Link>
+                    <Link to="chatstudent" className="homestudent-nav-item"><i className="fa-solid fa-comments"></i> Messages</Link>
+                    <Link to="meetingstudent" className="homestudent-nav-item"><FiGrid className="icon" /> Schedule</Link>
                     <Link to="studentemail" className="homestudent-nav-item"><FiMail className="icon" /> Email</Link>
                 </nav>
                 <button onClick={handleLogout} className="homestudent-logout-btn">
-                    <FiLogOut className="icon" /> Đăng Xuất
+                    <FiLogOut className="icon" /> Logout
                 </button>
             </aside>
 
@@ -40,7 +40,6 @@ const Homestudent = () => {
                 <header className="homestudent-header">
                     <h2>eTutoring – Student</h2>
                     <div className="homestudent-header-icons">
-                        <Link to="#"><FiGrid className="icon" /></Link>
                         <Link to="imformation"><BsPersonCircle className="icon" /></Link>
                     </div>
                 </header>

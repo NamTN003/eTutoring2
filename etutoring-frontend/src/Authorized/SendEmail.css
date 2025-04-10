@@ -65,8 +65,8 @@
     background: #f8f9fa;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 14px 18px;
-    max-height: 220px;    
+    padding: 4px 18px;
+    max-height: 200px;    
     overflow-y: auto;      
     overflow-x: hidden;  
   }

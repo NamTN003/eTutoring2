@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './CreateBlog.css'; // 👈 Thêm file CSS
+import './CreateBlog.css'; // 👈 Add CSS file
 
 const CreateBlog = () => {
     const userid = localStorage.getItem("userId");
@@ -29,46 +29,46 @@ const CreateBlog = () => {
                 },
             });
             console.log('✅ Blog created successfully:', response.data);
-            alert('✅ Blog đã được tạo thành công!');
+            alert('✅ Blog has been created successfully!');
             setContent('');
             setVisibility('all');
             setUploadedFile(null);
             setUploadedImage(null);
         } catch (error) {
             console.error('❌ Error creating blog:', error);
-            alert('❌ Lỗi khi tạo blog!');
+            alert('❌ Error creating blog!');
         }
     };
 
     return (
         <div className="create-blog-wrapper">
-            <h2>✍️ Tạo Blog Mới</h2>
+            <h2>✍️ Create a New Blog</h2>
             <form className="create-blog-form" onSubmit={handleSubmit}>
                 <div className="form-group">
-                    <label>Nội dung:</label>
+                    <label>Content:</label>
                     <textarea
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         required
-                        placeholder="Nhập nội dung blog..."
+                        placeholder="Enter blog content..."
                     />
                 </div>
 
                 <div className="form-group">
-                    <label>Đối tượng hiển thị:</label>
+                    <label>Visibility:</label>
                     <select
                         value={visibility}
                         onChange={(e) => setVisibility(e.target.value)}
                         required
                     >
-                        <option value="all">Tất cả</option>
-                        <option value="student">Sinh viên</option>
-                        <option value="tutor">Gia sư</option>
+                        <option value="all">Everyone</option>
+                        <option value="student">Students</option>
+                        <option value="tutor">Tutors</option>
                     </select>
                 </div>
 
                 <div className="form-group">
-                    <label>Tải tệp đính kèm:</label>
+                    <label>Upload Attachment:</label>
                     <input
                         type="file"
                         onChange={(e) => setUploadedFile(e.target.files[0])}
@@ -76,7 +76,7 @@ const CreateBlog = () => {
                 </div>
 
                 <div className="form-group">
-                    <label>Tải ảnh minh họa:</label>
+                    <label>Upload Image:</label>
                     <input
                         type="file"
                         accept="image/*"
@@ -84,7 +84,7 @@ const CreateBlog = () => {
                     />
                 </div>
 
-                <button type="submit">📢 Đăng Blog</button>
+                <button type="submit">📢 Post Blog</button>
             </form>
         </div>
     );

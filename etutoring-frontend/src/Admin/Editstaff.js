@@ -37,26 +37,26 @@ const Editstaff = () => {
         e.preventDefault();
         try {
             await axios.put(`http://localhost:5000/user/${id}`, formData);
-            alert("✅ Cập nhật nhân viên thành công!");
+            alert("✅ Employee update successful!");
             navigate("/homeadmin/liststaff");
         } catch (error) {
-            console.error("❌ Lỗi khi cập nhật nhân viên:", error);
-            alert("❌ Không thể cập nhật nhân viên");
+            console.error("❌ Error while updating employee:", error);
+            alert("❌ Unable to update employee");
         }
     };
 
-    if (loading) return <p>Đang tải dữ liệu nhân viên...</p>;
+    if (loading) return <p>Loading employee data...</p>;
 
     return (
         <div>
-            <h2>Chỉnh sửa nhân viên</h2>
+            <h2>Edit staff</h2>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Tên nhân viên" required />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Employee Name" required />
                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-                <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="Số điện thoại" required />
-                <input type="text" name="role" value={formData.role} onChange={handleChange} placeholder="Vai trò" required readOnly />
-                <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Địa chỉ" required />
-                <button type="submit">💾 Lưu</button>
+                <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone number" required />
+                <input type="text" name="role" value={formData.role} onChange={handleChange} placeholder="Role" required readOnly />
+                <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" required />
+                <button type="submit">💾 Save</button>
             </form>
         </div>
     );
