@@ -17,7 +17,7 @@ const emailRoutes = require("./route/emailRoute");
 const app = express();
 const server = http.createServer(app);
 
-const allowedOrigins = [process.env.CLIENT_URL || "http://localhost:3000"];
+const allowedOrigins = process.env.CLIENT_URL ;
 app.use(cors({
     origin: allowedOrigins,
     credentials: true,
@@ -34,7 +34,7 @@ mongoose
   });
 
 const io = new Server(server, {
-    cors: { origin: "http://localhost:3000" }
+    cors: { origin: process.env.CLIENT_URL }
 });
 
 app.set("io", io);
@@ -86,6 +86,7 @@ app.use('/uploads', express.static('uploads'));
 
 app.get("/", (req, res) => {
     res.send("Server đang chạy!");
+    console.log("fsd", process.env.CLIENT_URL);
 });
 
 app.use((err, req, res, next) => {

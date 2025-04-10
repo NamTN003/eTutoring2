@@ -32,7 +32,7 @@ const Createtutor = () => {
         return;
       }
 
-      await axios.post("http://localhost:5000/user/create-tutor", formData, {
+      await axios.post(`${process.env.REACT_APP_SERVER_HOST}/user/create-tutor`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

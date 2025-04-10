@@ -11,7 +11,7 @@ const Meeting = () => {
 
   const fetchMeetings = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/meeting");
+      const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting`);
       const sortedMeetings = response.data.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
       setMeetings(sortedMeetings);
     } catch (error) {
@@ -23,7 +23,7 @@ const Meeting = () => {
     if (!window.confirm("Are you sure you want to delete this meeting?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/meeting/${meetingId}`);
+      await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/meeting/${meetingId}`);
       setMeetings(meetings.filter(meeting => meeting._id !== meetingId));
       alert("Meeting deleted successfully!");
     } catch (error) {

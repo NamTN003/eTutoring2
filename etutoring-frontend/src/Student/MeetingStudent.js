@@ -12,7 +12,7 @@ const MeetingStudent = () => {
 
     const fetchMeetings = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/meeting?studentId=${studentId}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting?studentId=${studentId}`);
             const filteredMeetings = response.data.filter(meeting =>
                 meeting.student_ids?.some(student => student._id === studentId)
             );

@@ -38,7 +38,7 @@ const Register = () => {
 
     try {
       console.log("📤 Sending registration request with data:", formattedData);
-      const response = await axios.post("http://localhost:5000/register", formattedData);
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/register`, formattedData);
       alert("✅ Registration successful!");
       console.log("New user:", response.data);
       navigate("/homeadmin");

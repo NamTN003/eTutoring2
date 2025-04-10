@@ -25,7 +25,7 @@ const Createstudent = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await axios.get("http://localhost:5000/user/tutors", {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/tutors`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -53,7 +53,7 @@ const Createstudent = () => {
         return;
       }
 
-      await axios.post("http://localhost:5000/user/create-student", formData, {
+      await axios.post(`${process.env.REACT_APP_SERVER_HOST}/user/create-student`, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 

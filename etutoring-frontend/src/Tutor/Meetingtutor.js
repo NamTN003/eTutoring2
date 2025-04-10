@@ -13,7 +13,7 @@ const Meetingtutor = () => {
 
     const fetchMeetings = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/meeting?tutorId=${tutorId}`);
+            const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting?tutorId=${tutorId}`);
             const filteredMeetings = response.data.filter(meeting => meeting.tutor_id?._id === tutorId);
             const sortedMeetings = filteredMeetings.sort((a, b) => new Date(a.meeting_date) - new Date(b.meeting_date));
             setMeetings(sortedMeetings);

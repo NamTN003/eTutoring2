@@ -14,10 +14,10 @@ const AssignTutor = () => {
       try {
         const token = localStorage.getItem("token");
         const [studentRes, tutorRes] = await Promise.all([
-          axios.get("http://localhost:5000/user/students-with-tutors", {
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/students-with-tutors`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("http://localhost:5000/user/all-tutors", {
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/all-tutors`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);
@@ -53,7 +53,7 @@ const AssignTutor = () => {
       const token = localStorage.getItem("token");
 
       await axios.put(
-        "http://localhost:5000/user/assign-tutor",
+        `${process.env.REACT_APP_SERVER_HOST}/user/assign-tutor`,
         {
           studentIds: selectedStudents,
           tutorId: selectedTutor,
@@ -67,7 +67,7 @@ const AssignTutor = () => {
       setSelectedStudents([]);
       setSelectedTutor("");
 
-      const updated = await axios.get("http://localhost:5000/user/students-with-tutors", {
+      const updated = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/students-with-tutors`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setStudents(updated.data);

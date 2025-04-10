@@ -39,7 +39,7 @@ const Createacount = () => {
     try {
       console.log("📤 Gửi request đăng ký với dữ liệu:", formattedData);
       const response = await axios.post(
-        "http://localhost:5000/user/register",
+        `${process.env.REACT_APP_SERVER_HOST}/user/register`,
         formattedData
       );
       alert("✅ Registration successful!");

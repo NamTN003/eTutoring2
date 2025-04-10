@@ -25,10 +25,10 @@ const StudentDashboard = () => {
         const headers = { Authorization: `Bearer ${token}` };
 
         const [userRes, dashboardRes, weeklyRes, dailyRes] = await Promise.all([
-          axios.get(`http://localhost:5000/user/${userId}`, { headers }),
-          axios.get("http://localhost:5000/dashboard/my-simple-dashboard", { headers }),
-          axios.get("http://localhost:5000/dashboard/weekly-meetings", { headers }),
-          axios.get("http://localhost:5000/dashboard/student-daily-meetings", { headers }),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/${userId}`, { headers }),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/my-simple-dashboard`, { headers }),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/weekly-meetings`, { headers }),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/student-daily-meetings`, { headers }),
         ]);
 
         setUserData(userRes.data);

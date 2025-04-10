@@ -19,7 +19,7 @@ const Imformation = () => {
                 const decodedToken = JSON.parse(atob(token.split(".")[1]));
                 const userId = decodedToken.userId;
 
-                const response = await fetch(`http://localhost:5000/user/${userId}`, {
+                const response = await fetch(`${process.env.REACT_APP_SERVER_HOST}/user/${userId}`, {
                     method: "GET",
                     headers: {
                         Authorization: `Bearer ${token}`,

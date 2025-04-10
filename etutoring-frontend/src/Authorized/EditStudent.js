@@ -17,7 +17,7 @@ const EditStudent = () => {
   useEffect(() => {
     const fetchStudent = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`);
         setStudent(response.data);
       } catch (error) {
         console.error("❌ Error fetching student info:", error);
@@ -33,7 +33,7 @@ const EditStudent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/user/${id}`, student);
+      await axios.put(`${process.env.REACT_APP_SERVER_HOST}/user/user/${id}`, student);
       alert("✅ Student updated successfully!");
       navigate("/homeauthorized/studentlist");
     } catch (error) {

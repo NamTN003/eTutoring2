@@ -25,9 +25,9 @@ const CreateMeeting = () => {
     const fetchData = async () => {
       try {
         const [tutorRes, studentRes, subjectRes] = await Promise.all([
-          axios.get("http://localhost:5000/user/role?tutors=true"),
-          axios.get("http://localhost:5000/user/role?students=true"),
-          axios.get("http://localhost:5000/subject")
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/role?tutors=true`),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/role?students=true`),
+          axios.get(`${process.env.REACT_APP_SERVER_HOST}/subject`)
         ]);
         setTutors(tutorRes.data);
         setStudents(studentRes.data);
@@ -71,7 +71,7 @@ const CreateMeeting = () => {
     console.log("📤 Submitting meeting data:", form);
 
     try {
-      const res = await axios.post("http://localhost:5000/meeting/create", form, {
+      const res = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/meeting/create`, form, {
         headers: { "Content-Type": "application/json" },
       });
       alert(res.data.message);

@@ -3,7 +3,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 import "./ChatTutor.css";
 
-const socket = io("http://localhost:5000");
+const socket = io(`${process.env.REACT_APP_SERVER_HOST}`);
 
 const ChatTutor = () => {
   const userId = localStorage.getItem("userId");
@@ -22,7 +22,7 @@ const ChatTutor = () => {
     const fetchStudents = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/user/students?tutor_id=${userId}`,
+         `${process.env.REACT_APP_SERVER_HOST}/user/students?tutor_id=${userId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setStudents(data || []);
@@ -40,7 +40,7 @@ const ChatTutor = () => {
     const fetchMessages = async () => {
       try {
         const { data } = await axios.get(
-          `http://localhost:5000/message/conversation/${selectedStudent}`,
+        `${process.env.REACT_APP_SERVER_HOST}/message/conversation/${selectedStudent}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         setMessages(data || []);
@@ -65,7 +65,7 @@ const ChatTutor = () => {
     if (!newMessage.trim() || !selectedStudent) return;
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/message/send",
+        `${process.env.REACT_APP_SERVER_HOST}/message/send`,
         { receiver_id: selectedStudent, content: newMessage },
         { headers: { Authorization: `Bearer ${token}` } }
       );

@@ -8,7 +8,7 @@ const RollCall = () => {
     const [meetings, setMeetings] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:5000/meeting")
+        axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/meeting`)
             .then((res) => {
                 setMeetings(res.data);
             })

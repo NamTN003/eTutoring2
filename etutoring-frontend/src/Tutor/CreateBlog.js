@@ -23,7 +23,7 @@ const CreateBlog = () => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/blogs', formData, {
+            const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/blogs`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -17,7 +17,7 @@ const EditTutor = () => {
   useEffect(() => {
     const fetchTutor = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/user/${id}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`);
         setTutor(response.data);
       } catch (error) {
         console.error("❌ Error fetching tutor info:", error);
@@ -33,7 +33,7 @@ const EditTutor = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:5000/user/${id}`, tutor);
+      await axios.put(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`, tutor);
       alert("✅ Tutor updated successfully!");
       navigate("/homeauthorized/listtutor");
     } catch (error) {

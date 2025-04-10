@@ -19,7 +19,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const accountRes = await axios.get("http://localhost:5000/dashboard/total-accounts");
+        const accountRes = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/total-accounts`);
         if (accountRes.data) {
           setAccounts([
             ["Role", "Total"],
@@ -30,14 +30,14 @@ const AdminDashboard = () => {
           ]);
         }
 
-        const messageRes = await axios.get("http://localhost:5000/dashboard/message-count");
+        const messageRes = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/message-count`);
         const data = [["User", "Number of messages"]];
         messageRes.data.forEach((item) => {
           data.push([item.name, item.messageCount]);
         });
         setMessageData(data);
 
-        const staffReqRes = await axios.get("http://localhost:5000/dashboard/staff-auth-request-count");
+        const staffReqRes = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/dashboard/staff-auth-request-count`);
         setStaffRequestData(staffReqRes.data);
 
         setLoading(false);

@@ -13,7 +13,7 @@ const TutorEmail = () => {
     const fetchEmails = async () => {
       try {
         setLoading(true); // Set loading to true when starting the fetch
-        const response = await axios.get(`http://localhost:5000/email/emails/${recipientId}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/email/emails/${recipientId}`);
         setEmails(response.data);
       } catch (error) {
         console.error('Error fetching emails:', error);

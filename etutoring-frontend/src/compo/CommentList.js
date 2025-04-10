@@ -11,7 +11,7 @@ const CommentList = ({ blogId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/comments/${blogId}`);
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/comments/${blogId}`);
         setComments(response.data);
       } catch (error) {
         console.error('❌ Error fetching comments:', error);
@@ -24,7 +24,7 @@ const CommentList = ({ blogId }) => {
   const handleAddComment = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/comments', {
+      const response = await axios.post(`${process.env.REACT_APP_SERVER_HOST}/comments`, {
         blog_id: blogId,
         user_id: userId,
         content: newComment,

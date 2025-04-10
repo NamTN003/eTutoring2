@@ -11,7 +11,7 @@ const RollCallTutor = () => {
     useEffect(() => {
         const fetchMeetings = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/meeting', {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting`, {
                     headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
                 });
 

@@ -14,7 +14,7 @@ const SendEmail = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/email/users');
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/email/users`);
         setUsers(response.data);
       } catch (error) {
         console.error('Error fetching user list:', error);
@@ -48,7 +48,7 @@ const SendEmail = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/email/send-email', {
+      await axios.post(`${process.env.REACT_APP_SERVER_HOST}/email/send-email`, {
         sender,
         recipientIds,
         recipientNames,

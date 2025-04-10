@@ -11,7 +11,7 @@ const UpdateMeeting = () => {
   useEffect(() => {
     const fetchMeeting = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/meeting/${id}`);
+        const res = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting/${id}`);
         setMeeting(res.data);
       } catch (error) {
         console.error("Error fetching meeting details:", error);
@@ -22,12 +22,12 @@ const UpdateMeeting = () => {
 
   const updateAttendance = async (studentId, status) => {
     try {
-      await axios.put(`http://localhost:5000/meeting/${id}/attendance`, {
+      await axios.put(`${process.env.REACT_APP_SERVER_HOST}/meeting/${id}/attendance`, {
         user_id: studentId,
         status: status
       });
 
-      const res = await axios.get(`http://localhost:5000/meeting/${id}`);
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/meeting/${id}`);
       setMeeting(res.data);
 
       alert("✅ Attendance updated successfully!");

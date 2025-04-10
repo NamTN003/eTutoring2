@@ -8,7 +8,7 @@ const RequestUpgrade = () => {
     const authToken = localStorage.getItem("token");
     if (!authToken) return alert("You are not logged in!");
 
-    const res = await fetch("http://localhost:5000/user/request-authorization", {
+    const res = await fetch(`${process.env.REACT_APP_SERVER_HOST}/user/request-authorization`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

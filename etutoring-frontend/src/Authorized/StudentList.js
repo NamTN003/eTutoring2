@@ -18,7 +18,7 @@ const StudentList = () => {
                     return;
                 }
 
-                const response = await axios.get("http://localhost:5000/user/students-by-creator", {
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/students-by-creator`, {
                     headers: { Authorization: `Bearer ${token}` },
                 });
 
@@ -36,7 +36,7 @@ const StudentList = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this student?")) {
             try {
-                await axios.delete(`http://localhost:5000/user/${id}`);
+                await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`);
                 setStudents(studentlist.filter((student) => student._id !== id));
                 alert("✅ Student deleted successfully!");
             } catch (error) {

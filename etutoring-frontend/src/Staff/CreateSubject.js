@@ -17,7 +17,7 @@ const CreateSubject = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/subject", form, {
+      await axios.post(`${process.env.REACT_APP_SERVER_HOST}/subject`, form, {
         headers: { "Content-Type": "application/json" }
       });
       alert("✅ Subject created successfully!");

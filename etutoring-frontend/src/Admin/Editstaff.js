@@ -17,7 +17,7 @@ const Editstaff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/user/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`);
                 console.log("🔍 Dữ liệu nhân viên:", response.data);
                 setFormData(response.data);
             } catch (error) {
@@ -36,7 +36,7 @@ const Editstaff = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put(`http://localhost:5000/user/${id}`, formData);
+            await axios.put(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`, formData);
             alert("✅ Employee update successful!");
             navigate("/homeadmin/liststaff");
         } catch (error) {

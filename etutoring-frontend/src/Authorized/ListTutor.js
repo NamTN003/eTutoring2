@@ -18,7 +18,7 @@ const ListTutor = () => {
           return;
         }
 
-        const response = await axios.get("http://localhost:5000/user/tutors", {
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/tutors`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -36,7 +36,7 @@ const ListTutor = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this tutor?")) {
       try {
-        await axios.delete(`http://localhost:5000/user/${id}`, {
+        await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         setTutors(tutors.filter((tutor) => tutor._id !== id));

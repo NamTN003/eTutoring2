@@ -9,7 +9,7 @@ const BlogList = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/blogs');
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/blogs`);
         setBlogs(response.data.data);
       } catch (error) {
         console.error('❌ Error fetching blog list:', error);
@@ -35,12 +35,12 @@ const BlogList = () => {
               {blog.uploaded_image && (
                 <div className="blog-image">
                   <a
-                    href={`http://localhost:5000/${blog.uploaded_image}`}
+                    href={`${process.env.REACT_APP_SERVER_HOST}/${blog.uploaded_image}`}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <img
-                      src={`http://localhost:5000/${blog.uploaded_image}`}
+                      src={`${process.env.REACT_APP_SERVER_HOST}/${blog.uploaded_image}`}
                       alt="Blog"
                     />
                   </a>
@@ -50,7 +50,7 @@ const BlogList = () => {
               {blog.uploaded_file && (
                 <div className="blog-download">
                   <a
-                    href={`http://localhost:5000/${blog.uploaded_file}`}
+                    href={`${process.env.REACT_APP_SERVER_HOST}/${blog.uploaded_file}`}
                     download
                   >
                     📄 Download attachment

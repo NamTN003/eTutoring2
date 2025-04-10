@@ -7,7 +7,7 @@ const AdminRequests = () => {
 
   useEffect(() => {
     const fetchRequests = async () => {
-      const res = await axios.get("http://localhost:5000/user/");
+      const res = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/`);
       setRequests(res.data);
     };
 
@@ -15,14 +15,14 @@ const AdminRequests = () => {
   }, []);
 
   const handleApprove = async (id) => {
-    await axios.put(`http://localhost:5000/user/approve/${id}`, {}, {
+    await axios.put(`${process.env.REACT_APP_SERVER_HOST}/user/approve/${id}`, {}, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     setRequests(requests.filter(req => req._id !== id));
   };
 
   const handleReject = async (id) => {
-    await axios.put(`http://localhost:5000/user/reject/${id}`, {}, {
+    await axios.put(`${process.env.REACT_APP_SERVER_HOST}/user/reject/${id}`, {}, {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     });
     setRequests(requests.filter(req => req._id !== id));

@@ -10,7 +10,7 @@ const Liststaff = () => {
     useEffect(() => {
         const fetchStaff = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/user/liststaff");
+                const response = await axios.get(`${process.env.REACT_APP_SERVER_HOST}/user/liststaff`);
                 const staffMembers = response.data.filter(user => user.role === "staff");
                 setStaffList(staffMembers);
             } catch (error) {
@@ -24,7 +24,7 @@ const Liststaff = () => {
     const handleDelete = async (id) => {
         if (window.confirm("Are you sure you want to delete this employee?")) {
             try {
-                await axios.delete(`http://localhost:5000/user/${id}`);
+                await axios.delete(`${process.env.REACT_APP_SERVER_HOST}/user/${id}`);
                 setStaffList(staffList.filter((staff) => staff._id !== id));
                 alert("✅ Employee deleted successfully!");
             } catch (error) {
