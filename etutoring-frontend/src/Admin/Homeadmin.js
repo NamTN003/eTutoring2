@@ -22,7 +22,7 @@ const Homeadmin = () => {
                     <Link to="/homeadmin/createacount"><FaUserPlus /> Create account for employees</Link>
                     <Link to="/homeadmin/liststaff"><FaUsers /> List employees</Link>
                     <Link to="/homeadmin/adminrequests"><FaUserShield /> List employees promoted</Link>
-                    <Link to="/homeadmin/admindashboard"><FaInfoCircle /> Dashboard</Link>
+                    <Link to="/homeadmin/admindashboard"><i class="fa-solid fa-table-columns"></i> Dashboard</Link>
                 </nav>
                 <button className="logout-btn" onClick={handleLogout}>
                     <FaSignOutAlt /> Log Out

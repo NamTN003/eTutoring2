@@ -8,6 +8,9 @@ const StudentList = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+    const [currentPage, setCurrentPage] = useState(1);
+    const studentsPerPage = 3;
+
     useEffect(() => {
         const fetchStudents = async () => {
             try {
@@ -46,6 +49,19 @@ const StudentList = () => {
         }
     };
 
+    const indexOfLastStudent = currentPage * studentsPerPage;
+    const indexOfFirstStudent = indexOfLastStudent - studentsPerPage;
+    const currentStudents = studentlist.slice(indexOfFirstStudent, indexOfLastStudent);
+    const totalPages = Math.ceil(studentlist.length / studentsPerPage);
+
+    const goToNextPage = () => {
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+    };
+
+    const goToPrevPage = () => {
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
     return (
         <div className="studentlist-container">
             <h2>List of Students</h2>
@@ -54,24 +70,36 @@ const StudentList = () => {
             ) : error ? (
                 <p className="student-error">{error}</p>
             ) : (
-                studentlist.map((student) => (
-                    <div className="student-card" key={student._id}>
-                    <div className="student-info">
-                        <strong>{student.name}</strong> <br />
-                        {student.email} <br />
-                        Gender: {student.gender}
-                    </div>
+                <>
+                    {currentStudents.map((student) => (
+                        <div className="student-card" key={student._id}>
+                            <div className="student-info">
+                                <strong>{student.name}</strong> <br />
+                                {student.email} <br />
+                                Gender: {student.gender}
+                            </div>
 
-                    <div className="student-actions">
-                        <Link to={`../editstudent/${student._id}`} className="edit-btn">
-                        ✏ Edit
-                        </Link>
-                        <button className="delete-btn" onClick={() => handleDelete(student._id)}>
-                        🗑 Delete
+                            <div className="student-actions">
+                                <Link to={`../editstudent/${student._id}`} className="edit-btn">
+                                    ✏ Edit
+                                </Link>
+                                <button className="delete-btn" onClick={() => handleDelete(student._id)}>
+                                    🗑 Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+
+                    <div className="pagination-controls">
+                        <button onClick={goToPrevPage} disabled={currentPage === 1}>
+                            ◀ Prev
+                        </button>
+                        <span> Page {currentPage} of {totalPages} </span>
+                        <button onClick={goToNextPage} disabled={currentPage === totalPages}>
+                            Next ▶
                         </button>
                     </div>
-                    </div>
-                ))
+                </>
             )}
         </div>
     );

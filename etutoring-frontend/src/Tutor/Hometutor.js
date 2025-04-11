@@ -31,7 +31,7 @@ const Hometutor = () => {
                     <Link to="meetingtutor" className="hometutor-nav-item"><FiGrid className="icon" /> Schedule</Link>
                     <Link to="createblog" className="hometutor-nav-item"><FiEdit3 className="icon" /> Post Blog</Link>
                     <Link to="tutoremail" className="hometutor-nav-item"><FiMail className="icon" /> Email</Link>
-                    <Link to="tutordashboard" className="hometutor-nav-item"><FiMail className="icon" /> Dashboard</Link>
+                    <Link to="tutordashboard" className="hometutor-nav-item"><i class="fa-solid fa-table-columns"></i> Dashboard</Link>
                     <Link to="rollcalltutor" className="hometutor-nav-item"><i className="fa-solid fa-user-check"></i> Roll Call</Link>
                 </nav>
                 <button onClick={handleLogout} className="hometutor-logout-btn">

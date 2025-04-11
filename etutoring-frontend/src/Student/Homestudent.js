@@ -30,7 +30,7 @@ const Homestudent = () => {
                     <Link to="chatstudent" className="homestudent-nav-item"><i className="fa-solid fa-comments"></i> Messages</Link>
                     <Link to="meetingstudent" className="homestudent-nav-item"><FiGrid className="icon" /> Schedule</Link>
                     <Link to="studentemail" className="homestudent-nav-item"><FiMail className="icon" /> Email</Link>
-                    <Link to="studentdashboard" className="homestudent-nav-item"><FiMail className="icon" /> Dashboard</Link>
+                    <Link to="studentdashboard" className="homestudent-nav-item"><i class="fa-solid fa-table-columns"></i> Dashboard</Link>
                 </nav>
                 <button onClick={handleLogout} className="homestudent-logout-btn">
                     <FiLogOut className="icon" /> Logout
